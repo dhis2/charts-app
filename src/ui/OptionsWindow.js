@@ -1,4 +1,7 @@
-import {isString, isNumber, isBoolean, isObject} from 'd2-utilizr';
+import isString from 'd2-utilizr/lib/isString';
+import isNumber from 'd2-utilizr/lib/isNumber';
+import isBoolean from 'd2-utilizr/lib/isBoolean';
+import isObject from 'd2-utilizr/lib/isObject';
 
 export var OptionsWindow;
 
@@ -81,7 +84,7 @@ OptionsWindow = function(c) {
 			enforceMaxLength: true,
 			disabled: true,
 			xable: function() {
-				this.setDisabled(!targetLineValue.getValue() && !Ext.isNumber(targetLineValue.getValue()));
+				this.setDisabled(!targetLineValue.getValue() && !isNumber(targetLineValue.getValue()));
 			}
 		});
 
@@ -105,7 +108,7 @@ OptionsWindow = function(c) {
 			enforceMaxLength: true,
 			disabled: true,
 			xable: function() {
-				this.setDisabled(!baseLineValue.getValue() && !Ext.isNumber(baseLineValue.getValue()));
+				this.setDisabled(!baseLineValue.getValue() && !isNumber(baseLineValue.getValue()));
 			}
 		});
 
@@ -359,21 +362,21 @@ OptionsWindow = function(c) {
 				};
 			},
 			setOptions: function(layout) {
-				showValues.setValue(Ext.isBoolean(layout.showValues) ? layout.showValues : false);
-				hideEmptyRows.setValue(Ext.isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
-				showTrendLine.setValue(Ext.isBoolean(layout.showTrendLine) ? layout.showTrendLine : false);
+				showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : false);
+				hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
+				showTrendLine.setValue(isBoolean(layout.showTrendLine) ? layout.showTrendLine : false);
 
-                completedOnly.setValue(Ext.isBoolean(layout.completedOnly) ? layout.completedOnly : false);
+                completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
 
 				// target line
-				if (Ext.isNumber(layout.targetLineValue)) {
+				if (isNumber(layout.targetLineValue)) {
 					targetLineValue.setValue(layout.targetLineValue);
 				}
 				else {
 					targetLineValue.reset();
 				}
 
-				if (Ext.isString(layout.targetLineTitle)) {
+				if (isString(layout.targetLineTitle)) {
 					targetLineTitle.setValue(layout.targetLineTitle);
 				}
 				else {
@@ -381,25 +384,25 @@ OptionsWindow = function(c) {
 				}
 
 				// base line
-				if (Ext.isNumber(layout.baseLineValue)) {
+				if (isNumber(layout.baseLineValue)) {
 					baseLineValue.setValue(layout.baseLineValue);
 				}
 				else {
 					baseLineValue.reset();
 				}
 
-				if (Ext.isString(layout.baseLineTitle)) {
+				if (isString(layout.baseLineTitle)) {
 					baseLineTitle.setValue(layout.baseLineTitle);
 				}
 				else {
 					baseLineTitle.reset();
 				}
 
-                sortOrder.setValue(Ext.isNumber(layout.sortOrder) ? layout.sortOrder : 0);
-                aggregationType.setValue(Ext.isString(layout.aggregationType) ? layout.aggregationType : 'default');
+                sortOrder.setValue(isNumber(layout.sortOrder) ? layout.sortOrder : 0);
+                aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : 'default');
 
 				// rangeAxisMaxValue
-				if (Ext.isNumber(layout.rangeAxisMaxValue)) {
+				if (isNumber(layout.rangeAxisMaxValue)) {
 					rangeAxisMaxValue.setValue(layout.rangeAxisMaxValue);
 				}
 				else {
@@ -407,7 +410,7 @@ OptionsWindow = function(c) {
 				}
 
 				// rangeAxisMinValue
-				if (Ext.isNumber(layout.rangeAxisMinValue)) {
+				if (isNumber(layout.rangeAxisMinValue)) {
 					rangeAxisMinValue.setValue(layout.rangeAxisMinValue);
 				}
 				else {
@@ -415,7 +418,7 @@ OptionsWindow = function(c) {
 				}
 
 				// rangeAxisSteps
-				if (Ext.isNumber(layout.rangeAxisSteps)) {
+				if (isNumber(layout.rangeAxisSteps)) {
 					rangeAxisSteps.setValue(layout.rangeAxisSteps);
 				}
 				else {
@@ -423,7 +426,7 @@ OptionsWindow = function(c) {
 				}
 
 				// rangeAxisDecimals
-				if (Ext.isNumber(layout.rangeAxisDecimals)) {
+				if (isNumber(layout.rangeAxisDecimals)) {
 					rangeAxisDecimals.setValue(layout.rangeAxisDecimals);
 				}
 				else {
@@ -431,7 +434,7 @@ OptionsWindow = function(c) {
 				}
 
 				// range axis title
-				if (Ext.isString(layout.rangeAxisTitle)) {
+				if (isString(layout.rangeAxisTitle)) {
 					rangeAxisTitle.setValue(layout.rangeAxisTitle);
 				}
 				else {
@@ -439,18 +442,18 @@ OptionsWindow = function(c) {
 				}
 
 				// domain axis title
-				if (Ext.isString(layout.domainAxisTitle)) {
+				if (isString(layout.domainAxisTitle)) {
 					domainAxisTitle.setValue(layout.domainAxisTitle);
 				}
 				else {
 					domainAxisTitle.reset();
 				}
 
-				hideLegend.setValue(Ext.isBoolean(layout.hideLegend) ? layout.hideLegend : false);
-				hideTitle.setValue(Ext.isBoolean(layout.hideTitle) ? layout.hideTitle : false);
+				hideLegend.setValue(isBoolean(layout.hideLegend) ? layout.hideLegend : false);
+				hideTitle.setValue(isBoolean(layout.hideTitle) ? layout.hideTitle : false);
 
 				// title
-				if (Ext.isString(layout.title)) {
+				if (isString(layout.title)) {
 					title.setValue(layout.title);
 				}
 				else {
@@ -503,7 +506,7 @@ OptionsWindow = function(c) {
 				{
 					text: '<b>' + NS.i18n.update + '</b>',
 					handler: function() {
-                        ns.app.viewport.update();
+                            instanceManager.getReport();
 
 						window.hide();
 					}
@@ -511,13 +514,19 @@ OptionsWindow = function(c) {
 			],
 			listeners: {
 				show: function(w) {
-					if (ns.app.optionsButton.rendered) {
-						ns.core.web.window.setAnchorPosition(w, ns.app.optionsButton);
+                    var optionsButton = uiManager.get('optionsButton') || {};
 
-						if (!w.hasHideOnBlurHandler) {
-							ns.core.web.window.addHideOnBlurHandler(w);
-						}
-					}
+                    if (optionsButton.rendered) {
+                        uiManager.setAnchorPosition(w, optionsButton);
+
+                        if (!w.hasHideOnBlurHandler) {
+                            uiManager.addHideOnBlurHandler(w);
+                        }
+                    }
+
+                    if (!legendSet.store.isLoaded) {
+                        legendSet.store.load();
+                    }
 
 					// cmp
 					w.showValues = showValues;
