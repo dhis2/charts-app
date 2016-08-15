@@ -180,12 +180,10 @@ function initialize() {
 
     // viewport
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
-
-    var chartTypeToolbar = uiManager.reg
-
+    
     ui.Viewport(refs, {
         northRegion: northRegion,
-        chartTypeToolbar: ui.ChartTypeToolbar()
+        chartTypeToolbar: ui.ChartTypeToolbar(refs)
     });
 }
 

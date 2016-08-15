@@ -525,10 +525,6 @@ OptionsWindow = function(c) {
                         }
                     }
 
-                    if (!legendSet.store.isLoaded) {
-                        legendSet.store.load();
-                    }
-
 					// cmp
 					w.showValues = showValues;
                     w.hideEmptyRows = hideEmptyRows;
