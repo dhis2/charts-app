@@ -96,7 +96,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: NS.i18n.excluded_dimensions,
+                text: i18n.excluded_dimensions,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -125,7 +125,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: NS.i18n.series_dimensions,
+                text: i18n.series_dimensions,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -177,7 +177,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: NS.i18n.category_dimensions,
+                text: i18n.category_dimensions,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -229,7 +229,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: NS.i18n.report_filter,
+                text: i18n.report_filter,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -339,10 +339,10 @@ LayoutWindow = function(c) {
         dimensionStore.removeAll();
 
         if (!isAll) {
-            colStore.add({id: dimConf.data.dimensionName, name: dimConf.data.name});
-            rowStore.add({id: dimConf.period.dimensionName, name: dimConf.period.name});
-            filterStore.add({id: dimConf.organisationUnit.dimensionName, name: dimConf.organisationUnit.name});
-            dimensionStore.add({id: dimConf.category.dimensionName, name: dimConf.category.name});
+            colStore.add({id: confData.dimensionName, name: confData.name});
+            rowStore.add({id: confPeriod.dimensionName, name: confPeriod.name});
+            filterStore.add({id: confOrganisationUnit.dimensionName, name: confOrganisationUnit.name});
+            dimensionStore.add({id: confCategory.dimensionName, name: confCategory.name});
         }
     };
 
@@ -355,7 +355,7 @@ LayoutWindow = function(c) {
     };
 
     var window = Ext.create('Ext.window.Window', {
-        title: NS.i18n.chart_layout,
+        title: i18n.chart_layout,
         bodyStyle: 'background-color:#fff; padding:' + margin + 'px',
         closeAction: 'hide',
         autoShow: true,
@@ -381,7 +381,7 @@ LayoutWindow = function(c) {
         bbar: [
             '->',
             {
-                text: NS.i18n.hide,
+                text: i18n.hide,
                 listeners: {
                     added: function(b) {
                         b.on('click', function() {
@@ -391,7 +391,7 @@ LayoutWindow = function(c) {
                 }
             },
             {
-                text: '<b>' + NS.i18n.update + '</b>',
+                text: '<b>' + i18n.update + '</b>',
                 listeners: {
                     added: function(b) {
                         b.on('click', function() {

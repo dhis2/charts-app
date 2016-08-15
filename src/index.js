@@ -10,8 +10,8 @@ import arrayTo from 'd2-utilizr/lib/arrayTo';
 //import {api, pivot, manager, config, ui, init} from 'd2-analysis';
 import {api, manager, config, ui, init} from 'd2-analysis';
 
-//import {LayoutWindow} from './ui/LayoutWindow.js';
-//import {OptionsWindow} from './ui/OptionsWindow.js';
+import {LayoutWindow} from './ui/LayoutWindow.js';
+import {OptionsWindow} from './ui/OptionsWindow.js';
 
 // references
 var refs = {
@@ -168,56 +168,24 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        //var sortingId = layout.sorting ? layout.sorting.id : null,
-            //table;
-
-        //// get table
-        //var getTable = function() {
-            //var response = layout.getResponse();
-            //var colAxis = new pivot.TableAxis(layout, response, 'col');
-            //var rowAxis = new pivot.TableAxis(layout, response, 'row');
-            //return new pivot.Table(layout, response, colAxis, rowAxis);
-        //};
-
-        //// pre-sort if id
-        //if (sortingId && sortingId !== 'total') {
-            //layout.sort();
-        //}
-
-        //// table
-        //table = getTable();
-
-        //// sort if total
-        //if (sortingId && sortingId === 'total') {
-            //layout.sort(table);
-            //table = getTable();
-        //}
-
-        //uiManager.update(table.html);
-
-        //// events
-        //tableManager.setColumnHeaderMouseHandlers(layout, table);
-        //tableManager.setValueMouseHandlers(layout, table);
-
-        //// mask
-        //uiManager.unmask();
-
-        //// statistics
-        //instanceManager.postDataStatistics();
+        
     });
 
     // windows
-    //uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
+    uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
 
-    //uiManager.reg(OptionsWindow(refs), 'optionsWindow').hide();
+    uiManager.reg(OptionsWindow(refs), 'optionsWindow').hide();
 
     uiManager.reg(ui.FavoriteWindow(refs), 'favoriteWindow').hide();
 
     // viewport
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
 
+    var chartTypeToolbar = uiManager.reg
+
     ui.Viewport(refs, {
-        northRegion: northRegion
+        northRegion: northRegion,
+        chartTypeToolbar: ui.ChartTypeToolbar()
     });
 }
 

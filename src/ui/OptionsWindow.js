@@ -22,6 +22,7 @@ OptionsWindow = function(c) {
         baseLineValue,
         baseLineTitle,
         sortOrder,
+        aggregationType,
 
         rangeAxisMinValue,
         rangeAxisMaxValue,
@@ -50,18 +51,18 @@ OptionsWindow = function(c) {
         numberWidth = 80;
 
 		showValues = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: NS.i18n.show_values,
+			boxLabel: i18n.show_values,
 			style: 'margin-bottom:' + checkboxBottomMargin + 'px',
 			checked: true
 		});
 
 		hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: NS.i18n.hide_empty_category_items,
+			boxLabel: i18n.hide_empty_category_items,
 			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
 		});
 
 		showTrendLine = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: NS.i18n.trend_line,
+			boxLabel: i18n.trend_line,
 			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
 		});
 
@@ -78,7 +79,7 @@ OptionsWindow = function(c) {
 		targetLineTitle = Ext.create('Ext.form.field.Text', {
 			style: 'margin-left:1px; margin-bottom:1px',
 			fieldStyle: 'padding-left:3px',
-			emptyText: NS.i18n.target,
+			emptyText: i18n.target,
 			width: cmpWidth - labelWidth - 5 - numberWidth - 1,
 			maxLength: 100,
 			enforceMaxLength: true,
@@ -102,7 +103,7 @@ OptionsWindow = function(c) {
 		baseLineTitle = Ext.create('Ext.form.field.Text', {
 			style: 'margin-left:1px; margin-bottom:1px',
 			fieldStyle: 'padding-left:3px',
-			emptyText: NS.i18n.base,
+			emptyText: i18n.base,
 			width: cmpWidth - labelWidth - 5 - numberWidth - 1,
 			maxLength: 100,
 			enforceMaxLength: true,
@@ -117,7 +118,7 @@ OptionsWindow = function(c) {
 			style: 'margin-bottom:' + comboBottomMargin + 'px',
 			width: cmpWidth,
 			labelWidth: 125,
-			fieldLabel: NS.i18n.sort_order,
+			fieldLabel: i18n.sort_order,
 			labelStyle: 'color:#333',
 			queryMode: 'local',
 			valueField: 'id',
@@ -126,9 +127,9 @@ OptionsWindow = function(c) {
 			store: Ext.create('Ext.data.Store', {
 				fields: ['id', 'text'],
 				data: [
-					{id: 0, text: NS.i18n.none},
-					{id: -1, text: NS.i18n.low_to_high},
-					{id: 1, text: NS.i18n.high_to_low}
+					{id: 0, text: i18n.none},
+					{id: -1, text: i18n.low_to_high},
+					{id: 1, text: i18n.high_to_low}
 				]
 			})
 		});
@@ -138,7 +139,7 @@ OptionsWindow = function(c) {
 			style: 'margin-bottom:' + comboBottomMargin + 'px',
 			width: cmpWidth,
 			labelWidth: 125,
-			fieldLabel: NS.i18n.aggregation_type,
+			fieldLabel: i18n.aggregation_type,
 			labelStyle: 'color:#333',
 			queryMode: 'local',
 			valueField: 'id',
@@ -147,13 +148,13 @@ OptionsWindow = function(c) {
 			store: Ext.create('Ext.data.Store', {
 				fields: ['id', 'text'],
 				data: [
-					{id: 'DEFAULT', text: NS.i18n.by_data_element},
-					{id: 'COUNT', text: NS.i18n.count},
-					{id: 'SUM', text: NS.i18n.sum},
-					{id: 'STDDEV', text: NS.i18n.stddev},
-					{id: 'VARIANCE', text: NS.i18n.variance},
-					{id: 'MIN', text: NS.i18n.min},
-					{id: 'MAX', text: NS.i18n.max}
+					{id: 'DEFAULT', text: i18n.by_data_element},
+					{id: 'COUNT', text: i18n.count},
+					{id: 'SUM', text: i18n.sum},
+					{id: 'STDDEV', text: i18n.stddev},
+					{id: 'VARIANCE', text: i18n.variance},
+					{id: 'MIN', text: i18n.min},
+					{id: 'MAX', text: i18n.max}
 				]
 			})
 		});
@@ -193,7 +194,7 @@ OptionsWindow = function(c) {
 
 		rangeAxisTitle = Ext.create('Ext.form.field.Text', {
 			width: cmpWidth,
-			fieldLabel: NS.i18n.range_axis_label,
+			fieldLabel: i18n.range_axis_label,
 			labelStyle: 'color:#333',
 			labelWidth: 125,
 			maxLength: 100,
@@ -203,7 +204,7 @@ OptionsWindow = function(c) {
 
 		domainAxisTitle = Ext.create('Ext.form.field.Text', {
 			width: cmpWidth,
-			fieldLabel: NS.i18n.domain_axis_label,
+			fieldLabel: i18n.domain_axis_label,
 			labelStyle: 'color:#333',
 			labelWidth: 125,
 			maxLength: 100,
@@ -213,12 +214,12 @@ OptionsWindow = function(c) {
 
         // general
 		hideLegend = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: NS.i18n.hide_legend,
+			boxLabel: i18n.hide_legend,
 			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
 		});
 
 		hideTitle = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: NS.i18n.hide_chart_title,
+			boxLabel: i18n.hide_chart_title,
 			style: 'margin-bottom:7px',
 			listeners: {
 				change: function() {
@@ -230,7 +231,7 @@ OptionsWindow = function(c) {
 		title = Ext.create('Ext.form.field.Text', {
 			style: 'margin-bottom:0',
 			width: cmpWidth,
-			fieldLabel: NS.i18n.chart_title,
+			fieldLabel: i18n.chart_title,
 			labelStyle: 'color:#333',
 			labelWidth: 125,
 			maxLength: 100,
@@ -242,7 +243,7 @@ OptionsWindow = function(c) {
 
         // events
 		completedOnly = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: NS.i18n.include_only_completed_events_only,
+			boxLabel: i18n.include_only_completed_events_only,
 			style: 'margin-bottom:' + checkboxBottomMargin + 'px',
 		});
 
@@ -331,7 +332,7 @@ OptionsWindow = function(c) {
 		};
 
 		window = Ext.create('Ext.window.Window', {
-			title: NS.i18n.chart_options,
+			title: i18n.chart_options,
 			bodyStyle: 'background-color:#fff; padding:3px',
 			closeAction: 'hide',
 			autoShow: true,
@@ -464,7 +465,7 @@ OptionsWindow = function(c) {
 				{
 					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
 					style: 'margin-bottom:6px; margin-left:2px',
-					html: NS.i18n.data
+					html: i18n.data
 				},
 				data,
 				{
@@ -473,7 +474,7 @@ OptionsWindow = function(c) {
 				{
 					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
 					style: 'margin-bottom:6px; margin-left:2px',
-					html: NS.i18n.events
+					html: i18n.events
 				},
 				events,
 				{
@@ -482,7 +483,7 @@ OptionsWindow = function(c) {
 				{
 					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
 					style: 'margin-bottom:6px; margin-left:2px',
-					html: NS.i18n.axes
+					html: i18n.axes
 				},
 				axes,
 				{
@@ -491,20 +492,20 @@ OptionsWindow = function(c) {
 				{
 					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
 					style: 'margin-bottom:6px; margin-left:2px',
-					html: NS.i18n.general
+					html: i18n.general
 				},
 				general
 			],
 			bbar: [
 				'->',
 				{
-					text: NS.i18n.hide,
+					text: i18n.hide,
 					handler: function() {
 						window.hide();
 					}
 				},
 				{
-					text: '<b>' + NS.i18n.update + '</b>',
+					text: '<b>' + i18n.update + '</b>',
 					handler: function() {
                             instanceManager.getReport();
 
