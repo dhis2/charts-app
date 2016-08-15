@@ -7,15 +7,16 @@ import isString from 'd2-utilizr/lib/isString';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import {api, pivot, manager, config, ui, init} from 'd2-analysis';
+//import {api, pivot, manager, config, ui, init} from 'd2-analysis';
+import {api, manager, config, ui, init} from 'd2-analysis';
 
-import {LayoutWindow} from './ui/LayoutWindow.js';
-import {OptionsWindow} from './ui/OptionsWindow.js';
+//import {LayoutWindow} from './ui/LayoutWindow.js';
+//import {OptionsWindow} from './ui/OptionsWindow.js';
 
 // references
 var refs = {
-    api: api,
-    pivot: pivot
+    api: api
+    //pivot: pivot
 };
 
     // dimension config
@@ -78,11 +79,13 @@ periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
     // static
-appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+//appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+appManager.applyTo(arrayTo(api));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
-dimensionConfig.applyTo(arrayTo(pivot));
-optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+//dimensionConfig.applyTo(arrayTo(pivot));
+//optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+optionConfig.applyTo(arrayTo(api));
 
 // requests
 var manifestReq = $.ajax({
@@ -138,12 +141,12 @@ requestManager.run();
 function initialize() {
 
     // app manager
-    appManager.appName = 'Pivot Table';
-    appManager.sessionName = 'table';
+    appManager.appName = 'Data Visualizer';
+    appManager.sessionName = 'chart';
 
     // instance manager
-    instanceManager.apiResource = 'reportTables';
-    instanceManager.dataStatisticsEventType = 'REPORT_TABLE_VIEW';
+    instanceManager.apiResource = 'charts';
+    instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 
     // ui manager
     uiManager.disableRightClick();
@@ -165,48 +168,48 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        var sortingId = layout.sorting ? layout.sorting.id : null,
-            table;
+        //var sortingId = layout.sorting ? layout.sorting.id : null,
+            //table;
 
-        // get table
-        var getTable = function() {
-            var response = layout.getResponse();
-            var colAxis = new pivot.TableAxis(layout, response, 'col');
-            var rowAxis = new pivot.TableAxis(layout, response, 'row');
-            return new pivot.Table(layout, response, colAxis, rowAxis);
-        };
+        //// get table
+        //var getTable = function() {
+            //var response = layout.getResponse();
+            //var colAxis = new pivot.TableAxis(layout, response, 'col');
+            //var rowAxis = new pivot.TableAxis(layout, response, 'row');
+            //return new pivot.Table(layout, response, colAxis, rowAxis);
+        //};
 
-        // pre-sort if id
-        if (sortingId && sortingId !== 'total') {
-            layout.sort();
-        }
+        //// pre-sort if id
+        //if (sortingId && sortingId !== 'total') {
+            //layout.sort();
+        //}
 
-        // table
-        table = getTable();
+        //// table
+        //table = getTable();
 
-        // sort if total
-        if (sortingId && sortingId === 'total') {
-            layout.sort(table);
-            table = getTable();
-        }
+        //// sort if total
+        //if (sortingId && sortingId === 'total') {
+            //layout.sort(table);
+            //table = getTable();
+        //}
 
-        uiManager.update(table.html);
+        //uiManager.update(table.html);
 
-        // events
-        tableManager.setColumnHeaderMouseHandlers(layout, table);
-        tableManager.setValueMouseHandlers(layout, table);
+        //// events
+        //tableManager.setColumnHeaderMouseHandlers(layout, table);
+        //tableManager.setValueMouseHandlers(layout, table);
 
-        // mask
-        uiManager.unmask();
+        //// mask
+        //uiManager.unmask();
 
-        // statistics
-        instanceManager.postDataStatistics();
+        //// statistics
+        //instanceManager.postDataStatistics();
     });
 
     // windows
-    uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
+    //uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
 
-    uiManager.reg(OptionsWindow(refs), 'optionsWindow').hide();
+    //uiManager.reg(OptionsWindow(refs), 'optionsWindow').hide();
 
     uiManager.reg(ui.FavoriteWindow(refs), 'favoriteWindow').hide();
 

@@ -1,6 +1,7 @@
 import isString from 'd2-utilizr/lib/isString';
 import isArray from 'd2-utilizr/lib/isArray';
 import arrayContains from 'd2-utilizr/lib/arrayContains';
+import arrayPluck from 'd2-utilizr/lib/arrayContains';
 import clone from 'd2-utilizr/lib/clone';
 
 export var LayoutWindow;
@@ -26,38 +27,38 @@ LayoutWindow = function(c) {
     // components
 
     var getStore = function(data) {
-        var config = {};
+			var config = {};
 
-        config.fields = ['id', 'name'];
+			config.fields = ['id', 'name'];
 
-        if (data) {
-            config.data = data;
-        }
+			if (data) {
+				config.data = data;
+			}
 
-        config.getDimensionNames = function() {
-            var dimensionNames = [];
+			config.getDimensionNames = function() {
+				var dimensionNames = [];
 
-            this.each(function(r) {
-                dimensionNames.push(r.data.id);
-            });
+				this.each(function(r) {
+					dimensionNames.push(r.data.id);
+				});
 
-            return clone(dimensionNames);
-        };
+				return clone(dimensionNames);
+			};
 
-        config.hasDimension = function(id) {
-            return isString(id) && this.findExact('id', id) != -1 ? true : false;
-        };
+            config.hasDimension = function(id) {
+                return isString(id) && this.findExact('id', id) != -1 ? true : false;
+            };
 
-        config.removeDimension = function(id) {
-            var index = this.findExact('id', id);
+            config.removeDimension = function(id) {
+                var index = this.findExact('id', id);
 
-            if (index != -1) {
-                this.remove(this.getAt(index));
-            }
-        };
+                if (index != -1) {
+                    this.remove(this.getAt(index));
+                }
+            };
 
-        return Ext.create('Ext.data.Store', config);
-    };
+			return Ext.create('Ext.data.Store', config);
+		};
 
     var getStoreKeys = function(store) {
         var keys = [],
@@ -95,14 +96,14 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: i18n.excluded_dimensions,
+                text: NS.i18n.excluded_dimensions,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
         listeners: {
             afterrender: function(ms) {
                 ms.store.on('add', function() {
-                    setTimeout(function() {
+                    Ext.defer( function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -124,7 +125,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: i18n.column_dimensions,
+                text: NS.i18n.series_dimensions,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -135,8 +136,26 @@ LayoutWindow = function(c) {
                     dimensionStore.add(record);
                 });
 
-                ms.store.on('add', function() {
-                    setTimeout( function() {
+                ms.store.on('add', function(store, addedRecords) {
+                    var range = store.getRange();
+
+                    if (range.length > 1) {
+                        var addedIds = arrayPluck(addedRecords, 'internalId'),
+                            records = clone(range);
+
+                        store.removeAll();
+
+                        for (var i = 0; i < range.length; i++) {
+                            if (arrayContains(addedIds, range[i].internalId)) {
+                                store.add(range[i]);
+                            }
+                            else {
+                                filterStore.add(range[i]);
+                            }
+                        }
+                    }
+
+                    Ext.defer( function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -158,7 +177,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: i18n.row_dimensions,
+                text: NS.i18n.category_dimensions,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -169,8 +188,26 @@ LayoutWindow = function(c) {
                     dimensionStore.add(record);
                 });
 
-                ms.store.on('add', function() {
-                    setTimeout( function() {
+                ms.store.on('add', function(store, addedRecords) {
+                    var range = store.getRange();
+
+                    if (range.length > 1) {
+                        var addedIds = Ext.Array.pluck(addedRecords, 'internalId'),
+                            records = clone(range);
+
+                        store.removeAll();
+
+                        for (var i = 0; i < range.length; i++) {
+                            if (Ext.Array.contains(addedIds, range[i].internalId)) {
+                                store.add(range[i]);
+                            }
+                            else {
+                                filterStore.add(range[i]);
+                            }
+                        }
+                    }
+
+                    Ext.defer( function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -192,7 +229,7 @@ LayoutWindow = function(c) {
             height: 25,
             items: {
                 xtype: 'label',
-                text: i18n.report_filter,
+                text: NS.i18n.report_filter,
                 cls: 'ns-toolbar-multiselect-leftright-label'
             }
         },
@@ -204,7 +241,7 @@ LayoutWindow = function(c) {
                 });
 
                 ms.store.on('add', function() {
-                    setTimeout(function() {
+                    Ext.defer( function() {
                         ms.boundList.getSelectionModel().deselectAll();
                     }, 10);
                 });
@@ -289,7 +326,7 @@ LayoutWindow = function(c) {
             keys = ['dx', 'ou', 'pe', 'dates'];
 
         for (var key in map) {
-            if (map.hasOwnProperty(key) && !arrayContains(keys, key)) {
+            if (map.hasOwnProperty(key) && !Ext.Array.contains(keys, key)) {
                 removeDimension(key);
             }
         }
@@ -302,43 +339,10 @@ LayoutWindow = function(c) {
         dimensionStore.removeAll();
 
         if (!isAll) {
-            colStore.add({id: confData.dimensionName, name: confData.name});
-            rowStore.add({id: confPeriod.dimensionName, name: confPeriod.name});
-            filterStore.add({id: confOrganisationUnit.dimensionName, name: confOrganisationUnit.name});
-            dimensionStore.add({id: confCategory.dimensionName, name: confCategory.name});
-        }
-    };
-
-    var setDimensions = function(layout) {
-
-        // columns
-        if (isArray(layout.columns)) {
-            layout.columns.forEach(function(dimension) {
-                addDimension({
-                    id: dimension.dimension,
-                    name: dimensionConfig.get(dimension.dimension).name
-                }, colStore);
-            });
-        }
-
-        // rows
-        if (isArray(layout.rows)) {
-            layout.rows.forEach(function(dimension) {
-                addDimension({
-                    id: dimension.dimension,
-                    name: dimensionConfig.get(dimension.dimension).name
-                }, rowStore);
-            });
-        }
-
-        // filters
-        if (isArray(layout.filters)) {
-            layout.filters.forEach(function(dimension) {
-                addDimension({
-                    id: dimension.dimension,
-                    name: dimensionConfig.get(dimension.dimension).name
-                }, filterStore);
-            });
+            colStore.add({id: dimConf.data.dimensionName, name: dimConf.data.name});
+            rowStore.add({id: dimConf.period.dimensionName, name: dimConf.period.name});
+            filterStore.add({id: dimConf.organisationUnit.dimensionName, name: dimConf.organisationUnit.name});
+            dimensionStore.add({id: dimConf.category.dimensionName, name: dimConf.category.name});
         }
     };
 
@@ -351,7 +355,7 @@ LayoutWindow = function(c) {
     };
 
     var window = Ext.create('Ext.window.Window', {
-        title: i18n.table_layout,
+        title: NS.i18n.chart_layout,
         bodyStyle: 'background-color:#fff; padding:' + margin + 'px',
         closeAction: 'hide',
         autoShow: true,
@@ -365,9 +369,6 @@ LayoutWindow = function(c) {
         addDimension: addDimension,
         removeDimension: removeDimension,
         hasDimension: hasDimension,
-        setDimensions: setDimensions,
-        reset: reset,
-        resetData: resetData,
         hideOnBlur: true,
         items: {
             layout: 'column',
@@ -380,7 +381,7 @@ LayoutWindow = function(c) {
         bbar: [
             '->',
             {
-                text: i18n.hide,
+                text: NS.i18n.hide,
                 listeners: {
                     added: function(b) {
                         b.on('click', function() {
@@ -390,7 +391,7 @@ LayoutWindow = function(c) {
                 }
             },
             {
-                text: '<b>' + i18n.update + '</b>',
+                text: '<b>' + NS.i18n.update + '</b>',
                 listeners: {
                     added: function(b) {
                         b.on('click', function() {

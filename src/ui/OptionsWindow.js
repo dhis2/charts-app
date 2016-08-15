@@ -11,525 +11,537 @@ OptionsWindow = function(c) {
         i18n = c.i18nManager.get(),
         optionConfig = c.optionConfig,
 
-        showColTotals,
-        showRowTotals,
-        showColSubTotals,
-        showRowSubTotals,
-        showDimensionLabels,
+        showValues,
         hideEmptyRows,
-        skipRounding,
-        aggregationType,
-        dataApprovalLevel,
-        showHierarchy,
-        completedOnly,
-        digitGroupSeparator,
-        legendSet,
-        displayDensity,
-        fontSize,
-        reportingPeriod,
-        organisationUnit,
-        parentOrganisationUnit,
-        regression,
-        cumulative,
+        showTrendLine,
+        targetLineValue,
+        targetLineTitle,
+        baseLineValue,
+        baseLineTitle,
         sortOrder,
-        topLimit,
+
+        rangeAxisMinValue,
+        rangeAxisMaxValue,
+        rangeAxisSteps,
+        rangeAxisDecimals,
+        rangeAxisTitle,
+        domainAxisTitle,
+
+        hideLegend,
+        hideTitle,
+        title,
+
+        completedOnly,
 
         data,
-        organisationUnits,
+        axes,
+        general,
         events,
-        style,
-        parameters,
         window,
 
-        comboboxWidth = 262,
         comboBottomMargin = 1,
         checkboxBottomMargin = 2,
-        separatorTopMargin = 6;
+        separatorTopMargin = 6,
+        cmpWidth = 340,
+        labelWidth = 125,
+        numberWidth = 80;
 
-    showColTotals = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.show_col_totals,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
-    });
+		showValues = Ext.create('Ext.form.field.Checkbox', {
+			boxLabel: NS.i18n.show_values,
+			style: 'margin-bottom:' + checkboxBottomMargin + 'px',
+			checked: true
+		});
 
-    showRowTotals = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.show_row_totals,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
-    });
+		hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
+			boxLabel: NS.i18n.hide_empty_category_items,
+			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
+		});
 
-    showColSubTotals = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.show_col_subtotals,
-        style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
-    });
+		showTrendLine = Ext.create('Ext.form.field.Checkbox', {
+			boxLabel: NS.i18n.trend_line,
+			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
+		});
 
-    showRowSubTotals = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.show_row_subtotals,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-        checked: true
-    });
+		targetLineValue = Ext.create('Ext.form.field.Number', {
+			width: numberWidth,
+			height: 18,
+			listeners: {
+				change: function(nf) {
+					targetLineTitle.xable();
+				}
+			}
+		});
 
-    showDimensionLabels = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.show_dimension_labels,
-        style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + comboBottomMargin + 'px',
-        checked: true
-    });
+		targetLineTitle = Ext.create('Ext.form.field.Text', {
+			style: 'margin-left:1px; margin-bottom:1px',
+			fieldStyle: 'padding-left:3px',
+			emptyText: NS.i18n.target,
+			width: cmpWidth - labelWidth - 5 - numberWidth - 1,
+			maxLength: 100,
+			enforceMaxLength: true,
+			disabled: true,
+			xable: function() {
+				this.setDisabled(!targetLineValue.getValue() && !Ext.isNumber(targetLineValue.getValue()));
+			}
+		});
 
-    hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.hide_empty_rows,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px'
-    });
+		baseLineValue = Ext.create('Ext.form.field.Number', {
+			//cls: 'gis-numberfield',
+			width: numberWidth,
+			height: 18,
+			listeners: {
+				change: function(nf) {
+					baseLineTitle.xable();
+				}
+			}
+		});
 
-    skipRounding = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.skip_rounding,
-        style: 'margin-top:' + separatorTopMargin + 'px; margin-bottom:' + comboBottomMargin + 'px'
-    });
+		baseLineTitle = Ext.create('Ext.form.field.Text', {
+			style: 'margin-left:1px; margin-bottom:1px',
+			fieldStyle: 'padding-left:3px',
+			emptyText: NS.i18n.base,
+			width: cmpWidth - labelWidth - 5 - numberWidth - 1,
+			maxLength: 100,
+			enforceMaxLength: true,
+			disabled: true,
+			xable: function() {
+				this.setDisabled(!baseLineValue.getValue() && !Ext.isNumber(baseLineValue.getValue()));
+			}
+		});
 
-    aggregationType = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-top:' + (separatorTopMargin + 1) + 'px; margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
-        fieldLabel: i18n.aggregation_type,
-        labelStyle: 'color:#333',
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        value: optionConfig.getAggregationType('def').id,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name', 'index'],
-            data: optionConfig.getAggregationTypeRecords()
-        })
-    });
+		sortOrder = Ext.create('Ext.form.field.ComboBox', {
+			cls: 'ns-combo',
+			style: 'margin-bottom:' + comboBottomMargin + 'px',
+			width: cmpWidth,
+			labelWidth: 125,
+			fieldLabel: NS.i18n.sort_order,
+			labelStyle: 'color:#333',
+			queryMode: 'local',
+			valueField: 'id',
+			editable: false,
+			value: 0,
+			store: Ext.create('Ext.data.Store', {
+				fields: ['id', 'text'],
+				data: [
+					{id: 0, text: NS.i18n.none},
+					{id: -1, text: NS.i18n.low_to_high},
+					{id: 1, text: NS.i18n.high_to_low}
+				]
+			})
+		});
 
-    dataApprovalLevel = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
-        fieldLabel: i18n.data_approved_at_level,
-        labelStyle: 'color:#333',
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        hidden: !(appManager.systemInfo.hideUnapprovedDataInAnalytics && appManager.viewUnapprovedData),
-        value: optionConfig.getDataApprovalLevel('def').id,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name'],
-            data: appManager.dataApprovalLevels.unshift(optionConfig.getDataApprovalLevel('def'))
-        })
-    });
+		aggregationType = Ext.create('Ext.form.field.ComboBox', {
+			cls: 'ns-combo',
+			style: 'margin-bottom:' + comboBottomMargin + 'px',
+			width: cmpWidth,
+			labelWidth: 125,
+			fieldLabel: NS.i18n.aggregation_type,
+			labelStyle: 'color:#333',
+			queryMode: 'local',
+			valueField: 'id',
+			editable: false,
+			value: 'DEFAULT',
+			store: Ext.create('Ext.data.Store', {
+				fields: ['id', 'text'],
+				data: [
+					{id: 'DEFAULT', text: NS.i18n.by_data_element},
+					{id: 'COUNT', text: NS.i18n.count},
+					{id: 'SUM', text: NS.i18n.sum},
+					{id: 'STDDEV', text: NS.i18n.stddev},
+					{id: 'VARIANCE', text: NS.i18n.variance},
+					{id: 'MIN', text: NS.i18n.min},
+					{id: 'MAX', text: NS.i18n.max}
+				]
+			})
+		});
 
-    showHierarchy = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.show_hierarchy,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-    });
+        // axes
+		rangeAxisMinValue = Ext.create('Ext.form.field.Number', {
+			width: numberWidth,
+			height: 18,
+			labelWidth: 125
+		});
 
-    completedOnly = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.include_only_completed_events_only,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px',
-    });
+		rangeAxisMaxValue = Ext.create('Ext.form.field.Number', {
+			width: numberWidth,
+			height: 18,
+			labelWidth: 125,
+            style: 'margin-left:1px'
+		});
 
-    displayDensity = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
-        fieldLabel: i18n.display_density,
-        labelStyle: 'color:#333',
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        value: optionConfig.getDisplayDensity('normal').id,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name', 'index'],
-            data: optionConfig.getDisplayDensityRecords()
-        })
-    });
+		rangeAxisSteps = Ext.create('Ext.form.field.Number', {
+			width: labelWidth + 5 + numberWidth,
+			height: 18,
+			fieldLabel: 'Range axis tick steps',
+			labelStyle: 'color:#333',
+			labelWidth: 125,
+			minValue: 1
+		});
 
-    fontSize = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
-        fieldLabel: i18n.font_size,
-        labelStyle: 'color:#333',
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        value: optionConfig.getFontSize('normal').id,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name', 'index'],
-            data: optionConfig.getFontSizeRecords()
-        })
-    });
+		rangeAxisDecimals = Ext.create('Ext.form.field.Number', {
+			width: labelWidth + 5 + numberWidth,
+			height: 18,
+			fieldLabel: 'Range axis decimals',
+			labelStyle: 'color:#333',
+			labelWidth: 125,
+			minValue: 0,
+            maxValue: 20
+		});
 
-    digitGroupSeparator = Ext.create('Ext.form.field.ComboBox', {
-        labelStyle: 'color:#333',
-        cls: 'ns-combo',
-        style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
-        fieldLabel: i18n.digit_group_separator,
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        value: appManager.systemSettings.keyAnalysisDigitGroupSeparator || optionConfig.getDigitGroupSeparator('space').id,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name', 'index'],
-            data: optionConfig.getDigitGroupSeparatorRecords()
-        })
-    });
+		rangeAxisTitle = Ext.create('Ext.form.field.Text', {
+			width: cmpWidth,
+			fieldLabel: NS.i18n.range_axis_label,
+			labelStyle: 'color:#333',
+			labelWidth: 125,
+			maxLength: 100,
+			enforceMaxLength: true,
+			style: 'margin-bottom:1px'
+		});
 
-    legendSet = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:' + comboBottomMargin + 'px',
-        width: comboboxWidth,
-        labelWidth: 130,
-        fieldLabel: i18n.legend_set,
-        labelStyle: 'color:#333',
-        valueField: 'id',
-        displayField: 'name',
-        queryMode: 'local',
-        editable: false,
-        value: 0,
-        store: {
-			fields: ['id', 'name', 'index'],
-			data: appManager.legendSets.concat([{
-				id: 0,
-				name: i18n.none,
-				index: -1
-			}]),
-			sorters: [
-				{property: 'index', direction: 'ASC'},
-				{property: 'name', direction: 'ASC'}
+		domainAxisTitle = Ext.create('Ext.form.field.Text', {
+			width: cmpWidth,
+			fieldLabel: NS.i18n.domain_axis_label,
+			labelStyle: 'color:#333',
+			labelWidth: 125,
+			maxLength: 100,
+			enforceMaxLength: true,
+			style: 'margin-bottom:1px'
+		});
+
+        // general
+		hideLegend = Ext.create('Ext.form.field.Checkbox', {
+			boxLabel: NS.i18n.hide_legend,
+			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
+		});
+
+		hideTitle = Ext.create('Ext.form.field.Checkbox', {
+			boxLabel: NS.i18n.hide_chart_title,
+			style: 'margin-bottom:7px',
+			listeners: {
+				change: function() {
+					title.xable();
+				}
+			}
+		});
+
+		title = Ext.create('Ext.form.field.Text', {
+			style: 'margin-bottom:0',
+			width: cmpWidth,
+			fieldLabel: NS.i18n.chart_title,
+			labelStyle: 'color:#333',
+			labelWidth: 125,
+			maxLength: 100,
+			enforceMaxLength: true,
+			xable: function() {
+				this.setDisabled(hideTitle.getValue());
+			}
+		});
+
+        // events
+		completedOnly = Ext.create('Ext.form.field.Checkbox', {
+			boxLabel: NS.i18n.include_only_completed_events_only,
+			style: 'margin-bottom:' + checkboxBottomMargin + 'px',
+		});
+
+        data = {
+			xtype: 'container',
+			bodyStyle: 'border:0 none',
+			style: 'margin-left:14px',
+			items: [
+				showValues,
+				hideEmptyRows,
+				showTrendLine,
+				{
+					xtype: 'container',
+					layout: 'column',
+					bodyStyle: 'border:0 none',
+                    style: 'margin-top:' + (separatorTopMargin + 1) + 'px',
+					items: [
+						{
+							bodyStyle: 'border:0 none; padding-top:3px; margin-right:5px; color:#333',
+							width: 130,
+							html: 'Target value / title:'
+						},
+						targetLineValue,
+						targetLineTitle
+					]
+				},
+				{
+					xtype: 'container',
+					layout: 'column',
+					bodyStyle: 'border:0 none',
+					items: [
+						{
+							bodyStyle: 'border:0 none; padding-top:3px; margin-right:5px; color:#333',
+							width: 130,
+							html: 'Base value / title:'
+						},
+						baseLineValue,
+						baseLineTitle
+					]
+				},
+                sortOrder,
+                aggregationType
 			]
-		}
-    });
+		};
 
-    reportingPeriod = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.reporting_period,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px'
-    });
+		axes = {
+			bodyStyle: 'border:0 none',
+			style: 'margin-left:14px',
+			items: [
+				{
+					layout: 'column',
+					bodyStyle: 'border:0 none',
+					items: [
+						{
+							bodyStyle: 'border:0 none; padding-top:3px; margin-right:5px; color:#333',
+							width: 130,
+							html: 'Range axis min/max:'
+						},
+						rangeAxisMinValue,
+						rangeAxisMaxValue
+					]
+				},
+				rangeAxisSteps,
+				rangeAxisDecimals,
+				rangeAxisTitle,
+				domainAxisTitle
+			]
+		};
 
-    organisationUnit = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.organisation_unit,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px'
-    });
+		general = {
+			bodyStyle: 'border:0 none',
+			style: 'margin-left:14px',
+			items: [
+				hideLegend,
+				hideTitle,
+				title
+			]
+		};
 
-    parentOrganisationUnit = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.parent_organisation_unit,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px'
-    });
+		events = {
+			bodyStyle: 'border:0 none',
+			style: 'margin-left:14px',
+			items: [
+				completedOnly
+			]
+		};
 
-    regression = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.include_regression,
-        style: 'margin-bottom:' + checkboxBottomMargin + 'px'
-    });
+		window = Ext.create('Ext.window.Window', {
+			title: NS.i18n.chart_options,
+			bodyStyle: 'background-color:#fff; padding:3px',
+			closeAction: 'hide',
+			autoShow: true,
+			modal: true,
+			resizable: false,
+			hideOnBlur: true,
+			getOptions: function() {
+				return {
+					showValues: showValues.getValue(),
+                    hideEmptyRows: hideEmptyRows.getValue(),
+					showTrendLine: showTrendLine.getValue(),
+					completedOnly: completedOnly.getValue(),
+					targetLineValue: targetLineValue.getValue(),
+					targetLineTitle: targetLineTitle.getValue(),
+					baseLineValue: baseLineValue.getValue(),
+					baseLineTitle: baseLineTitle.getValue(),
+                    sortOrder: sortOrder.getValue(),
+                    aggregationType: aggregationType.getValue(),
+					rangeAxisMaxValue: rangeAxisMaxValue.getValue(),
+					rangeAxisMinValue: rangeAxisMinValue.getValue(),
+					rangeAxisSteps: rangeAxisSteps.getValue(),
+					rangeAxisDecimals: rangeAxisDecimals.getValue(),
+					rangeAxisTitle: rangeAxisTitle.getValue(),
+					domainAxisTitle: domainAxisTitle.getValue(),
+					hideLegend: hideLegend.getValue(),
+					hideTitle: hideTitle.getValue(),
+					title: title.getValue()
+				};
+			},
+			setOptions: function(layout) {
+				showValues.setValue(Ext.isBoolean(layout.showValues) ? layout.showValues : false);
+				hideEmptyRows.setValue(Ext.isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
+				showTrendLine.setValue(Ext.isBoolean(layout.showTrendLine) ? layout.showTrendLine : false);
 
-    cumulative = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.include_cumulative,
-        style: 'margin-bottom:6px'
-    });
+                completedOnly.setValue(Ext.isBoolean(layout.completedOnly) ? layout.completedOnly : false);
 
-    sortOrder = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:1px',
-        width: 254,
-        labelWidth: 130,
-        fieldLabel: i18n.sort_order,
-        labelStyle: 'color:#333',
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        value: 0,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name'],
-            data: [
-                {id: 0, name: i18n.none},
-                {id: 1, name: i18n.low_to_high},
-                {id: 2, name: i18n.high_to_low}
-            ]
-        })
-    });
+				// target line
+				if (Ext.isNumber(layout.targetLineValue)) {
+					targetLineValue.setValue(layout.targetLineValue);
+				}
+				else {
+					targetLineValue.reset();
+				}
 
-    topLimit = Ext.create('Ext.form.field.ComboBox', {
-        cls: 'ns-combo',
-        style: 'margin-bottom:3px',
-        width: 254,
-        labelWidth: 130,
-        fieldLabel: i18n.top_limit,
-        labelStyle: 'color:#333',
-        queryMode: 'local',
-        valueField: 'id',
-        displayField: 'name',
-        editable: false,
-        value: 0,
-        store: Ext.create('Ext.data.Store', {
-            fields: ['id', 'name'],
-            data: [
-                {id: 0, name: i18n.none},
-                {id: 5, name: 5},
-                {id: 10, name: 10},
-                {id: 20, name: 20},
-                {id: 50, name: 50},
-                {id: 100, name: 100}
-            ]
-        })
-    });
+				if (Ext.isString(layout.targetLineTitle)) {
+					targetLineTitle.setValue(layout.targetLineTitle);
+				}
+				else {
+					targetLineTitle.reset();
+				}
 
-    data = {
-        bodyStyle: 'border:0 none',
-        style: 'margin-left:14px',
-        items: [
-            showColTotals,
-            showRowTotals,
-            showColSubTotals,
-            showRowSubTotals,
-            showDimensionLabels,
-            hideEmptyRows,
-            skipRounding,
-            aggregationType,
-            dataApprovalLevel
-        ]
-    };
+				// base line
+				if (Ext.isNumber(layout.baseLineValue)) {
+					baseLineValue.setValue(layout.baseLineValue);
+				}
+				else {
+					baseLineValue.reset();
+				}
 
-    organisationUnits = {
-        bodyStyle: 'border:0 none',
-        style: 'margin-left:14px',
-        items: [
-            showHierarchy
-        ]
-    };
+				if (Ext.isString(layout.baseLineTitle)) {
+					baseLineTitle.setValue(layout.baseLineTitle);
+				}
+				else {
+					baseLineTitle.reset();
+				}
 
-    events = {
-        bodyStyle: 'border:0 none',
-        style: 'margin-left:14px',
-        items: [
-            completedOnly
-        ]
-    };
+                sortOrder.setValue(Ext.isNumber(layout.sortOrder) ? layout.sortOrder : 0);
+                aggregationType.setValue(Ext.isString(layout.aggregationType) ? layout.aggregationType : 'default');
 
-    style = {
-        bodyStyle: 'border:0 none',
-        style: 'margin-left:14px',
-        items: [
-            displayDensity,
-            fontSize,
-            digitGroupSeparator,
-            legendSet
-        ]
-    };
+				// rangeAxisMaxValue
+				if (Ext.isNumber(layout.rangeAxisMaxValue)) {
+					rangeAxisMaxValue.setValue(layout.rangeAxisMaxValue);
+				}
+				else {
+					rangeAxisMaxValue.reset();
+				}
 
-    parameters = Ext.create('Ext.panel.Panel', {
-        bodyStyle: 'border:0 none; background:transparent',
-        style: 'margin-left:14px',
-        items: [
-            reportingPeriod,
-            organisationUnit,
-            parentOrganisationUnit,
-            regression,
-            cumulative,
-            sortOrder,
-            topLimit
-        ],
-        hidden: true
-    });
+				// rangeAxisMinValue
+				if (Ext.isNumber(layout.rangeAxisMinValue)) {
+					rangeAxisMinValue.setValue(layout.rangeAxisMinValue);
+				}
+				else {
+					rangeAxisMinValue.reset();
+				}
 
-    window = Ext.create('Ext.window.Window', {
-        title: i18n.table_options,
-        bodyStyle: 'background-color:#fff; padding:2px',
-        closeAction: 'hide',
-        autoShow: true,
-        modal: true,
-        resizable: false,
-        hideOnBlur: true,
-        reset: function() {
-            this.setOptions();
-        },
-        getOptions: function() {
-            return {
-                showRowTotals: showRowTotals.getValue(),
-                showColTotals: showColTotals.getValue(),
-                showColSubTotals: showColSubTotals.getValue(),
-                showRowSubTotals: showRowSubTotals.getValue(),
-                showDimensionLabels: showDimensionLabels.getValue(),
-                hideEmptyRows: hideEmptyRows.getValue(),
-                skipRounding: skipRounding.getValue(),
-                aggregationType: aggregationType.getValue(),
-                dataApprovalLevel: {id: dataApprovalLevel.getValue()},
-                showHierarchy: showHierarchy.getValue(),
-                completedOnly: completedOnly.getValue(),
-                displayDensity: displayDensity.getValue(),
-                fontSize: fontSize.getValue(),
-                digitGroupSeparator: digitGroupSeparator.getValue(),
-                legendSet: {id: legendSet.getValue()},
-                reportingPeriod: reportingPeriod.getValue(),
-                organisationUnit: organisationUnit.getValue(),
-                parentOrganisationUnit: parentOrganisationUnit.getValue(),
-                regression: regression.getValue(),
-                cumulative: cumulative.getValue(),
-                sortOrder: sortOrder.getValue(),
-                topLimit: topLimit.getValue()
-            };
-        },
-        setOptions: function(layout) {
-            layout = layout || {};
+				// rangeAxisSteps
+				if (Ext.isNumber(layout.rangeAxisSteps)) {
+					rangeAxisSteps.setValue(layout.rangeAxisSteps);
+				}
+				else {
+					rangeAxisSteps.reset();
+				}
 
-            showRowTotals.setValue(isBoolean(layout.showRowTotals) ? layout.showRowTotals : true);
-            showColTotals.setValue(isBoolean(layout.showColTotals) ? layout.showColTotals : true);
-            showColSubTotals.setValue(isBoolean(layout.showColSubTotals) ? layout.showColSubTotals : true);
-            showRowSubTotals.setValue(isBoolean(layout.showRowSubTotals) ? layout.showRowSubTotals : true);
-            showDimensionLabels.setValue(isBoolean(layout.showDimensionLabels) ? layout.showDimensionLabels : true);
-            hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
-            skipRounding.setValue(isBoolean(layout.skipRounding) ? layout.skipRounding : false);
-            aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
-            dataApprovalLevel.setValue(isObject(layout.dataApprovalLevel) && isString(layout.dataApprovalLevel.id) ? layout.dataApprovalLevel.id : optionConfig.getDataApprovalLevel('def').id);
-            showHierarchy.setValue(isBoolean(layout.showHierarchy) ? layout.showHierarchy : false);
-            completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
-            displayDensity.setValue(isString(layout.displayDensity) ? layout.displayDensity : optionConfig.getDisplayDensity('normal').id);
-            fontSize.setValue(isString(layout.fontSize) ? layout.fontSize : optionConfig.getFontSize('normal').id);
-            digitGroupSeparator.setValue(isString(layout.digitGroupSeparator) ? layout.digitGroupSeparator : optionConfig.getDigitGroupSeparator('space').id);
-            legendSet.setValue(isObject(layout.legendSet) && isString(layout.legendSet.id) ? layout.legendSet.id : 0);
-            reportingPeriod.setValue(isBoolean(layout.reportingPeriod) ? layout.reportingPeriod : false);
-            organisationUnit.setValue(isBoolean(layout.organisationUnit) ? layout.organisationUnit : false);
-            parentOrganisationUnit.setValue(isBoolean(layout.parentOrganisationUnit) ? layout.parentOrganisationUnit : false);
-            regression.setValue(isBoolean(layout.regression) ? layout.regression : false);
-            cumulative.setValue(isBoolean(layout.cumulative) ? layout.cumulative : false);
-            sortOrder.setValue(isNumber(layout.sortOrder) ? layout.sortOrder : 0);
-            topLimit.setValue(isNumber(layout.topLimit) ? layout.topLimit : 0);
-        },
-        items: [
-            {
-                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-top:4px; margin-bottom:6px; margin-left:5px',
-                html: i18n.data
-            },
-            data,
-            {
-                bodyStyle: 'border:0 none; padding:7px'
-            },
-            {
-                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:5px',
-                html: i18n.organisation_units
-            },
-            organisationUnits,
-            {
-                bodyStyle: 'border:0 none; padding:7px'
-            },
-            {
-                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:5px',
-                html: i18n.events
-            },
-            events,
-            {
-                bodyStyle: 'border:0 none; padding:7px'
-            },
-            {
-                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:5px',
-                html: i18n.style
-            },
-            style,
-            {
-                bodyStyle: 'border:0 none; padding:3px'
-            },
-            {
-                bodyStyle: 'border:1px solid #d5d5d5; padding:3px 3px 0 3px; background-color:#f0f0f0',
-                items: [
-                    {
-                        xtype: 'container',
-                        layout: 'column',
-                        items: [
-                            {
-                                bodyStyle: 'border:0 none; padding:2px 5px 6px 2px; background-color:transparent; color:#222; font-size:12px',
-                                html: '<b>' + i18n.parameters + '</b> <span style="font-size:11px"> (' + i18n.for_standard_reports_only + ')</span>',
-                                columnWidth: 1
-                            },
-                            {
-                                xtype: 'button',
-                                text: i18n.show,
-                                height: 19,
-                                handler: function() {
-                                    parameters.setVisible(!parameters.isVisible());
+				// rangeAxisDecimals
+				if (Ext.isNumber(layout.rangeAxisDecimals)) {
+					rangeAxisDecimals.setValue(layout.rangeAxisDecimals);
+				}
+				else {
+					rangeAxisDecimals.reset();
+				}
 
-                                    this.setText(parameters.isVisible() ? i18n.hide : i18n.show);
-                                }
-                            }
-                        ]
-                    },
-                    parameters
-                ]
-            }
-        ],
-        bbar: [
-            '->',
-            {
-                text: i18n.hide,
-                handler: function() {
-                    window.hide();
-                }
-            },
-            {
-                text: '<b>' + i18n.update + '</b>',
-                handler: function() {
-                    instanceManager.getReport();
+				// range axis title
+				if (Ext.isString(layout.rangeAxisTitle)) {
+					rangeAxisTitle.setValue(layout.rangeAxisTitle);
+				}
+				else {
+					rangeAxisTitle.reset();
+				}
 
-                    window.hide();
-                }
-            }
-        ],
-        listeners: {
-            show: function(w) {
-                var optionsButton = uiManager.get('optionsButton') || {};
+				// domain axis title
+				if (Ext.isString(layout.domainAxisTitle)) {
+					domainAxisTitle.setValue(layout.domainAxisTitle);
+				}
+				else {
+					domainAxisTitle.reset();
+				}
 
-                if (optionsButton.rendered) {
-                    uiManager.setAnchorPosition(w, optionsButton);
+				hideLegend.setValue(Ext.isBoolean(layout.hideLegend) ? layout.hideLegend : false);
+				hideTitle.setValue(Ext.isBoolean(layout.hideTitle) ? layout.hideTitle : false);
 
-                    if (!w.hasHideOnBlurHandler) {
-                        uiManager.addHideOnBlurHandler(w);
-                    }
-                }
+				// title
+				if (Ext.isString(layout.title)) {
+					title.setValue(layout.title);
+				}
+				else {
+					title.reset();
+				}
+			},
+			items: [
+				{
+					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+					style: 'margin-bottom:6px; margin-left:2px',
+					html: NS.i18n.data
+				},
+				data,
+				{
+					bodyStyle: 'border:0 none; padding:5px'
+				},
+				{
+					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+					style: 'margin-bottom:6px; margin-left:2px',
+					html: NS.i18n.events
+				},
+				events,
+				{
+					bodyStyle: 'border:0 none; padding:5px'
+				},
+				{
+					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+					style: 'margin-bottom:6px; margin-left:2px',
+					html: NS.i18n.axes
+				},
+				axes,
+				{
+					bodyStyle: 'border:0 none; padding:5px'
+				},
+				{
+					bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+					style: 'margin-bottom:6px; margin-left:2px',
+					html: NS.i18n.general
+				},
+				general
+			],
+			bbar: [
+				'->',
+				{
+					text: NS.i18n.hide,
+					handler: function() {
+						window.hide();
+					}
+				},
+				{
+					text: '<b>' + NS.i18n.update + '</b>',
+					handler: function() {
+                        ns.app.viewport.update();
 
-                if (!legendSet.store.isLoaded) {
-                    legendSet.store.load();
-                }
+						window.hide();
+					}
+				}
+			],
+			listeners: {
+				show: function(w) {
+					if (ns.app.optionsButton.rendered) {
+						ns.core.web.window.setAnchorPosition(w, ns.app.optionsButton);
 
-                // cmp
-                w.showColTotals = showColTotals;
-                w.showRowTotals = showRowTotals;
-                w.showColSubTotals = showColSubTotals
-                w.showRowSubTotals = showRowSubTotals;
-                w.showDimensionLabels = showDimensionLabels;
-                w.hideEmptyRows = hideEmptyRows;
-                w.skipRounding = skipRounding;
-                w.aggregationType = aggregationType;
-                w.dataApprovalLevel = dataApprovalLevel;
-                w.showHierarchy = showHierarchy;
-                w.completedOnly = completedOnly;
-                w.displayDensity = displayDensity;
-                w.fontSize = fontSize;
-                w.digitGroupSeparator = digitGroupSeparator;
-                w.legendSet = legendSet;
-                w.reportingPeriod = reportingPeriod;
-                w.organisationUnit = organisationUnit;
-                w.parentOrganisationUnit = parentOrganisationUnit;
-                w.regression = regression;
-                w.cumulative = cumulative;
-                w.sortOrder = sortOrder;
-                w.topLimit = topLimit;
-            }
-        }
-    });
+						if (!w.hasHideOnBlurHandler) {
+							ns.core.web.window.addHideOnBlurHandler(w);
+						}
+					}
 
-    return window;
+					// cmp
+					w.showValues = showValues;
+                    w.hideEmptyRows = hideEmptyRows;
+					w.showTrendLine = showTrendLine;
+                    w.completedOnly = completedOnly;
+					w.targetLineValue = targetLineValue;
+					w.targetLineTitle = targetLineTitle;
+					w.baseLineValue = baseLineValue;
+					w.baseLineTitle = baseLineTitle;
+                    w.sortOrder = sortOrder;
+                    w.aggregationType = aggregationType;
+					w.rangeAxisMaxValue = rangeAxisMaxValue;
+					w.rangeAxisMinValue = rangeAxisMinValue;
+					w.rangeAxisSteps = rangeAxisSteps;
+					w.rangeAxisDecimals = rangeAxisDecimals;
+					w.rangeAxisTitle = rangeAxisTitle;
+					w.domainAxisTitle = domainAxisTitle;
+					w.hideLegend = hideLegend;
+					w.hideTitle = hideTitle;
+					w.title = title;
+				}
+			}
+		});
+
+		return window;
 };
