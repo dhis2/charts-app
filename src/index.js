@@ -7,16 +7,15 @@ import isString from 'd2-utilizr/lib/isString';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-//import {api, pivot, manager, config, ui, init} from 'd2-analysis';
-import {api, manager, config, ui, init} from 'd2-analysis';
+import {api, chart, manager, config, ui, init} from 'd2-analysis';
 
 import {LayoutWindow} from './ui/LayoutWindow.js';
 import {OptionsWindow} from './ui/OptionsWindow.js';
 
 // references
 var refs = {
-    api: api
-    //pivot: pivot
+    api,
+    chart
 };
 
     // dimension config
@@ -83,12 +82,12 @@ periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
     // static
-//appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+appManager.applyTo([].concat(arrayTo(api), arrayTo(chart)));
 appManager.applyTo(arrayTo(api));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
-//dimensionConfig.applyTo(arrayTo(pivot));
-//optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
+dimensionConfig.applyTo(arrayTo(chart));
+optionConfig.applyTo([].concat(arrayTo(api), arrayTo(chart)));
 optionConfig.applyTo(arrayTo(api));
 
 // requests
@@ -171,8 +170,16 @@ function initialize() {
     }());
 
     // instance manager
-    instanceManager.setFn(function(layout) {
-        
+    instanceManager.setFn(function(layout, response, legendSet) {
+        var chart = new chart.Chart(layout, response, legendSet);
+
+        uiManager.update(chart);
+
+        // mask
+        uiManager.unmask();
+
+        // statistics
+        instanceManager.postDataStatistics();        
     });
 
     // windows
