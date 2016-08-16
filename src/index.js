@@ -32,6 +32,10 @@ var periodConfig = new config.PeriodConfig();
 refs.periodConfig = periodConfig;
 
     // ui config
+var chartConfig = new config.ChartConfig();
+refs.chartConfig = chartConfig;
+
+    // chart config
 var uiConfig = new config.UiConfig();
 refs.uiConfig = uiConfig;
 
