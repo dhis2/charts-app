@@ -170,10 +170,10 @@ function initialize() {
     }());
 
     // instance manager
-    instanceManager.setFn(function(layout, response, legendSet) {
-        var chart = new chart.Chart(layout, response, legendSet);
+    instanceManager.setFn(function(layout) {
+        var chartObject = new chart.Chart(layout);
 
-        uiManager.update(chart);
+        uiManager.update(chartObject);
 
         // mask
         uiManager.unmask();
