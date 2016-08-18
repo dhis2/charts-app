@@ -7,10 +7,15 @@ import isString from 'd2-utilizr/lib/isString';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import {api, chart, manager, config, ui, init} from 'd2-analysis';
+import { api, chart, manager, config, ui, init } from 'd2-analysis';
 
-import {LayoutWindow} from './ui/LayoutWindow.js';
-import {OptionsWindow} from './ui/OptionsWindow.js';
+import { Layout } from './api/Layout';
+
+import { LayoutWindow } from './ui/LayoutWindow.js';
+import { OptionsWindow } from './ui/OptionsWindow.js';
+
+// extend
+api.Layout = Layout;
 
 // references
 var refs = {
@@ -83,12 +88,10 @@ uiManager.setI18nManager(i18nManager);
 
     // static
 appManager.applyTo([].concat(arrayTo(api), arrayTo(chart)));
-appManager.applyTo(arrayTo(api));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
 dimensionConfig.applyTo(arrayTo(chart));
 optionConfig.applyTo([].concat(arrayTo(api), arrayTo(chart)));
-optionConfig.applyTo(arrayTo(api));
 
 // requests
 var manifestReq = $.ajax({
@@ -171,8 +174,9 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        var chartObject = new chart.Chart(layout);
-
+        var chartObject = new chart.Chart(refs, layout);
+console.log(chartObject);
+        // render
         uiManager.update(chartObject);
 
         // mask
