@@ -106,15 +106,15 @@ var Plugin = function() {
             }
 
             var instanceRefs = {
-                dimensionConfig: dimensionConfig,
-                optionConfig: optionConfig,
-                periodConfig: periodConfig,
-                api: api,
-                //pivot: pivot,
-                appManager: appManager,
-                calendarManager: calendarManager,
-                requestManager: requestManager,
-                sessionStorageManager: sessionStorageManager
+                dimensionConfig,
+                optionConfig,
+                periodConfig,
+                api,
+                chart,
+                appManager,
+                calendarManager,
+                requestManager,
+                sessionStorageManager,
             };
 
             var uiManager = new manager.UiManager();
@@ -134,47 +134,21 @@ var Plugin = function() {
             uiManager.setInstanceManager(instanceManager);
 
             instanceManager.setFn(function(layout) {
-                //var sortingId = layout.sorting ? layout.sorting.id : null,
-                    //html = '',
-                    //table;
+                var chartObject = new chart.Chart({
+                    refs,
+                    layout
+                });
+                
+                // render
+                uiManager.update(chartObject);
 
-                //// get table
-                //var getTable = function() {
-                    //var response = layout.getResponse();
-                    //var colAxis = new pivot.TableAxis(layout, response, 'col');
-                    //var rowAxis = new pivot.TableAxis(layout, response, 'row');
-                    //return new pivot.Table(layout, response, colAxis, rowAxis);
-                //};
-
-                //// pre-sort if id
-                //if (sortingId && sortingId !== 'total') {
-                    //layout.sort();
-                //}
-
-                //// table
-                //table = getTable();
-
-                //// sort if total
-                //if (sortingId && sortingId === 'total') {
-                    //layout.sort(table);
-                    //table = getTable();
-                //}
-
-                //html += reportTablePlugin.showTitles ? uiManager.getTitleHtml(layout.name) : '';
-                //html += table.html;
-
-                //uiManager.update(html, layout.el);
-
-                //// events
-                //tableManager.setColumnHeaderMouseHandlers(layout, table);
-
-                //// mask
-                //uiManager.unmask();
+                // mask
+                uiManager.unmask();                
             });
 
             if (layout.id) {
                 instanceManager.getById(layout.id, function(_layout) {
-                    _layout = new api.Layout(objectApplyIf(layout, _layout));
+                    _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
                     instanceManager.getReport(_layout);
                 });
             }
@@ -185,4 +159,4 @@ var Plugin = function() {
     };
 };
 
-global.reportTablePlugin = new Plugin();
+global.chartPlugin = new Plugin();

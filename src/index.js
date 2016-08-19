@@ -174,8 +174,13 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        var chartObject = new chart.Chart(refs, layout);
+        var chartObject = new chart.Chart({
+            refs,
+            layout
+        });
+        
 console.log(chartObject);
+
         // render
         uiManager.update(chartObject);
 
@@ -193,13 +198,14 @@ console.log(chartObject);
 
     uiManager.reg(ui.FavoriteWindow(refs), 'favoriteWindow').hide();
 
-    // viewport
+    // north
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
-    
-    ui.Viewport(refs, {
+
+    // viewport
+    uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
         chartTypeToolbar: ui.ChartTypeToolbar(refs)
-    });
+    }), 'viewport');
 }
 
 global.refs = refs;
