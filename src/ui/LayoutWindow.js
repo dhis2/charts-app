@@ -137,18 +137,22 @@ LayoutWindow = function(c) {
 
                 ms.store.on('add', function(store, addedRecords) {
                     var range = store.getRange();
-
+                    
                     if (range.length > 1) {
-                        var addedIds = arrayPluck(addedRecords, 'internalId');
+                        var addedIds = addedRecords.map(function(obj) {
+                            return obj.internalId;
+                        });                            
 
                         store.removeAll();
 
-                        for (var i = 0; i < range.length; i++) {
-                            if (arrayContains(addedIds, range[i].internalId)) {
-                                store.add(range[i]);
+                        for (var i = 0, rec; i < range.length; i++) {
+                            rec = Ext.clone(range[i]);
+
+                            if (arrayContains(addedIds, rec.internalId)) {
+                                store.add(rec);
                             }
                             else {
-                                filterStore.add(range[i]);
+                                filterStore.add(rec);
                             }
                         }
                     }
@@ -190,7 +194,9 @@ LayoutWindow = function(c) {
                     var range = store.getRange();
 
                     if (range.length > 1) {
-                        var addedIds = arrayPluck(addedRecords, 'internalId');
+                        var addedIds = addedRecords.map(function(obj) {
+                            return obj.internalId;
+                        });
 
                         store.removeAll();
 
