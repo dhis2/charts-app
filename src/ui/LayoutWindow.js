@@ -1,8 +1,7 @@
-import isString from 'd2-utilizr/lib/isString';
-import isArray from 'd2-utilizr/lib/isArray';
 import arrayContains from 'd2-utilizr/lib/arrayContains';
 import arrayPluck from 'd2-utilizr/lib/arrayContains';
-import clone from 'd2-utilizr/lib/clone';
+import clone from 'd2-utilizr/lib/clone';import isString from 'd2-utilizr/lib/isString';
+import isArray from 'd2-utilizr/lib/isArray';
 
 export var LayoutWindow;
 
@@ -191,12 +190,12 @@ LayoutWindow = function(c) {
                     var range = store.getRange();
 
                     if (range.length > 1) {
-                        var addedIds = Ext.Array.pluck(addedRecords, 'internalId');
+                        var addedIds = arrayPluck(addedRecords, 'internalId');
 
                         store.removeAll();
 
                         for (var i = 0; i < range.length; i++) {
-                            if (Ext.Array.contains(addedIds, range[i].internalId)) {
+                            if (arrayContains(addedIds, range[i].internalId)) {
                                 store.add(range[i]);
                             }
                             else {
@@ -324,7 +323,7 @@ LayoutWindow = function(c) {
             keys = ['dx', 'ou', 'pe', 'dates'];
 
         for (var key in map) {
-            if (map.hasOwnProperty(key) && !Ext.Array.contains(keys, key)) {
+            if (map.hasOwnProperty(key) && !arrayContains(keys, key)) {
                 removeDimension(key);
             }
         }
