@@ -174,7 +174,7 @@ function initialize() {
 
     // instance manager
     instanceManager.setFn(function(layout) {
-        var chartObject = new chart.Chart({
+        var chartObject = chart.Chart({
             refs,
             layout
         });
@@ -182,7 +182,7 @@ function initialize() {
 console.log(chartObject);
 
         // render
-        uiManager.update(chartObject);
+        uiManager.add(chartObject);
 
         // mask
         uiManager.unmask();

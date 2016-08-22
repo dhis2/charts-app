@@ -140,8 +140,7 @@ LayoutWindow = function(c) {
                     var range = store.getRange();
 
                     if (range.length > 1) {
-                        var addedIds = arrayPluck(addedRecords, 'internalId'),
-                            records = clone(range);
+                        var addedIds = arrayPluck(addedRecords, 'internalId');
 
                         store.removeAll();
 
@@ -192,8 +191,7 @@ LayoutWindow = function(c) {
                     var range = store.getRange();
 
                     if (range.length > 1) {
-                        var addedIds = Ext.Array.pluck(addedRecords, 'internalId'),
-                            records = clone(range);
+                        var addedIds = Ext.Array.pluck(addedRecords, 'internalId');
 
                         store.removeAll();
 
