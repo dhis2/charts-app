@@ -178,17 +178,18 @@ function initialize() {
             refs,
             layout
         });
-        
-console.log(chartObject);
 
         // render
         uiManager.add(chartObject);
+
+        // reg
+        uiManager.reg(chartObject, 'chart');
 
         // mask
         uiManager.unmask();
 
         // statistics
-        instanceManager.postDataStatistics();        
+        instanceManager.postDataStatistics();
     });
 
     // windows
@@ -206,6 +207,23 @@ console.log(chartObject);
         northRegion: northRegion,
         chartTypeToolbar: ui.ChartTypeToolbar(refs)
     }), 'viewport');
+
+    uiManager.getUpdateComponent().on('resize', function(cmp, width) {
+        var chart = uiManager.get('chart');
+
+        if (chart) {
+            chart.onViewportResize();
+        }
+
+        if (width < 700 && cmp.fullSize) {
+            cmp.toggleCmp();
+            cmp.fullSize = false;
+        }
+        else if (width >= 700 && !this.fullSize) {
+            cmp.toggleCmp(true);
+            cmp.fullSize = true;
+        }
+    });
 }
 
 global.refs = refs;
