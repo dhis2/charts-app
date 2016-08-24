@@ -65,7 +65,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     if (isObject(c.seriesStyle)) {
         t.seriesStyle = c.seriesStyle;
     }
-    
+
     // force apply
     Object.assign(t, forceApplyConfig);
 
@@ -87,4 +87,50 @@ Layout.prototype.clone = function() {
     layout.setDataDimensionItems(t.getDataDimensionItems());
 
     return layout;
+};
+
+Layout.prototype.toPost = function() {
+    var t = this;
+
+    t.type = refs.chartConfig.c2s[t.type];
+
+    delete t.klass;
+    delete t.getResponse;
+    delete t.setResponse;
+    delete t.getAccess;
+    delete t.setAccess;
+    delete t.getDataDimensionItems;
+    delete t.setDataDimensionItems;
+    delete t.getRequestPath;
+
+    t.getDimensions(true).forEach(function(dimension) {
+        dimension.toPost();
+    });
+
+    t.rowTotals = t.showRowTotals;
+    delete t.showRowTotals;
+
+    t.colTotals = t.showColTotals;
+    delete t.showColTotals;
+
+    t.rowSubTotals = t.showRowSubTotals;
+    delete t.showRowSubTotals;
+
+    t.colSubTotals = t.showColSubTotals;
+    delete t.showColSubTotals;
+
+    t.reportParams = {
+        paramReportingPeriod: t.reportingPeriod,
+        paramOrganisationUnit: t.organisationUnit,
+        paramParentOrganisationUnit: t.parentOrganisationUnit
+    };
+
+    delete t.reportingPeriod;
+    delete t.organisationUnit;
+    delete t.parentOrganisationUnit;
+
+    delete t.parentGraphMap;
+
+    delete t.id;
+    delete t.el;
 };

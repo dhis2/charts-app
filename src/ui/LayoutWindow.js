@@ -349,6 +349,39 @@ LayoutWindow = function(c) {
         }
     };
 
+    var setDimensions = function(layout) {
+
+        // columns
+        if (isArray(layout.columns)) {
+            layout.columns.forEach(function(dimension) {
+                addDimension({
+                    id: dimension.dimension,
+                    name: dimensionConfig.get(dimension.dimension).name
+                }, colStore);
+            });
+        }
+
+        // rows
+        if (isArray(layout.rows)) {
+            layout.rows.forEach(function(dimension) {
+                addDimension({
+                    id: dimension.dimension,
+                    name: dimensionConfig.get(dimension.dimension).name
+                }, rowStore);
+            });
+        }
+
+        // filters
+        if (isArray(layout.filters)) {
+            layout.filters.forEach(function(dimension) {
+                addDimension({
+                    id: dimension.dimension,
+                    name: dimensionConfig.get(dimension.dimension).name
+                }, filterStore);
+            });
+        }
+    };
+
     var getSetup = function() {
         return {
             col: getStoreKeys(colStore),
@@ -375,6 +408,7 @@ LayoutWindow = function(c) {
         saveState,
         resetData,
         reset,
+        setDimensions,
         getSetup,
         hideOnBlur: true,
         items: {
