@@ -92,7 +92,7 @@ Layout.prototype.clone = function() {
 Layout.prototype.toPost = function() {
     var t = this;
 
-    t.type = refs.chartConfig.c2s[t.type];
+    t.type = refs.chartConfig.c2s[t.type] || t.type;
 
     delete t.klass;
     delete t.getResponse;
