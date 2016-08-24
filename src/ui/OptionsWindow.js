@@ -339,6 +339,9 @@ OptionsWindow = function(c) {
 			modal: true,
 			resizable: false,
 			hideOnBlur: true,
+            reset: function() {
+                this.setOptions();
+            },
 			getOptions: function() {
 				return {
 					showValues: showValues.getValue(),
@@ -363,6 +366,8 @@ OptionsWindow = function(c) {
 				};
 			},
 			setOptions: function(layout) {
+                layout = layout || {};
+
 				showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : false);
 				hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
 				showTrendLine.setValue(isBoolean(layout.showTrendLine) ? layout.showTrendLine : false);

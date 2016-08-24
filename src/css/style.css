@@ -201,6 +201,7 @@ body,
 
 .x-panel-body {
     font-size: 11px;
+    border-color: #dadada;
 }
 .x-panel .x-grid-body {
     border-style: none;

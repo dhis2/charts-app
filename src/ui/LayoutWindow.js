@@ -137,11 +137,11 @@ LayoutWindow = function(c) {
 
                 ms.store.on('add', function(store, addedRecords) {
                     var range = store.getRange();
-                    
+
                     if (range.length > 1) {
                         var addedIds = addedRecords.map(function(obj) {
                             return obj.internalId;
-                        });                            
+                        });
 
                         store.removeAll();
 
@@ -364,14 +364,18 @@ LayoutWindow = function(c) {
         autoShow: true,
         modal: true,
         resizable: false,
-        getSetup: getSetup,
-        dimensionStore: dimensionStore,
-        rowStore: rowStore,
-        colStore: colStore,
-        filterStore: filterStore,
-        addDimension: addDimension,
-        removeDimension: removeDimension,
-        hasDimension: hasDimension,
+        getSetup,
+        dimensionStore,
+        rowStore,
+        colStore,
+        filterStore,
+        addDimension,
+        removeDimension,
+        hasDimension,
+        saveState,
+        resetData,
+        reset,
+        getSetup,
         hideOnBlur: true,
         items: {
             layout: 'column',

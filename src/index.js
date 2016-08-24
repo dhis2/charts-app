@@ -154,6 +154,25 @@ function initialize() {
     instanceManager.apiResource = 'charts';
     instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 
+    instanceManager.setFn(function(layout) {
+        var chartObject = chart.Chart({
+            refs,
+            layout
+        });
+
+        // render
+        uiManager.update(chartObject);
+
+        // reg
+        uiManager.reg(chartObject, 'chart');
+
+        // mask
+        uiManager.unmask();
+
+        // statistics
+        instanceManager.postDataStatistics();
+    });
+
     // ui manager
     uiManager.disableRightClick();
 
@@ -172,24 +191,20 @@ function initialize() {
             '</div>';
     }());
 
-    // instance manager
-    instanceManager.setFn(function(layout) {
-        var chartObject = chart.Chart({
-            refs,
-            layout
-        });
+    uiManager.setUpdateFn(function(content, container) {
+        var t = uiManager;
 
-        // render
-        uiManager.add(chartObject);
+        var cmp = container || t.getUpdateComponent();
 
-        // reg
-        uiManager.reg(chartObject, 'chart');
+        cmp.update();
+        cmp.removeAll();
 
-        // mask
-        uiManager.unmask();
-
-        // statistics
-        instanceManager.postDataStatistics();
+        if (content) {
+            cmp.add(content);
+        }
+        else {
+            cmp.update(t.getIntroHtml());
+        }
     });
 
     // windows
