@@ -32,7 +32,9 @@
  * DV Tips
 */
 
-/* General */
+/*----------------------------------------------------------------------------
+ * General
+ *--------------------------------------------------------------------------*/
 
 body {
 	-webkit-touch-callout: none;
@@ -49,10 +51,9 @@ body,
 .x-form-item,
 .x-panel-header-text-default,
 .x-grid-cell-inner,
-.x-form-item-label,
-.x-window-header-text-default {
+.x-form-item-label {
     font-size: 11px;
-	font-family: 'Arial','Sans-serif','Roboto','Helvetica','Consolas';
+	font-family: 'Arial','Helvetica Neue','sans-serif' !important;
 }
 
 #init {
@@ -218,7 +219,7 @@ body,
 .ns-panel-title-dimension {
 	height: 17px;
 	background-repeat: no-repeat;
-	padding-left: 20px
+	padding-left: 22px
 }
 
 .ns-panel-title-data {
@@ -385,7 +386,7 @@ body,
     padding-left: 1px;
     font-size: 11px;
     color: #333;
-	position: relative;
+    position: relative;
 	top: -1px;
 }
 
@@ -421,6 +422,11 @@ body,
 .x-toolbar .x-toolbar-separator-horizontal {
     height: 15px;
     border-right: 1px solid #f2f2f2;
+}
+
+    /* Disabled */
+.x-toolbar.x-item-disabled {
+    opacity: 1;
 }
 
 	/* Background */
@@ -647,6 +653,14 @@ body,
     width: 26px !important;
 }
 
+.ns-button-icon-search {
+	background: url('../images/search_14.png') 1px 1px no-repeat;
+}
+
+.ns-button-icon-nodeselectchild {
+	background: url('../images/node-select-child.png') 1px 1px no-repeat;
+}
+
 .ns-button-organisationunitselection .x-btn-center {
 	width: 18px !important;
 }
@@ -664,8 +678,8 @@ body,
 .x-tip {
     border-radius: 2px;
     padding: 1px 4px;
-    border: 1px solid #222;
-    background-color: #222;
+    border: 1px solid #111;
+    background-color: #111;
 }
 
 .x-tip .x-tip-body {
@@ -675,7 +689,7 @@ body,
 }
 
 .x-tip-anchor {
-	border-top-color: #222;
+	border-top-color: #111;
 }
 
 
@@ -701,6 +715,15 @@ body,
 	opacity: 0.65;
 }
 
+/*----------------------------------------------------------------------------
+ * Grid
+ *--------------------------------------------------------------------------*/
+
+.x-grid-row-selected .x-grid-cell {
+    background-color: #eaeaea !important;
+    border-style: solid;
+    border-color: transparent;
+}
 
 /*----------------------------------------------------------------------------
  * DV Grid
@@ -723,7 +746,7 @@ body,
 	margin-left: 4px;
 }
 .ns-grid-row-icon-sharing {
-	background: url('../images/grid-sharing_16.png') no-repeat;
+	background: url('../images/grid-sharing-2_16.png') no-repeat;
 	margin-left: 4px;
 }
 .ns-grid-row-icon-dashboard {
@@ -742,7 +765,7 @@ body,
 
 .ns-grid .x-grid-cell-inner,
 .ns-grid .x-grid-cell-inner * {
-	font-size: 10px !important;
+	font-size: 11px !important;
 }
 .ns-grid .x-grid-cell-inner {
 	padding-top: 3px;
@@ -754,10 +777,10 @@ body,
 }
 .ns-grid .x-grid-header-ct {
 	border-bottom-width: 1px !important;
-	border-bottom-color: #d0d0d0;
+	border-bottom-color: #d6d6d6;
 }
 .ns-grid .x-grid-body {
-	border: 1px solid #d0d0d0;
+	border: 1px solid #d6d6d6;
 	border-top: 0 none !important;
 }
 
@@ -775,7 +798,7 @@ body,
 .ns-grid .link * {
 	cursor: pointer;
 	cursor: hand;
-	color: blue;
+	color: #001EFF;
 	text-decoration: underline;
 }
 
@@ -902,8 +925,20 @@ body,
     border-style: solid;
     border-color: #ddd;
 }
-.x-menu-item-link {
-	padding: 4px 2px 4px 28px;
+
+
+/*----------------------------------------------------------------------------
+ * DV Statusbar
+ *--------------------------------------------------------------------------*/
+
+.ns-statusbar .x-panel-body-default {
+	padding: 5px 0 0 6px;
+	border: 0 none;
+	background-color: transparent;
+	color: #111;
+	vertical-align: top;
+	font-size: 10px;
+	line-height: 14px;
 }
 
 
@@ -916,16 +951,15 @@ body,
 	padding: 6px 5px 4px 8px;
 	border: 0 none;
 	cursor: pointer;
-	border-top-left-radius: 1px;
-	border-top-right-radius: 1px;
+	border-radius: 0;
     background-image: none;
     background-color: #e0e0e0;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #dedede), color-stop(100%, #e6e6e6)) !important;
-    background-image: -webkit-linear-gradient(top, #dedede, #e6e6e6) !important;
-    background-image: -moz-linear-gradient(top, #dedede, #e6e6e6) !important;
-    background-image: -o-linear-gradient(top, #dedede, #e6e6e6) !important;
-    background-image: -ms-linear-gradient(top, #dedede, #e6e6e6) !important;
-    background-image: linear-gradient(top, #dedede, #e6e6e6) !important;
+    background-image: -webkit-linear-gradient(top, #dddddd, #e6e6e6) !important;
+    background-image: -moz-linear-gradient(top, #dddddd, #e6e6e6) !important;
+    background-image: -o-linear-gradient(top, #dddddd, #e6e6e6) !important;
+    background-image: -ms-linear-gradient(top, #dddddd, #e6e6e6) !important;
+    background-image: linear-gradient(top, #dddddd, #e6e6e6) !important;
 }
 	/* accordion title dock, default, collapsed */
 .ns-accordion .collapsed .x-accordion-hd {
