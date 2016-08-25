@@ -150,6 +150,8 @@ requestManager.run();
 
 function initialize() {
 
+    var i18n = i18nManager.get();
+
     // app manager
     appManager.appName = 'Data Visualizer';
     appManager.sessionName = 'chart';
@@ -184,14 +186,14 @@ function initialize() {
 
     uiManager.setIntroHtml(function() {
         return '<div class="ns-viewport-text" style="padding:20px">' +
-            '<h3>' + i18nManager.get('example1') + '</h3>' +
-            '<div>- ' + i18nManager.get('example2') + '</div>' +
-            '<div>- ' + i18nManager.get('example3') + '</div>' +
-            '<div>- ' + i18nManager.get('example4') + '</div>' +
-            '<h3 style="padding-top:20px">' + i18nManager.get('example5') + '</h3>' +
-            '<div>- ' + i18nManager.get('example6') + '</div>' +
-            '<div>- ' + i18nManager.get('example7') + '</div>' +
-            '<div>- ' + i18nManager.get('example8') + '</div>' +
+            '<h3>' + i18n.example1 + '</h3>' +
+            '<div>- ' + i18n.example2 + '</div>' +
+            '<div>- ' + i18n.example3 + '</div>' +
+            '<div>- ' + i18n.example4 + '</div>' +
+            '<h3 style="padding-top:20px">' + i18n.example5 + '</h3>' +
+            '<div>- ' + i18n.example6 + '</div>' +
+            '<div>- ' + i18n.example7 + '</div>' +
+            '<div>- ' + i18n.example8 + '</div>' +
             '</div>';
     }());
 
@@ -221,10 +223,41 @@ function initialize() {
     // north
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
 
+    var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
+        isDefaultButton: true,
+        btnText: i18n.chart,
+        btnIconCls: 'ns-button-icon-chart'
+    }), 'defaultIntegrationButton');
+
+    var tableIntegrationButton = ui.IntegrationButton(refs, {
+        objectName: 'map',
+        moduleName: 'dhis-web-pivot',
+        btnIconCls: 'ns-button-icon-table',
+        btnText: i18n.table,
+        menuItem1Text: i18n.go_to_pivot_tables,
+        menuItem2Text: i18n.open_this_chart_as_table,
+        menuItem3Text: i18n.open_last_pivot_table
+    });
+
+    var mapIntegrationButton = ui.IntegrationButton(refs, {
+        objectName: 'map',
+        moduleName: 'dhis-web-mapping',
+        btnIconCls: 'ns-button-icon-map',
+        btnText: i18n.map,
+        menuItem1Text: i18n.go_to_maps,
+        menuItem2Text: i18n.open_this_chart_as_map,
+        menuItem3Text: i18n.open_last_map
+    });
+
     // viewport
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
-        chartTypeToolbar: ui.ChartTypeToolbar(refs)
+        chartTypeToolbar: ui.ChartTypeToolbar(refs),
+        integrationButtons: [
+            tableIntegrationButton,
+            defaultIntegrationButton,
+            mapIntegrationButton
+        ]
     }), 'viewport');
 
     uiManager.getUpdateComponent().on('resize', function(cmp, width) {
