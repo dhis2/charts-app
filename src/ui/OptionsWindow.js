@@ -405,7 +405,7 @@ OptionsWindow = function(c) {
 				}
 
                 sortOrder.setValue(isNumber(layout.sortOrder) ? layout.sortOrder : 0);
-                aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : 'default');
+                aggregationType.setValue(isString(layout.aggregationType) ? layout.aggregationType : optionConfig.getAggregationType('def').id);
 
 				// rangeAxisMaxValue
 				if (isNumber(layout.rangeAxisMaxValue)) {
