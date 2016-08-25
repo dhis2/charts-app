@@ -230,7 +230,7 @@ function initialize() {
     }), 'defaultIntegrationButton');
 
     var tableIntegrationButton = ui.IntegrationButton(refs, {
-        objectName: 'map',
+        objectName: 'table',
         moduleName: 'dhis-web-pivot',
         btnIconCls: 'ns-button-icon-table',
         btnText: i18n.table,
