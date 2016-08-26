@@ -201,6 +201,45 @@ var Plugin = function() {
                 }
             });
 
+            // element
+            var el = Ext.get(layout.el);
+
+            var elBorderW = parseInt(el.getStyle('border-left-width')) + parseInt(el.getStyle('border-right-width'));
+            var elBorderH = parseInt(el.getStyle('border-top-width')) + parseInt(el.getStyle('border-bottom-width'));
+            var elPaddingW = parseInt(el.getStyle('padding-left')) + parseInt(el.getStyle('padding-right'));
+            var elPaddingH = parseInt(el.getStyle('padding-top')) + parseInt(el.getStyle('padding-bottom'));
+
+            var width = el.getWidth() - elBorderW - elPaddingW;
+            var height = el.getHeight() - elBorderH - elPaddingH;
+
+            var centerRegion = uiManager.reg(Ext.create('Ext.panel.Panel', {
+                renderTo: el,
+                bodyStyle: 'border: 0 none',
+                width: layout.width || width || '100%',
+                height: layout.height || height || '50%',
+                layout: 'fit'
+            }), 'centerRegion');
+
+            var viewport = uiManager.reg({
+                getWidth: function() {
+                    return el.getWidth();
+                },
+                getHeight: function() {
+                    return el.getHeight();
+                },
+                centerRegion: centerRegion
+            }, 'viewport');
+
+            uiManager.setUpdateFn(function(content) {
+                var t = uiManager;
+
+                var cmp = t.getUpdateComponent();
+
+                cmp.update();
+                cmp.removeAll();
+                cmp.add(content);
+            });
+
             if (layout.id) {
                 instanceManager.getById(layout.id, function(_layout) {
                     _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
