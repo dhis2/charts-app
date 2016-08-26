@@ -616,6 +616,35 @@ body,
  * DV Button
  *--------------------------------------------------------------------------*/
 
+.ns-button-icon-type-column {
+	background: url('../images/column.png') no-repeat;
+}
+.ns-button-icon-type-columnstacked {
+	background: url('../images/column-stacked.png') no-repeat;
+}
+.ns-button-icon-type-bar {
+	background: url('../images/bar.png') no-repeat;
+}
+.ns-button-icon-type-barstacked {
+	background: url('../images/bar-stacked.png') no-repeat;
+}
+.ns-button-icon-type-line {
+	background: url('../images/line.png') no-repeat;
+}
+.ns-button-icon-type-area {
+	background: url('../images/area.png') no-repeat;
+}
+.ns-button-icon-type-pie {
+	background: url('../images/pie.png') no-repeat;
+}
+.ns-button-icon-type-radar {
+	background: url('../images/radar.png') no-repeat;
+}
+.ns-button-icon-type-gauge {
+	background: url('../images/gauge.png') no-repeat;
+}
+
+
 .ns-button-icon-gear {
 	width: 22px !important;
 	height: 22px !important;
