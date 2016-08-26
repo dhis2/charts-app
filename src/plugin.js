@@ -230,6 +230,10 @@ var Plugin = function() {
                 centerRegion: centerRegion
             }, 'viewport');
 
+            el.setViewportWidth = function(width) {
+                uiManager.getUpdateComponent().setWidth(width);
+            };
+
             uiManager.setUpdateFn(function(content) {
                 var t = uiManager;
 
