@@ -4,10 +4,21 @@ import isArray from 'd2-utilizr/lib/isArray';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-//import {api, pivot, manager, config, init} from 'd2-analysis';
-import {api, manager, config, init} from 'd2-analysis';
+import { api, chart, manager, config, init, override } from 'd2-analysis';
 
-var refs = {};
+import { Layout } from './api/Layout';
+
+// override
+override.extChartOverrides();
+
+// extend
+api.Layout = Layout;
+
+// references
+var refs = {
+    api,
+    chart
+};
 
 // dimension config
 var dimensionConfig = new config.DimensionConfig();
@@ -20,6 +31,10 @@ refs.optionConfig = optionConfig;
 // period config
 var periodConfig = new config.PeriodConfig();
 refs.periodConfig = periodConfig;
+
+// chart config
+var chartConfig = new config.ChartConfig();
+refs.chartConfig = chartConfig;
 
 // app manager
 var appManager = new manager.AppManager();
@@ -45,10 +60,7 @@ dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 
-//appManager.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 appManager.applyTo(arrayTo(api));
-//dimensionConfig.applyTo(arrayTo(pivot));
-//optionConfig.applyTo([].concat(arrayTo(api), arrayTo(pivot)));
 optionConfig.applyTo(arrayTo(api));
 
 // plugin
@@ -123,27 +135,68 @@ var Plugin = function() {
 
             var instanceManager = new manager.InstanceManager(instanceRefs);
             instanceRefs.instanceManager = instanceManager;
-            instanceManager.apiResource = 'reportTables';
+            instanceManager.apiResource = 'charts';
             instanceManager.isPlugin = true;
             instanceManager.applyTo(arrayTo(api));
-
-            var tableManager = new manager.TableManager(instanceRefs);
-            instanceRefs.tableManager = tableManager;
 
                 // instance manager
             uiManager.setInstanceManager(instanceManager);
 
             instanceManager.setFn(function(layout) {
-                var chartObject = new chart.Chart({
-                    refs,
-                    layout
-                });
-                
-                // render
-                uiManager.update(chartObject);
 
-                // mask
-                uiManager.unmask();                
+                var legendSetId;
+
+                var fn = function() {
+
+                    var chartObject = chart.Chart({
+                        refs,
+                        layout,
+                        legendSetId
+                    });
+
+                    // render
+                    uiManager.update(chartObject);
+
+                    // reg
+                    uiManager.reg(chartObject, 'chart');
+
+                    // mask
+                    uiManager.unmask();
+                };
+
+                // legend set
+                if (layout.type === 'gauge' && layout.hasDimension('dx')) {
+                    var ids = layout.getDimension('dx').getRecordIds();
+
+                    if (ids.length) {
+                        new api.Request({
+                            type: 'json',
+                            baseUrl: appManager.getPath() + '/api/indicators.json',
+                            params: [
+                                'filter=id:eq:' + ids[0],
+                                'fields=legendSet[id]',
+                                'paging=false'
+                            ],
+                            success: function(json) {
+                                if (isArray(json.indicators) && json.indicators.length) {
+                                    if (isObject(json.indicators[0].legendSet)) {
+                                        var legendSet = json.indicators[0].legendSet;
+
+                                        if (isObject(legendSet)) {
+                                            legendSetId = legendSet.id;
+                                        }
+                                    }
+                                }
+                            },
+                            complete: function() {
+                                fn();
+                            }
+                        }).run();
+                    }
+                }
+                else {
+                    fn();
+                }
             });
 
             if (layout.id) {
