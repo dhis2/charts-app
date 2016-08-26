@@ -151,7 +151,7 @@ var Plugin = function() {
                 var fn = function() {
 
                     var chartObject = chart.Chart({
-                        instanceRefs,
+                        refs: instanceRefs,
                         layout,
                         legendSetId
                     });
