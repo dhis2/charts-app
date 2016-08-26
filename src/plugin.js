@@ -121,6 +121,7 @@ var Plugin = function() {
                 dimensionConfig,
                 optionConfig,
                 periodConfig,
+                chartConfig,
                 api,
                 chart,
                 appManager,
