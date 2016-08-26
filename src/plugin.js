@@ -127,6 +127,7 @@ var Plugin = function() {
                 appManager,
                 calendarManager,
                 requestManager,
+                i18nManager,
                 sessionStorageManager,
             };
 
