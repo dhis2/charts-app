@@ -3,6 +3,8 @@ import './css/style.css';
 import './css/meringue.css';
 import 'd2-analysis/css/ui/GridHeaders.css';
 
+import isArray from 'd2-utilizr/lib/isArray';
+import isObject from 'd2-utilizr/lib/isObject';
 import isString from 'd2-utilizr/lib/isString';
 import arrayFrom from 'd2-utilizr/lib/arrayFrom';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
@@ -161,22 +163,63 @@ function initialize() {
     instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 
     instanceManager.setFn(function(layout) {
-        var chartObject = chart.Chart({
-            refs,
-            layout
-        });
 
-        // render
-        uiManager.update(chartObject);
+        var legendSetId;
 
-        // reg
-        uiManager.reg(chartObject, 'chart');
+        var fn = function() {
 
-        // mask
-        uiManager.unmask();
+            var chartObject = chart.Chart({
+                refs,
+                layout,
+                legendSetId
+            });
 
-        // statistics
-        instanceManager.postDataStatistics();
+            // render
+            uiManager.update(chartObject);
+
+            // reg
+            uiManager.reg(chartObject, 'chart');
+
+            // mask
+            uiManager.unmask();
+
+            // statistics
+            instanceManager.postDataStatistics();
+        };
+
+        // legend set
+        if (layout.type === 'gauge' && layout.hasDimension('dx')) {
+            var ids = layout.getDimension('dx').getRecordIds();
+
+            if (ids.length) {
+                new api.Request({
+                    type: 'json',
+                    baseUrl: appManager.getPath() + '/api/indicators.json',
+                    params: [
+                        'filter=id:eq:' + ids[0],
+                        'fields=legendSet[id]',
+                        'paging=false'
+                    ],
+                    success: function(json) {
+                        if (isArray(json.indicators) && json.indicators.length) {
+                            if (isObject(json.indicators[0].legendSet)) {
+                                var legendSet = json.indicators[0].legendSet;
+
+                                if (isObject(legendSet)) {
+                                    legendSetId = legendSet.id;
+                                }
+                            }
+                        }
+                    },
+                    complete: function() {
+                        fn();
+                    }
+                }).run();
+            }
+        }
+        else {
+            fn();
+        }
     });
 
     // ui manager
