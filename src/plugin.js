@@ -139,7 +139,8 @@ var Plugin = function() {
             var instanceManager = new manager.InstanceManager(instanceRefs);
             instanceRefs.instanceManager = instanceManager;
             instanceManager.apiResource = 'charts';
-            instanceManager.isPlugin = true;
+            instanceManager.plugin = true;
+            instanceManager.dashboard = chartPlugin.dashboard;
             instanceManager.applyTo(arrayTo(api));
 
                 // instance manager
