@@ -134,6 +134,7 @@ var Plugin = function() {
             var uiManager = new manager.UiManager();
             instanceRefs.uiManager = uiManager;
             uiManager.applyTo(arrayTo(api));
+            uiManager.preventMask = true;
 
             var instanceManager = new manager.InstanceManager(instanceRefs);
             instanceRefs.instanceManager = instanceManager;
@@ -144,15 +145,16 @@ var Plugin = function() {
                 // instance manager
             uiManager.setInstanceManager(instanceManager);
 
-            instanceManager.setFn(function(layout) {
+            instanceManager.setFn(function(_layout) {
 
                 var legendSetId;
 
                 var fn = function() {
 
                     var chartObject = chart.Chart({
+                        settings: chartPlugin,
                         refs: instanceRefs,
-                        layout,
+                        layout: _layout,
                         legendSetId
                     });
 
@@ -167,8 +169,8 @@ var Plugin = function() {
                 };
 
                 // legend set
-                if (layout.type === 'gauge' && layout.hasDimension('dx')) {
-                    var ids = layout.getDimension('dx').getRecordIds();
+                if (_layout.type === 'gauge' && _layout.hasDimension('dx')) {
+                    var ids = _layout.getDimension('dx').getRecordIds();
 
                     if (ids.length) {
                         new api.Request({
@@ -251,7 +253,7 @@ var Plugin = function() {
                 });
             }
             else {
-                instanceManager.getReport(layout);
+                instanceManager.getReport(new api.Layout(instanceRefs, layout));
             }
         });
     };
