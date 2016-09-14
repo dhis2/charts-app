@@ -16,7 +16,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: [/node_modules/, /d2-analysis/, /scripts/],
+                exclude: [/node_modules/, /d2-analysis/, /d2-charts-api/, /scripts/],
                 loader: 'babel',
                 query: {
                     cacheDirectory: true,
@@ -35,18 +35,5 @@ module.exports = {
                 ]
             },
         ],
-    },
-    plugins: [
-        // Plugins to extend webpack functionality (https://webpack.github.io/docs/plugins.html)
-        /* Example that provides `fetch` as a global variable
-        new webpack.ProvidePlugin({
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        })
-        */
-        //new webpack.ProvidePlugin({
-            //$: "jquery",
-            //jQuery: "jquery",
-            //"window.jQuery": "jquery"
-        //}),
-    ],
+    }
 };
