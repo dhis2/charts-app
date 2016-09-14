@@ -18,7 +18,6 @@ import { OptionsWindow } from './ui/OptionsWindow.js';
 
 // override
 override.extOverrides();
-override.extChartOverrides();
 
 // extend
 api.Layout = Layout;
