@@ -3,13 +3,13 @@ import './css/style.css';
 import './css/meringue.css';
 import 'd2-analysis/css/ui/GridHeaders.css';
 
+import arrayTo from 'd2-utilizr/lib/arrayTo';
 import isArray from 'd2-utilizr/lib/isArray';
 import isObject from 'd2-utilizr/lib/isObject';
-import isString from 'd2-utilizr/lib/isString';
-import arrayFrom from 'd2-utilizr/lib/arrayFrom';
-import arrayTo from 'd2-utilizr/lib/arrayTo';
 
-import { api, chart, manager, config, ui, init, override } from 'd2-analysis';
+import { createChart } from 'd2-charts-api';
+
+import { api, manager, config, ui, init, override } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -18,14 +18,14 @@ import { OptionsWindow } from './ui/OptionsWindow.js';
 
 // override
 override.extOverrides();
+override.extChartOverrides();
 
 // extend
 api.Layout = Layout;
 
 // references
 var refs = {
-    api,
-    chart
+    api
 };
 
     // dimension config
@@ -40,11 +40,11 @@ refs.optionConfig = optionConfig;
 var periodConfig = new config.PeriodConfig();
 refs.periodConfig = periodConfig;
 
-    // ui config
+    // chart config
 var chartConfig = new config.ChartConfig();
 refs.chartConfig = chartConfig;
 
-    // chart config
+    // ui config
 var uiConfig = new config.UiConfig();
 refs.uiConfig = uiConfig;
 
@@ -92,11 +92,11 @@ periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
     // static
-appManager.applyTo([].concat(arrayTo(api), arrayTo(chart)));
+appManager.applyTo([].concat(arrayTo(api)));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
-dimensionConfig.applyTo(arrayTo(chart));
-optionConfig.applyTo([].concat(arrayTo(api), arrayTo(chart)));
+//dimensionConfig.applyTo(arrayTo(chart));
+optionConfig.applyTo([].concat(arrayTo(api)));
 
 // requests
 var manifestReq = $.ajax({
@@ -167,17 +167,13 @@ function initialize() {
 
         var fn = function() {
 
-            var chartObject = chart.Chart({
-                refs,
-                layout,
-                legendSetId
-            });
+            var el = uiManager.getUpdateComponent().body.id;
+            var response = layout.getResponse();
 
-            // render
-            uiManager.update(chartObject);
+            var { chart } = createChart(response, layout, el);
 
             // reg
-            uiManager.reg(chartObject, 'chart');
+            uiManager.reg(chart, 'chart');
 
             // mask
             uiManager.unmask();
@@ -239,20 +235,10 @@ function initialize() {
             '</div>';
     }());
 
-    uiManager.setUpdateFn(function(content, container) {
+    uiManager.setUpdateFn(function(content) {
         var t = uiManager;
 
-        var cmp = container || t.getUpdateComponent();
-
-        cmp.update();
-        cmp.removeAll();
-
-        if (content) {
-            cmp.add(content);
-        }
-        else {
-            cmp.update(t.getIntroHtml());
-        }
+        t.getUpdateComponent().update(content || t.getIntroHtml());
     });
 
     // windows
@@ -303,12 +289,6 @@ function initialize() {
     }), 'viewport');
 
     uiManager.getUpdateComponent().on('resize', function(cmp, width) {
-        var chart = uiManager.get('chart');
-
-        if (chart) {
-            chart.onViewportResize();
-        }
-
         if (width < 700 && cmp.fullSize) {
             cmp.toggleCmp();
             cmp.fullSize = false;
