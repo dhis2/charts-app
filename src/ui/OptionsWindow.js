@@ -79,7 +79,6 @@ OptionsWindow = function(c) {
 		targetLineTitle = Ext.create('Ext.form.field.Text', {
 			style: 'margin-left:1px; margin-bottom:1px',
 			fieldStyle: 'padding-left:3px',
-			emptyText: i18n.target,
 			width: cmpWidth - labelWidth - 5 - numberWidth - 1,
 			maxLength: 100,
 			enforceMaxLength: true,
@@ -103,7 +102,6 @@ OptionsWindow = function(c) {
 		baseLineTitle = Ext.create('Ext.form.field.Text', {
 			style: 'margin-left:1px; margin-bottom:1px',
 			fieldStyle: 'padding-left:3px',
-			emptyText: i18n.base,
 			width: cmpWidth - labelWidth - 5 - numberWidth - 1,
 			maxLength: 100,
 			enforceMaxLength: true,
