@@ -1,23 +1,22 @@
 import './css/style.css';
 
-import isArray from 'd2-utilizr/lib/isArray';
-import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 import arrayTo from 'd2-utilizr/lib/arrayTo';
+import isArray from 'd2-utilizr/lib/isArray';
+import isObject from 'd2-utilizr/lib/isObject';
+import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 
-import { api, chart, manager, config, init, override } from 'd2-analysis';
+import { createChart } from 'd2-charts-api';
+
+import { api, manager, config, ui, init, override } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
-
-// override
-override.extChartOverrides();
 
 // extend
 api.Layout = Layout;
 
 // references
 var refs = {
-    api,
-    chart
+    api
 };
 
 // dimension config
@@ -55,6 +54,8 @@ refs.i18nManager = i18nManager;
 // sessionstorage manager
 var sessionStorageManager = new manager.SessionStorageManager();
 refs.sessionStorageManager = sessionStorageManager;
+
+// dependencies
 
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
@@ -123,11 +124,9 @@ var Plugin = function() {
                 periodConfig,
                 chartConfig,
                 api,
-                chart,
                 appManager,
                 calendarManager,
                 requestManager,
-                i18nManager,
                 sessionStorageManager,
             };
 
@@ -147,23 +146,21 @@ var Plugin = function() {
             uiManager.setInstanceManager(instanceManager);
 
             instanceManager.setFn(function(_layout) {
-
                 var legendSetId;
 
                 var fn = function() {
 
-                    var chartObject = chart.Chart({
-                        settings: chartPlugin,
-                        refs: instanceRefs,
-                        layout: _layout,
-                        legendSetId
-                    });
+                    var el = _layout.el;
+                    var response = _layout.getResponse();
+                    var extraOptions = {
+                        legendSet: appManager.getLegendSetById(legendSetId),
+                        dashboard: instanceManager.dashboard
+                    };
 
-                    // render
-                    uiManager.update(chartObject);
+                    var { chart } = createChart(response, _layout, el, extraOptions);
 
                     // reg
-                    uiManager.reg(chartObject, 'chart');
+                    uiManager.reg(chart, 'chart');
 
                     // mask
                     uiManager.unmask();
@@ -202,49 +199,6 @@ var Plugin = function() {
                 else {
                     fn();
                 }
-            });
-
-            // element
-            var el = Ext.get(layout.el);
-
-            var elBorderW = parseInt(el.getStyle('border-left-width')) + parseInt(el.getStyle('border-right-width'));
-            var elBorderH = parseInt(el.getStyle('border-top-width')) + parseInt(el.getStyle('border-bottom-width'));
-            var elPaddingW = parseInt(el.getStyle('padding-left')) + parseInt(el.getStyle('padding-right'));
-            var elPaddingH = parseInt(el.getStyle('padding-top')) + parseInt(el.getStyle('padding-bottom'));
-
-            var width = el.getWidth() - elBorderW - elPaddingW;
-            var height = el.getHeight() - elBorderH - elPaddingH;
-
-            var centerRegion = uiManager.reg(Ext.create('Ext.panel.Panel', {
-                renderTo: el,
-                bodyStyle: 'border: 0 none',
-                width: layout.width || width || '100%',
-                height: layout.height || height || '50%',
-                layout: 'fit'
-            }), 'centerRegion');
-
-            var viewport = uiManager.reg({
-                getWidth: function() {
-                    return el.getWidth();
-                },
-                getHeight: function() {
-                    return el.getHeight();
-                },
-                centerRegion: centerRegion
-            }, 'viewport');
-
-            el.setViewportWidth = function(width) {
-                uiManager.getUpdateComponent().setWidth(width);
-            };
-
-            uiManager.setUpdateFn(function(content) {
-                var t = uiManager;
-
-                var cmp = t.getUpdateComponent();
-
-                cmp.update();
-                cmp.removeAll();
-                cmp.add(content);
             });
 
             if (layout.id) {
