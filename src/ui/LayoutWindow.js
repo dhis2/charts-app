@@ -25,39 +25,43 @@ LayoutWindow = function(c) {
 
     // components
 
-    var getStore = function(data) {
-			var config = {};
+    var getStore = function(data, name) {
+        var config = {};
 
-			config.fields = ['id', 'name'];
+        config.fields = ['id', 'name'];
 
-			if (data) {
-				config.data = data;
-			}
+        if (data) {
+            config.data = data;
+        }
 
-			config.getDimensionNames = function() {
-				var dimensionNames = [];
+        if (name) {
+            config.name = name;
+        }
 
-				this.each(function(r) {
-					dimensionNames.push(r.data.id);
-				});
+        config.getDimensionNames = function() {
+            var dimensionNames = [];
 
-				return clone(dimensionNames);
-			};
+            this.each(function(r) {
+                dimensionNames.push(r.data.id);
+            });
 
-            config.hasDimension = function(id) {
-                return isString(id) && this.findExact('id', id) != -1 ? true : false;
-            };
+            return clone(dimensionNames);
+        };
 
-            config.removeDimension = function(id) {
-                var index = this.findExact('id', id);
+        config.hasDimension = function(id) {
+            return isString(id) && this.findExact('id', id) != -1 ? true : false;
+        };
 
-                if (index != -1) {
-                    this.remove(this.getAt(index));
-                }
-            };
+        config.removeDimension = function(id) {
+            var index = this.findExact('id', id);
 
-			return Ext.create('Ext.data.Store', config);
-		};
+            if (index != -1) {
+                this.remove(this.getAt(index));
+            }
+        };
+
+        return Ext.create('Ext.data.Store', config);
+    };
 
     var getStoreKeys = function(store) {
         var keys = [],
@@ -74,11 +78,11 @@ LayoutWindow = function(c) {
 
     var dimensionStore = getStore();
 
-    var colStore = getStore();
+    var colStore = getStore(null, 'colStore');
 
-    var rowStore = getStore();
+    var rowStore = getStore(null, 'rowStore');
 
-    var filterStore = getStore();
+    var filterStore = getStore(null, 'filterStore');
 
     var dimension = Ext.create('Ext.ux.form.MultiSelect', {
         cls: 'ns-toolbar-multiselect-leftright',
@@ -350,6 +354,9 @@ LayoutWindow = function(c) {
     };
 
     var setDimensions = function(layout) {
+
+        // empty cache
+        dimensionStoreMap = {};
 
         // columns
         if (isArray(layout.columns)) {
