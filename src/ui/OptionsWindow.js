@@ -16,7 +16,7 @@ OptionsWindow = function(c) {
 
         showValues,
         hideEmptyRows,
-        showTrendLine,
+        regressionType,
         targetLineValue,
         targetLineTitle,
         baseLineValue,
@@ -57,13 +57,28 @@ OptionsWindow = function(c) {
 		});
 
 		hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: i18n.hide_empty_category_items,
-			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
+			boxLabel: i18n.hide_empty_categories,
+			style: 'margin-bottom:' + separatorTopMargin + 'px'
 		});
 
-		showTrendLine = Ext.create('Ext.form.field.Checkbox', {
-			boxLabel: i18n.trend_line,
-			style: 'margin-bottom:' + checkboxBottomMargin + 'px'
+		regressionType = Ext.create('Ext.form.field.ComboBox', {
+			cls: 'ns-combo',
+			style: 'margin-bottom:' + comboBottomMargin + 'px',
+			width: cmpWidth,
+			labelWidth: 125,
+			fieldLabel: i18n.trend_line,
+			labelStyle: 'color:#333',
+			queryMode: 'local',
+			valueField: 'id',
+			editable: false,
+			value: 'NONE',
+			store: Ext.create('Ext.data.Store', {
+				fields: ['id', 'text'],
+				data: [
+					{id: 'NONE', text: i18n.none},
+					{id: 'LINEAR', text: i18n.linear}
+				]
+			})
 		});
 
 		targetLineValue = Ext.create('Ext.form.field.Number', {
@@ -252,12 +267,11 @@ OptionsWindow = function(c) {
 			items: [
 				showValues,
 				hideEmptyRows,
-				showTrendLine,
+				regressionType,
 				{
 					xtype: 'container',
 					layout: 'column',
 					bodyStyle: 'border:0 none',
-                    style: 'margin-top:' + (separatorTopMargin + 1) + 'px',
 					items: [
 						{
 							bodyStyle: 'border:0 none; padding-top:3px; margin-right:5px; color:#333',
@@ -344,7 +358,7 @@ OptionsWindow = function(c) {
 				return {
 					showValues: showValues.getValue(),
                     hideEmptyRows: hideEmptyRows.getValue(),
-					showTrendLine: showTrendLine.getValue(),
+					regressionType: regressionType.getValue(),
 					completedOnly: completedOnly.getValue(),
 					targetLineValue: targetLineValue.getValue(),
 					targetLineTitle: targetLineTitle.getValue(),
@@ -368,7 +382,7 @@ OptionsWindow = function(c) {
 
 				showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : false);
 				hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
-				showTrendLine.setValue(isBoolean(layout.showTrendLine) ? layout.showTrendLine : false);
+				regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
 
                 completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
 
@@ -531,7 +545,7 @@ OptionsWindow = function(c) {
 					// cmp
 					w.showValues = showValues;
                     w.hideEmptyRows = hideEmptyRows;
-					w.showTrendLine = showTrendLine;
+					w.regressionType = regressionType;
                     w.completedOnly = completedOnly;
 					w.targetLineValue = targetLineValue;
 					w.targetLineTitle = targetLineTitle;

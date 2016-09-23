@@ -20,7 +20,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     // options
     t.showValues = isBoolean(c.showData) ? c.showData : (isBoolean(c.showValues) ? c.showValues : true);
     t.hideEmptyRows = isBoolean(c.hideEmptyRows) ? c.hideEmptyRows : (isBoolean(c.hideEmptyRows) ? c.hideEmptyRows : true);
-    t.showTrendLine = isBoolean(c.regression) ? c.regression : (isBoolean(c.showTrendLine) ? c.showTrendLine : false);
+    t.regressionType = isString(c.regressionType) ? c.regressionType : 'NONE';
 
     t.completedOnly = isBoolean(c.completedOnly) ? c.completedOnly : false;
 

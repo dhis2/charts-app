@@ -18,7 +18,6 @@ import { OptionsWindow } from './ui/OptionsWindow.js';
 
 // override
 override.extOverrides();
-override.extChartOverrides();
 
 // extend
 api.Layout = Layout;
@@ -169,8 +168,11 @@ function initialize() {
 
             var el = uiManager.getUpdateComponent().body.id;
             var response = layout.getResponse();
+            var extraOptions = legendSetId ? {
+                legendSet: appManager.getLegendSetById(legendSetId)
+            } : undefined;
 
-            var { chart } = createChart(response, layout, el);
+            var { chart } = createChart(response, layout, el, extraOptions);
 
             // reg
             uiManager.reg(chart, 'chart');
