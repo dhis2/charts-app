@@ -236,6 +236,27 @@ function initialize() {
             '<div>- ' + i18n.example8 + '</div>' +
             '</div>';
     }());
+    
+    instanceManager.updateInterpretationFunction = function(interpretation){
+    	var layout = instanceManager.getLayout();
+    	var reqMap = layout.data();
+
+        reqMap.metaData.done(function (md) {
+            reqMap.data.done(function (res) {
+                res.metaData = md.metaData;
+
+                layout.setResponse(new instanceManager.api.Response(res));
+
+            	var el = uiManager.getUpdateComponent().body.id;
+                var response = layout.getResponse();
+                var extraOptions = {
+                    relativePeriodDate: interpretation.created
+                };
+
+                var { chart } = createChart(response, layout, el, extraOptions);
+            });
+        });
+    };
 
     uiManager.setUpdateFn(function(content) {
         var t = uiManager;
@@ -252,6 +273,8 @@ function initialize() {
 
     // north
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
+    
+    var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
@@ -282,6 +305,7 @@ function initialize() {
     // viewport
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
+        eastRegion: eastRegion,
         chartTypeToolbar: ui.ChartTypeToolbar(refs),
         integrationButtons: [
             tableIntegrationButton,
