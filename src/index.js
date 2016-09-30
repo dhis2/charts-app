@@ -299,6 +299,15 @@ function initialize() {
             cmp.toggleCmp(true);
             cmp.fullSize = true;
         }
+
+        var body = uiManager.getUpdateComponent().body,
+            chart = uiManager.get('chart'),
+            buffer = 12;
+
+        var width = body.getWidth() - buffer,
+            height = body.getHeight() - buffer;
+
+        chart.setSize(width, height, {duration: 50});
     });
 }
 
