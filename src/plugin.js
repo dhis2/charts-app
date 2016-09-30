@@ -162,6 +162,11 @@ var Plugin = function() {
                     // reg
                     uiManager.reg(chart, 'chart');
 
+                    // dashboard item resize
+                    document.getElementById(el).setViewportWidth = function(width) {
+                        chart.setSize(width, undefined, {duration: 100});
+                    };
+
                     // mask
                     uiManager.unmask();
                 };
