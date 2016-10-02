@@ -833,6 +833,19 @@ body,
 
 
 /*----------------------------------------------------------------------------
+ * Window
+ *--------------------------------------------------------------------------*/
+
+.x-window .x-window-header-text-default {
+    font-size: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #444;
+    padding-left: 8px;
+    padding-top: 1px;
+}
+
+/*----------------------------------------------------------------------------
  * DV Window
  *--------------------------------------------------------------------------*/
 
@@ -1049,6 +1062,7 @@ body,
 
 .ns-textarea .x-form-field {
 	font-size: 11px;
+    line-height: 14px !important;
 }
 
 .ns-textarea.monospaced textarea {
