@@ -1181,3 +1181,7 @@ body,
 	color:black;
 	font-weight:bold;
 }
+.eastPanel .commentArea textarea{
+    margin-bottom:5px;
+    font-size:12px;
+}
