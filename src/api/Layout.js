@@ -133,4 +133,12 @@ Layout.prototype.toPost = function() {
 
     delete t.id;
     delete t.el;
+
+    delete t.displayDescription;
+    delete t.interpretations;
+    delete t.lastUpdated;
+    delete t.created;
+    delete t.user;
+    delete t.publicAccess;
+    delete t.userGroupAccesses;
 };

@@ -359,7 +359,7 @@ OptionsWindow = function(c) {
 			setOptions: function(layout) {
                 layout = layout || {};
 
-				showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : false);
+				showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : true);
 				hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
 				regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
 
