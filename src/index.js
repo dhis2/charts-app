@@ -236,41 +236,6 @@ function initialize() {
             '<div>- ' + i18n.example8 + '</div>' +
             '</div>';
     }());
-    
-    instanceManager.updateInterpretationFunction = function(interpretation){
-    //         var layout = instanceManager.getLayout();
-    //         var reqMap = layout.data();
-
-    //         reqMap.metaData.done(function (md) {
-    //             reqMap.data.done(function (res) {
-    //                 res.metaData = md.metaData;
-
-    //                 layout.setResponse(new instanceManager.api.Response(res));
-
-    //                 var el = uiManager.getUpdateComponent().body.id;
-    //                 var response = layout.getResponse();
-    //                 var extraOptions = {
-    //                     relativePeriodDate: interpretation.created
-    //                 };
-
-    //                 var { chart } = createChart(response, layout, el, extraOptions);
-    //             });
-    //         });
-        //Generate reporttable for this interpretation
-        var layout = instanceManager.getStateCurrent(); // just get layout from state instead of re-picking it from ui
-
-        layout.setResponse(null); // clear the current data cache so it goes to the server with the new relativePeriodDate
-        layout.relativePeriodDate = interpretation.created; // set this date on the layout object, not in extraOptions
-        layout.interpretationId = interpretation.id;
-        
-        var actualName = layout.name;
-        if (layout.name.indexOf('<span') != -1){
-            actualName = layout.name.substring(0, layout.name.indexOf(' <span'))
-        }
-        layout.name = actualName + ' <span id="relativePeriodDateTitle">[' + manager.DateManager.getYYYYMMDD(interpretation.created, true) + ']</span>'; // just append to the name here
-
-        instanceManager.getReport(layout, true);  // re-run
-    };
 
     uiManager.setUpdateFn(function(content) {
         var t = uiManager;
@@ -287,7 +252,7 @@ function initialize() {
 
     // north
     var northRegion = uiManager.reg(ui.NorthRegion(refs), 'northRegion');
-    
+
     var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
