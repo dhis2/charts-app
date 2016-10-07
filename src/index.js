@@ -277,16 +277,16 @@ function initialize() {
             cmp.fullSize = true;
         }
 
-        var chart = uiManager.get('chart');
+        if (instanceManager.isStateCurrent()) {
+            if (uiManager.get('chart')) {
+                var body = uiManager.getUpdateComponent().body,
+                    buffer = 12;
 
-        if (chart) {
-            var body = uiManager.getUpdateComponent().body,
-                buffer = 12;
+                var width = body.getWidth() - buffer,
+                    height = body.getHeight() - buffer;
 
-            var width = body.getWidth() - buffer,
-                height = body.getHeight() - buffer;
-
-            chart.setSize(width, height, {duration: 50});
+                uiManager.get('chart').setSize(width, height, {duration: 50});
+            }
         }
     });
 }
