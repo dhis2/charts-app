@@ -48,7 +48,7 @@ var uiConfig = new config.UiConfig();
 refs.uiConfig = uiConfig;
 
     // app manager
-var appManager = new manager.AppManager();
+var appManager = new manager.AppManager(refs);
 refs.appManager = appManager;
 
     // calendar manager
@@ -162,9 +162,7 @@ function initialize() {
 
     instanceManager.setFn(function(layout) {
 
-        var legendSetId;
-
-        var fn = function() {
+        var fn = function(legendSetId) {
 
             var el = uiManager.getUpdateComponent().body.id;
             var response = layout.getResponse();
@@ -185,34 +183,10 @@ function initialize() {
         };
 
         // legend set
-        if (layout.type === 'gauge' && layout.hasDimension('dx')) {
-            var ids = layout.getDimension('dx').getRecordIds();
-
-            if (ids.length) {
-                new api.Request({
-                    type: 'json',
-                    baseUrl: appManager.getPath() + '/api/indicators.json',
-                    params: [
-                        'filter=id:eq:' + ids[0],
-                        'fields=legendSet[id]',
-                        'paging=false'
-                    ],
-                    success: function(json) {
-                        if (isArray(json.indicators) && json.indicators.length) {
-                            if (isObject(json.indicators[0].legendSet)) {
-                                var legendSet = json.indicators[0].legendSet;
-
-                                if (isObject(legendSet)) {
-                                    legendSetId = legendSet.id;
-                                }
-                            }
-                        }
-                    },
-                    complete: function() {
-                        fn();
-                    }
-                }).run();
-            }
+        if (layout.doLegendSet()) {
+            appManager.getLegendSetIdByDxId(layout.getFirstDxId(), function(legendSetId) {
+                fn(legendSetId);
+            });
         }
         else {
             fn();

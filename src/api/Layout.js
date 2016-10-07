@@ -142,3 +142,7 @@ Layout.prototype.toPost = function() {
     delete t.publicAccess;
     delete t.userGroupAccesses;
 };
+
+Layout.prototype.doLegendSet = function() {
+    return this.type === 'gauge' && this.hasDimension('dx');
+};
