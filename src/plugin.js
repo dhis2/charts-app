@@ -137,7 +137,8 @@ var Plugin = function() {
 
             var instanceManager = new manager.InstanceManager(instanceRefs);
             instanceRefs.instanceManager = instanceManager;
-            instanceManager.apiResource = 'charts';
+            instanceManager.apiResource = 'chart';
+            instanceManager.apiEndpoint = 'charts';
             instanceManager.plugin = true;
             instanceManager.dashboard = chartPlugin.dashboard;
             instanceManager.applyTo(arrayTo(api));
@@ -172,34 +173,10 @@ var Plugin = function() {
                 };
 
                 // legend set
-                if (_layout.type === 'gauge' && _layout.hasDimension('dx')) {
-                    var ids = _layout.getDimension('dx').getRecordIds();
-
-                    if (ids.length) {
-                        new api.Request({
-                            type: 'json',
-                            baseUrl: appManager.getPath() + '/api/indicators.json',
-                            params: [
-                                'filter=id:eq:' + ids[0],
-                                'fields=legendSet[id]',
-                                'paging=false'
-                            ],
-                            success: function(json) {
-                                if (isArray(json.indicators) && json.indicators.length) {
-                                    if (isObject(json.indicators[0].legendSet)) {
-                                        var legendSet = json.indicators[0].legendSet;
-
-                                        if (isObject(legendSet)) {
-                                            legendSetId = legendSet.id;
-                                        }
-                                    }
-                                }
-                            },
-                            complete: function() {
-                                fn();
-                            }
-                        }).run();
-                    }
+                if (layout.doLegendSet()) {
+                    appManager.getLegendSetIdByDxId(layout.getFirstDxId(), function(legendSetId) {
+                        fn(legendSetId);
+                    });
                 }
                 else {
                     fn();
