@@ -157,7 +157,8 @@ function initialize() {
     appManager.sessionName = 'chart';
 
     // instance manager
-    instanceManager.apiResource = 'charts';
+    instanceManager.apiResource = 'chart';
+    instanceManager.apiEndpoint = 'charts';
     instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 
     instanceManager.setFn(function(layout) {
