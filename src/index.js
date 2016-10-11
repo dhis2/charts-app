@@ -268,16 +268,7 @@ function initialize() {
         ]
     }), 'viewport');
 
-    uiManager.getUpdateComponent().on('resize', function(cmp, width) {
-        if (width < 700 && cmp.fullSize) {
-            cmp.toggleCmp();
-            cmp.fullSize = false;
-        }
-        else if (width >= 700 && !this.fullSize) {
-            cmp.toggleCmp(true);
-            cmp.fullSize = true;
-        }
-
+    uiManager.onResize(function(cmp, width) {
         if (instanceManager.isStateCurrent()) {
             if (uiManager.get('chart')) {
                 var body = uiManager.getUpdateComponent().body,
