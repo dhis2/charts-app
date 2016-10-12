@@ -13,6 +13,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
 
     // inherit
     Object.assign(t, new d2aLayout(refs, c, applyConfig));
+    t.prototype = d2aLayout.prototype;
 
     //type
     t.type = refs.chartConfig.s2c[c.type] || refs.chartConfig.client[c.type] || refs.chartConfig.client['column'];
@@ -90,57 +91,30 @@ Layout.prototype.clone = function() {
 };
 
 Layout.prototype.toPost = function() {
-    var t = this;
+    var t = this,
+        refs = t.getRefs();
+
+    t.toPostSuper();
 
     t.type = refs.chartConfig.c2s[t.type] || t.type;
 
-    delete t.klass;
-    delete t.getResponse;
-    delete t.setResponse;
-    delete t.getAccess;
-    delete t.setAccess;
-    delete t.getDataDimensionItems;
-    delete t.setDataDimensionItems;
-    delete t.getRequestPath;
+    t.showData = t.showValues;
+    delete t.showValues;
 
-    t.getDimensions(true).forEach(function(dimension) {
-        dimension.toPost();
-    });
+    t.regression = t.showTrendLine;
+	delete t.showTrendLine;
 
-    t.rowTotals = t.showRowTotals;
-    delete t.showRowTotals;
+    t.targetLineLabel = t.targetLineTitle;
+	delete t.targetLineTitle;
 
-    t.colTotals = t.showColTotals;
-    delete t.showColTotals;
+    t.baseLineLabel = t.baseLineTitle;
+	delete t.baseLineTitle;
 
-    t.rowSubTotals = t.showRowSubTotals;
-    delete t.showRowSubTotals;
+    t.domainAxisLabel = t.domainAxisTitle;
+	delete t.domainAxisTitle;
 
-    t.colSubTotals = t.showColSubTotals;
-    delete t.showColSubTotals;
-
-    t.reportParams = {
-        paramReportingPeriod: t.reportingPeriod,
-        paramOrganisationUnit: t.organisationUnit,
-        paramParentOrganisationUnit: t.parentOrganisationUnit
-    };
-
-    delete t.reportingPeriod;
-    delete t.organisationUnit;
-    delete t.parentOrganisationUnit;
-
-    delete t.parentGraphMap;
-
-    delete t.id;
-    delete t.el;
-
-    delete t.displayDescription;
-    delete t.interpretations;
-    delete t.lastUpdated;
-    delete t.created;
-    delete t.user;
-    delete t.publicAccess;
-    delete t.userGroupAccesses;
+    t.rangeAxisLabel = t.rangeAxisTitle;
+	delete t.rangeAxisTitle;
 };
 
 Layout.prototype.doLegendSet = function() {

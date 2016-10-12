@@ -33,6 +33,7 @@ OptionsWindow = function(c) {
 
         hideLegend,
         hideTitle,
+        title,
 
         completedOnly,
 
@@ -45,7 +46,7 @@ OptionsWindow = function(c) {
         comboBottomMargin = 1,
         checkboxBottomMargin = 2,
         separatorTopMargin = 6,
-        cmpWidth = 340,
+        cmpWidth = 360,
         labelWidth = 125,
         numberWidth = 80;
 
@@ -232,7 +233,25 @@ OptionsWindow = function(c) {
 
 		hideTitle = Ext.create('Ext.form.field.Checkbox', {
 			boxLabel: i18n.hide_chart_title,
-			style: 'margin-bottom:7px'
+			style: 'margin-bottom:7px',
+			listeners: {
+				change: function() {
+					title.xable();
+				}
+			}
+		});
+
+		title = Ext.create('Ext.form.field.Text', {
+			width: cmpWidth,
+			fieldLabel: i18n.chart_title,
+			labelStyle: 'color:#333',
+			labelWidth: 125,
+			maxLength: 100,
+			enforceMaxLength: true,
+			style: 'margin-bottom:0',
+			xable: function() {
+				this.setDisabled(hideTitle.getValue());
+			}
 		});
 
         // events
@@ -311,7 +330,8 @@ OptionsWindow = function(c) {
 			style: 'margin-left:14px',
 			items: [
 				hideLegend,
-				hideTitle
+				hideTitle,
+                title
 			]
 		};
 
@@ -353,7 +373,8 @@ OptionsWindow = function(c) {
 					rangeAxisTitle: rangeAxisTitle.getValue(),
 					domainAxisTitle: domainAxisTitle.getValue(),
 					hideLegend: hideLegend.getValue(),
-					hideTitle: hideTitle.getValue()
+					hideTitle: hideTitle.getValue(),
+					title: title.getValue()
 				};
 			},
 			setOptions: function(layout) {
@@ -448,6 +469,14 @@ OptionsWindow = function(c) {
 
 				hideLegend.setValue(isBoolean(layout.hideLegend) ? layout.hideLegend : false);
 				hideTitle.setValue(isBoolean(layout.hideTitle) ? layout.hideTitle : false);
+
+                // title
+				if (isString(layout.title)) {
+					title.setValue(layout.title);
+				}
+				else {
+					title.reset();
+				}
 			},
 			items: [
 				{
@@ -532,6 +561,7 @@ OptionsWindow = function(c) {
 					w.domainAxisTitle = domainAxisTitle;
 					w.hideLegend = hideLegend;
 					w.hideTitle = hideTitle;
+					w.title = title;
 				}
 			}
 		});
