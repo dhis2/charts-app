@@ -156,20 +156,13 @@ OptionsWindow = function(c) {
 			labelStyle: 'color:#333',
 			queryMode: 'local',
 			valueField: 'id',
-			editable: false,
-			value: 'DEFAULT',
-			store: Ext.create('Ext.data.Store', {
-				fields: ['id', 'text'],
-				data: [
-					{id: 'DEFAULT', text: i18n.by_data_element},
-					{id: 'COUNT', text: i18n.count},
-					{id: 'SUM', text: i18n.sum},
-					{id: 'STDDEV', text: i18n.stddev},
-					{id: 'VARIANCE', text: i18n.variance},
-					{id: 'MIN', text: i18n.min},
-					{id: 'MAX', text: i18n.max}
-				]
-			})
+            displayField: 'name',
+            editable: false,
+            value: optionConfig.getAggregationType('def').id,
+            store: Ext.create('Ext.data.Store', {
+                fields: ['id', 'name', 'index'],
+                data: optionConfig.getAggregationTypeRecords()
+            })
 		});
 
         // axes
