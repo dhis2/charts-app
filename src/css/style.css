@@ -576,6 +576,9 @@ body,
     background-image:url('../images/fav-delete.png');
 }
 
+.ns-menu-item-favorite-translate{
+	background-image:url('../images/fav-translate.png');
+}
 
 /*----------------------------------------------------------------------------
  * Button
