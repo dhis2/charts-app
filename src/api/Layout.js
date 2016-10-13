@@ -15,6 +15,9 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     Object.assign(t, new d2aLayout(refs, c, applyConfig));
     t.prototype = d2aLayout.prototype;
 
+    // ensure 1 column, 1 row, n filters
+    t.stripAxes();
+
     //type
     t.type = refs.chartConfig.s2c[c.type] || refs.chartConfig.client[c.type] || refs.chartConfig.client['column'];
 
