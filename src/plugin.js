@@ -139,6 +139,7 @@ var Plugin = function() {
             instanceRefs.instanceManager = instanceManager;
             instanceManager.apiResource = 'chart';
             instanceManager.apiEndpoint = 'charts';
+            instanceManager.apiModule = 'dhis-web-visualizer';
             instanceManager.plugin = true;
             instanceManager.dashboard = chartPlugin.dashboard;
             instanceManager.applyTo(arrayTo(api));

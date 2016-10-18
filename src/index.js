@@ -159,6 +159,7 @@ function initialize() {
     // instance manager
     instanceManager.apiResource = 'chart';
     instanceManager.apiEndpoint = 'charts';
+    instanceManager.apiModule = 'dhis-web-visualizer';
     instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 
     instanceManager.setFn(function(layout) {
