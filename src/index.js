@@ -4,8 +4,6 @@ import './css/meringue.css';
 import 'd2-analysis/css/ui/GridHeaders.css';
 
 import arrayTo from 'd2-utilizr/lib/arrayTo';
-import isArray from 'd2-utilizr/lib/isArray';
-import isObject from 'd2-utilizr/lib/isObject';
 
 import { createChart } from 'd2-charts-api';
 
@@ -106,8 +104,8 @@ var manifestReq = $.ajax({
     }
 });
 
-var systemInfoUrl = '/api/system/info.json';
-var systemSettingsUrl = '/api/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
+var systemInfoUrl = '/system/info.json';
+var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
 var userAccountUrl = '/api/me/user-account.json';
 
 var systemInfoReq;
@@ -118,12 +116,12 @@ manifestReq.done(function(text) {
     appManager.manifest = JSON.parse(text);
     appManager.env = process.env.NODE_ENV;
     appManager.setAuth();
-    systemInfoReq = $.getJSON(appManager.getPath() + systemInfoUrl);
+    systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
 
 systemInfoReq.done(function(systemInfo) {
     appManager.systemInfo = systemInfo;
     appManager.path = systemInfo.contextPath;
-    systemSettingsReq = $.getJSON(appManager.getPath() + systemSettingsUrl);
+    systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
 
 systemSettingsReq.done(function(systemSettings) {
     appManager.systemSettings = systemSettings;
