@@ -178,8 +178,8 @@ var Plugin = function() {
                 };
 
                 // legend set
-                if (layout.doLegendSet()) {
-                    appManager.getLegendSetIdByDxId(layout.getFirstDxId(), function(legendSetId) {
+                if (_layout.doLegendSet()) {
+                    appManager.getLegendSetIdByDxId(_layout.getFirstDxId(), function(legendSetId) {
                         fn(legendSetId);
                     });
                 }
