@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dhis2/dhis2-visualizer.git"
+    "url": "git+https://github.com/dhis2/charts-app.git"
   },
   "keywords": [
     "DHIS 2",
@@ -21,9 +21,9 @@
   "author": "Jan Henrik Øverland",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/dhis2/dhis2-visualizer/issues"
+    "url": "https://github.com/dhis2/charts-app/issues"
   },
-  "homepage": "https://github.com/dhis2/dhis2-visualizer#readme",
+  "homepage": "https://github.com/dhis2/charts-app#readme",
   "dependencies": {
     "d2-utilizr": "0.2.11",
     "d2-analysis": "25.0.0",
