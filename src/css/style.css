@@ -1083,7 +1083,7 @@ body,
 }
 
 .ns-textarea.monospaced textarea {
-	font-family: monospace, consolas, courier new;
+	font-family: "Monospace", "Consolas", "Courier New", "Courier 10 Pitch" !important;
 	padding: 4px;
 	border: 0 none;
 }
