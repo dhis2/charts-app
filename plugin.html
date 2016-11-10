@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plugin test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1"/>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="./build/chart.js"></script>
+</head>
+<body>
+
+<div id="r1"></div>
+<div id="r2"></div>
+<div id="r3"></div>
+
+<script>
+    var r1 = { id: "DkPKc1EUmC2", el: "r1"};
+    var r2 = { id: "IvXcdp2cFHa", el: "r2"};
+    var r3 = { id: "hewtA7a025J", el: "r3"};
+
+    chartPlugin.url = '//localhost:8080';
+    chartPlugin.username = 'admin';
+    chartPlugin.password = 'district';
+    chartPlugin.loadingIndicator = true;
+
+    chartPlugin.load(r1, r2, r3);
+</script>
+
+</body>
+</html>
