@@ -6,10 +6,9 @@ import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 
 import { createChart } from 'd2-charts-api';
 
-import { api, manager, config, ui, init, override } from 'd2-analysis';
+import { api, config, init, manager, override, ui, util } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
-
 
 // version
 const VERSION = '25';
@@ -19,7 +18,8 @@ api.Layout = Layout;
 
 // references
 var refs = {
-    api
+    api,
+    init
 };
 
 // dimension config
@@ -68,148 +68,74 @@ appManager.applyTo(arrayTo(api));
 optionConfig.applyTo(arrayTo(api));
 
 // plugin
-var Plugin = function() {
-    var t = this;
+function render(plugin, layout) {
+    var instanceRefs = Object.assign({}, refs);
 
-    t.url = null;
-    t.username = null;
-    t.password = null;
-    t.spinner = false;
+    var uiManager = new manager.UiManager(instanceRefs);
+    instanceRefs.uiManager = uiManager;
+    uiManager.applyTo(arrayTo(api));
+    uiManager.preventMask = true;
 
-    var _isPending = false;
-    var _isReady = false;
+    var instanceManager = new manager.InstanceManager(instanceRefs);
+    instanceRefs.instanceManager = instanceManager;
+    instanceManager.apiResource = 'chart';
+    instanceManager.apiEndpoint = 'charts';
+    instanceManager.apiModule = 'dhis-web-visualizer';
+    instanceManager.plugin = true;
+    instanceManager.dashboard = chartPlugin.dashboard;
+    instanceManager.applyTo(arrayTo(api));
 
-    var _layouts = [];
+    // instance manager
+    uiManager.setInstanceManager(instanceManager);
 
-    t.add = function(...layouts) {
-        layouts = isArray(layouts[0]) ? layouts[0] : layouts;
-
-        if (layouts.length) {
-            _layouts = [..._layouts, ...layouts];
-        }
-    };
-
-    t.load = function(...layouts) {
-        t.add(isArray(layouts[0]) ? layouts[0] : layouts);
-
-        _run();
-    };
-
-    var _run = function() {
-        if (_isReady) {
-            while (_layouts.length) {
-                _load(_layouts.shift());
-            }
-        }
-        else if (!_isPending) {
-            _isPending = true;
-
-            _initialize();
-        }
-    };
-
-    var _load = function(layout) {
-        if (t.spinner) {
-            $('#' + layout.el).append('<div class="spinner"></div>');
-        }
-
-        var instanceRefs = {
-            dimensionConfig,
-            optionConfig,
-            periodConfig,
-            chartConfig,
-            api,
-            appManager,
-            calendarManager,
-            requestManager,
-            sessionStorageManager
-        };
-
-        var uiManager = new manager.UiManager(instanceRefs);
-        instanceRefs.uiManager = uiManager;
-        uiManager.applyTo(arrayTo(api));
-        uiManager.preventMask = true;
-
-        var instanceManager = new manager.InstanceManager(instanceRefs);
-        instanceRefs.instanceManager = instanceManager;
-        instanceManager.apiResource = 'chart';
-        instanceManager.apiEndpoint = 'charts';
-        instanceManager.apiModule = 'dhis-web-visualizer';
-        instanceManager.plugin = true;
-        instanceManager.dashboard = chartPlugin.dashboard;
-        instanceManager.applyTo(arrayTo(api));
-
-            // instance manager
-        uiManager.setInstanceManager(instanceManager);
-
-        instanceManager.setFn(function(_layout) {
-            var legendSetId;
-
-            var fn = function() {
-
-                var el = _layout.el;
-                var response = _layout.getResponse();
-                var extraOptions = {
-                    legendSet: appManager.getLegendSetById(legendSetId),
-                    dashboard: instanceManager.dashboard
-                };
-
-                var { chart } = createChart(response, _layout, el, extraOptions);
-
-                // reg
-                uiManager.reg(chart, 'chart');
-
-                // dashboard item resize
-                document.getElementById(el).setViewportWidth = function(width) {
-                    chart.setSize(width, undefined, {duration: 100});
-                };
-
-                // mask
-                uiManager.unmask();
+    instanceManager.setFn(function (_layout) {
+        var fn = function (legendSetId) {
+            var el = _layout.el;
+            var response = _layout.getResponse();
+            var extraOptions = {
+                legendSet: appManager.getLegendSetById(legendSetId),
+                dashboard: instanceManager.dashboard
             };
 
-            // legend set
-            if (_layout.doLegendSet()) {
-                appManager.getLegendSetIdByDxId(_layout.getFirstDxId(), function(legendSetId) {
-                    fn(legendSetId);
-                });
-            }
-            else {
-                fn();
-            }
-        });
+            var {chart} = createChart(response, _layout, el, extraOptions);
 
-        if (layout.id) {
-            instanceManager.getById(layout.id, function(_layout) {
-                _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
+            // reg
+            uiManager.reg(chart, 'chart');
 
-                instanceManager.getReport(_layout);
+            // dashboard item resize
+            document.getElementById(el).setViewportWidth = function (width) {
+                chart.setSize(width, undefined, {duration: 100});
+            };
+
+            // mask
+            uiManager.unmask();
+        };
+
+        // legend set
+        if (_layout.doLegendSet()) {
+            appManager.getLegendSetIdByDxId(_layout.getFirstDxId(), function (legendSetId) {
+                fn(legendSetId);
             });
         }
         else {
-            instanceManager.getReport(new api.Layout(instanceRefs, layout));
+            fn();
         }
-    };
+    });
 
-    var _initialize = function() {
-        appManager.manifestVersion = VERSION;
-        appManager.path = t.url;
-        appManager.setAuth(t.username && t.password ? t.username + ':' + t.password : null);
+    if (plugin.loadingIndicator) {
+        uiManager.renderLoadingIndicator(layout.el);
+    }
 
-        // user account
-        $.getJSON(appManager.getPath() + '/api/me/user-account.json').done(function(userAccount) {
-            appManager.userAccount = userAccount;
+    if (layout.id) {
+        instanceManager.getById(layout.id, function (_layout) {
+            _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
 
-            requestManager.add(new api.Request(init.legendSetsInit(refs)));
-            requestManager.add(new api.Request(init.dimensionsInit(refs)));
-
-            _isReady = true;
-            _isPending = false;
-
-            requestManager.set(_run);
-            requestManager.run();
+            instanceManager.getReport(_layout);
         });
-    };
-};
+    }
+    else {
+        instanceManager.getReport(new api.Layout(instanceRefs, layout));
+    }
+}
 
-global.chartPlugin = new Plugin();
+global.chartPlugin = new util.Plugin({ refs, VERSION, renderFn: render });
