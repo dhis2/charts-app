@@ -260,6 +260,7 @@ function initialize() {
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
         eastRegion: eastRegion,
+        westRegionItems: ui.WestRegionAggregateItems(refs),
         chartTypeToolbar: ui.ChartTypeToolbar(refs),
         integrationButtons: [
             tableIntegrationButton,
