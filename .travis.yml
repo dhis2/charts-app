@@ -6,10 +6,10 @@ cache:
   - node_modules
 script:
 - npm run build
-after_success:
-- if ( [ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ] ) && [ "$TRAVIS_REPO_SLUG"
-  == "dhis2/charts-app" ]  &&  [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn clean
-  deploy --settings deploy/settings.xml && exit 0; fi
+deploy:a
+- if ( [ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ] ) && [ "$TRAVIS_REPO_SLUG" == "dhis2/charts-app" ]  &&  [ "$TRAVIS_PULL_REQUEST" == "false" ] ;then
+   mvn clean deploy --settings deploy/settings.xml && exit 0; 
+  fi
 env:
   global:
   - secure: a5QVqmbbL1/RhdZn3cPuvQYgtgI1RCPKVpsbNMv6AWk/zo9m1NzoI9uGwnNrwrpvOH+uP1D5LWLL7USjAcCxFoM4yM0tuBiIhsOjYywzX8zDbL3JrZwzzXpBdLXlVO5saqbBagRaoOAzSJ3brVFx1g0D8TJ36j3fRVu5DyF9lQqxW3Zn7n88GD32NTg33j1vVV8gi5gLU9/ZpWZk6u6KfXdFIQtPyI/iXAXO+mLOZP54rYaVYf/wmpQUpcms7KKDSwDrQhanPG+n42yQZmB9EDN/zHiwJPyxWLL9oY29Y3AbWGpZQbMEnaK8a6x9gtQoN8pmyiFAb41zM/LGWg0QvvDZWDb+UuA+0VLzGQBpBOY05DrQvuapyjmDI9wlq0kpl4vdWgcOkXrykKzvHQdZsnA4wA1B9KfJ92x4Uk4fLu0WQmtekGySeTtyF1C5yHRL/yZ5IZaZxStsH+KPCHjUivNuDq+xBqDPujj3rbZqSXSfksczAUKyVG7jHOIOLRvtgQesh/BkXQ9Oh89VAGeJVRcejQ9nGmfq0ARR16a55QdrrkTu2dNnIFlwfLhmqqXQdkh0fZSWYsqw76CrkkCY/ENG8AaUMz2SHS6y/hT15dgjTidrtJsPPycriwlRfrTiIDPM9+w/wOybkAJfLA12cs4uAU52Fk/0CstrLi76dbg=
