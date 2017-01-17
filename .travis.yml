@@ -16,6 +16,7 @@ script:
 - npm link d2-charts-api
 - npm run build
 after_success:
+- cd $TRAVIS_BUILD_DIR
 - if ( [ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ] ) && [ "$TRAVIS_REPO_SLUG" == "dhis2/charts-app" ]  &&  [ "$TRAVIS_PULL_REQUEST" == "false" ] ;then
    mvn clean deploy --settings deploy/settings.xml && exit 0; 
   fi
