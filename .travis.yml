@@ -7,7 +7,7 @@ cache:
 
 before_script:
 - cd $HOME
-- git clone --depth=10 https://github.com/dhis2/d2-charts-api.git
+- git clone --depth=10 -b v25 https://github.com/dhis2/d2-charts-api.git
 - cd $HOME/d2-charts-api
 - npm install
 - npm run build
