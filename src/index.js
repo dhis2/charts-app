@@ -149,10 +149,15 @@ requestManager.run();
 
 function initialize() {
 
+    // i18n init
     var i18n = i18nManager.get();
 
+    optionConfig.init();
+    dimensionConfig.init();
+    periodConfig.init();
+
     // app manager
-    appManager.appName = 'Data Visualizer';
+    appManager.appName = i18n.data_visualizer || 'Data Visualizer';
     appManager.sessionName = 'chart';
 
     // instance manager
