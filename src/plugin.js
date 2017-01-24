@@ -61,8 +61,11 @@ refs.sessionStorageManager = sessionStorageManager;
 // dependencies
 
 dimensionConfig.setI18nManager(i18nManager);
+dimensionConfig.init();
 optionConfig.setI18nManager(i18nManager);
+optionConfig.init();
 periodConfig.setI18nManager(i18nManager);
+periodConfig.init();
 
 appManager.applyTo(arrayTo(api));
 optionConfig.applyTo(arrayTo(api));
