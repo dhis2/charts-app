@@ -1,6 +1,6 @@
 {
   "name": "dhis2-visualizer",
-  "version": "26.0.1",
+  "version": "26.0.2",
   "description": "DHIS 2 Visualizer",
   "main": "index.html",
   "scripts": {

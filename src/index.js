@@ -48,6 +48,8 @@ refs.uiConfig = uiConfig;
 
     // app manager
 var appManager = new manager.AppManager(refs);
+appManager.sessionName = 'chart';
+appManager.apiVersion = 25;
 refs.appManager = appManager;
 
     // calendar manager
@@ -72,28 +74,22 @@ refs.uiManager = uiManager;
 
     // instance manager
 var instanceManager = new manager.InstanceManager(refs);
+instanceManager.apiResource = 'chart';
+instanceManager.apiEndpoint = 'charts';
+instanceManager.apiModule = 'dhis-web-visualizer';
+instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 refs.instanceManager = instanceManager;
 
-    // table manager
-var tableManager = new manager.TableManager(refs);
-refs.tableManager = tableManager;
-
 // dependencies
-
-    // instance manager
 uiManager.setInstanceManager(instanceManager);
-
-    // i18n manager
 dimensionConfig.setI18nManager(i18nManager);
 optionConfig.setI18nManager(i18nManager);
 periodConfig.setI18nManager(i18nManager);
 uiManager.setI18nManager(i18nManager);
 
-    // static
 appManager.applyTo([].concat(arrayTo(api)));
 instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
-//dimensionConfig.applyTo(arrayTo(chart));
 optionConfig.applyTo([].concat(arrayTo(api)));
 
 // requests
@@ -109,24 +105,24 @@ var systemInfoUrl = '/system/info.json';
 var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
 var userAccountUrl = '/api/me/user-account.json';
 
-var systemInfoReq;
-var systemSettingsReq;
-var userAccountReq;
-
 manifestReq.done(function(text) {
     appManager.manifest = JSON.parse(text);
     appManager.env = process.env.NODE_ENV;
     appManager.setAuth();
-    systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
+    appManager.logVersion();
+
+    var systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
 
 systemInfoReq.done(function(systemInfo) {
     appManager.systemInfo = systemInfo;
     appManager.path = systemInfo.contextPath;
-    systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
+
+    var systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
 
 systemSettingsReq.done(function(systemSettings) {
     appManager.systemSettings = systemSettings;
-    userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
+
+    var userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
 
 userAccountReq.done(function(userAccount) {
     appManager.userAccount = userAccount;
@@ -141,6 +137,7 @@ requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
 requestManager.add(new api.Request(init.legendSetsInit(refs)));
 requestManager.add(new api.Request(init.dimensionsInit(refs)));
 requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
+requestManager.add(new api.Request(init.userFavoritesInit(refs)));
 
 requestManager.set(initialize);
 requestManager.run();
@@ -158,13 +155,6 @@ function initialize() {
 
     // app manager
     appManager.appName = i18n.data_visualizer || 'Data Visualizer';
-    appManager.sessionName = 'chart';
-
-    // instance manager
-    instanceManager.apiResource = 'chart';
-    instanceManager.apiEndpoint = 'charts';
-    instanceManager.apiModule = 'dhis-web-visualizer';
-    instanceManager.dataStatisticsEventType = 'CHART_VIEW';
 
     instanceManager.setFn(function(layout) {
 
