@@ -194,8 +194,20 @@ function initialize() {
 
     uiManager.enableConfirmUnload();
 
+    uiManager.setIntroFn(function() {
+        if (appManager.userFavorites.length) {
+            setTimeout(function() {
+                appManager.userFavorites.forEach(function(favorite) {
+                    Ext.get('favorite-' + favorite.id).addListener('click', function() {
+                        instanceManager.getById(favorite.id, null, true);
+                    });
+                });
+            }, 0);
+        }
+    });
+
     uiManager.setIntroHtml(function() {
-        return '<div class="ns-viewport-text" style="padding:20px">' +
+        var html = '<div class="ns-viewport-text" style="padding:20px">' +
             '<h3>' + i18n.example1 + '</h3>' +
             '<div>- ' + i18n.example2 + '</div>' +
             '<div>- ' + i18n.example3 + '</div>' +
@@ -203,15 +215,23 @@ function initialize() {
             '<h3 style="padding-top:20px">' + i18n.example5 + '</h3>' +
             '<div>- ' + i18n.example6 + '</div>' +
             '<div>- ' + i18n.example7 + '</div>' +
-            '<div>- ' + i18n.example8 + '</div>' +
-            '</div>';
+            '<div>- ' + i18n.example8 + '</div>';
+
+        if (appManager.userFavorites.length > 0) {
+            html += '<div id="top-favorites" style="margin-top: 20px; padding: 0">';
+            html += `<h3>${ i18nManager.get('your_most_viewed_favorites') }</h3>`;
+
+            appManager.userFavorites.forEach(function(favorite) {
+                html += '<div>- <a href="javascript:void(0)" class="favorite favorite-li" id="favorite-' + favorite.id + '">' + favorite.name + '</a></div>';
+            });
+
+            html += '</div>';
+        }
+
+        return html;
     }());
 
-    uiManager.setUpdateFn(function(content) {
-        var t = uiManager;
-
-        t.getUpdateComponent().update(content || t.getIntroHtml());
-    });
+    uiManager.update();
 
     // windows
     uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
