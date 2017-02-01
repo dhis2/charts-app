@@ -2,7 +2,12 @@ export var DownloadButtonItems;
 
 DownloadButtonItems = function(refs, layout) {
     var uiManager = refs.uiManager,
+        instanceManager = refs.instanceManager,
         i18n = refs.i18nManager.get();
+
+    var getFilename = function() {
+        return instanceManager.getStateFavoriteName() || instanceManager.getStateCurrent().title;
+    };
 
     return [
         {
@@ -14,14 +19,14 @@ DownloadButtonItems = function(refs, layout) {
             text: i18n.image_png + ' (.png)',
             iconCls: 'ns-menu-item-image',
             handler: function() {
-                uiManager.submitSvgForm('png');
+                uiManager.submitSvgForm('png', getFilename());
             }
         },
         {
             text: 'PDF (.pdf)',
             iconCls: 'ns-menu-item-image',
             handler: function() {
-                uiManager.submitSvgForm('pdf');
+                uiManager.submitSvgForm('pdf', getFilename());
             }
         }
     ];
