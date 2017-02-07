@@ -121,5 +121,11 @@ Layout.prototype.toPost = function() {
 };
 
 Layout.prototype.doLegendSet = function() {
-    return this.type === 'gauge' && this.hasDimension('dx');
+    return [
+        'column',
+        'stackedcolumn',
+        'bar',
+        'stackedbar',
+        'pie'
+    ].indexOf(this.type) > -1;
 };
