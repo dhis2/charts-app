@@ -245,6 +245,8 @@ function initialize() {
 
     var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
+    var chartTypeToolbar = uiManager.reg(ui.ChartTypeToolbar(refs), 'chartTypeToolbar');
+
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
         btnText: i18n.chart,
@@ -276,7 +278,7 @@ function initialize() {
         northRegion: northRegion,
         eastRegion: eastRegion,
         westRegionItems: ui.WestRegionAggregateItems(refs),
-        chartTypeToolbar: ui.ChartTypeToolbar(refs),
+        chartTypeToolbar: chartTypeToolbar,
         integrationButtons: [
             tableIntegrationButton,
             defaultIntegrationButton,
