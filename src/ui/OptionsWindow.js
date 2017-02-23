@@ -15,7 +15,7 @@ OptionsWindow = function(c) {
         optionConfig = c.optionConfig,
 
         showValues,
-        percentStackedValues,
+        usePercentStackedValues,
         useCumulativeValues,
         hideEmptyRows,
         regressionType,
@@ -58,8 +58,8 @@ OptionsWindow = function(c) {
         checked: true
     });
 
-    percentStackedValues = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.percent_stacked_values,
+    usePercentStackedValues = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.use_percent_stacked_values,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
@@ -271,7 +271,7 @@ OptionsWindow = function(c) {
         style: 'margin-left:14px',
         items: [
             showValues,
-            percentStackedValues,
+            usePercentStackedValues,
             useCumulativeValues,
             hideEmptyRows,
             regressionType,
@@ -364,7 +364,7 @@ OptionsWindow = function(c) {
         getOptions: function() {
             return {
                 showValues: showValues.getValue(),
-                percentStackedValues: percentStackedValues.getValue(),
+                usePercentStackedValues: usePercentStackedValues.getValue(),
                 useCumulativeValues: useCumulativeValues.getValue(),
                 hideEmptyRows: hideEmptyRows.getValue(),
                 regressionType: regressionType.getValue(),
@@ -390,7 +390,7 @@ OptionsWindow = function(c) {
             layout = layout || {};
 
             showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : true);
-            percentStackedValues.setValue(isBoolean(layout.percentStackedValues) ? layout.percentStackedValues : true);
+            usePercentStackedValues.setValue(isBoolean(layout.usePercentStackedValues) ? layout.usePercentStackedValues : true);
             useCumulativeValues.setValue(isBoolean(layout.useCumulativeValues) ? layout.useCumulativeValues : true);
             hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
             regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
@@ -555,7 +555,7 @@ OptionsWindow = function(c) {
 
                 // cmp
                 w.showValues = showValues;
-                w.percentStackedValues = percentStackedValues;
+                w.usePercentStackedValues = usePercentStackedValues;
                 w.useCumulativeValues = useCumulativeValues;
                 w.hideEmptyRows = hideEmptyRows;
                 w.regressionType = regressionType;
