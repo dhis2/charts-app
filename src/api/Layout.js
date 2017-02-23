@@ -24,6 +24,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     // options
     t.showValues = isBoolean(c.showData) ? c.showData : (isBoolean(c.showValues) ? c.showValues : true);
     t.percentStackedValues = isBoolean(c.percentStackedValues) ? c.percentStackedValues : false;
+    t.useCumulativeValues = isBoolean(c.useCumulativeValues) ? c.useCumulativeValues : false;
     t.hideEmptyRows = isBoolean(c.hideEmptyRows) ? c.hideEmptyRows : (isBoolean(c.hideEmptyRows) ? c.hideEmptyRows : true);
     t.regressionType = isString(c.regressionType) ? c.regressionType : 'NONE';
 
