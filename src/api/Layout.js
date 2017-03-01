@@ -49,6 +49,8 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.hideLegend = isBoolean(c.hideLegend) ? c.hideLegend : false;
     t.hideTitle = isBoolean(c.hideTitle) ? c.hideTitle : false;
     t.title = isString(c.title) && !isEmpty(c.title) ? c.title : null;
+    t.hideSubtitle = isBoolean(c.hideSubtitle) ? c.hideSubtitle : false;
+    t.subtitle = isString(c.subtitle) && !isEmpty(c.subtitle) ? c.subtitle : null;
 
     // graph map
     t.parentGraphMap = isObject(c.parentGraphMap) ? c.parentGraphMap : null;
