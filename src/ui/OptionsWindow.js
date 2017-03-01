@@ -36,6 +36,8 @@ OptionsWindow = function(c) {
         hideLegend,
         hideTitle,
         title,
+        hideSubtitle,
+        subtitle,
 
         completedOnly,
 
@@ -238,7 +240,8 @@ OptionsWindow = function(c) {
 
     hideTitle = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.hide_chart_title,
-        style: 'margin-bottom:7px',
+        style: `margin-bottom:${ checkboxBottomMargin }px; margin-right: 5px`,
+        width: 125,
         listeners: {
             change: function() {
                 title.xable();
@@ -247,15 +250,35 @@ OptionsWindow = function(c) {
     });
 
     title = Ext.create('Ext.form.field.Text', {
-        width: cmpWidth,
-        fieldLabel: i18n.chart_title,
-        labelStyle: 'color:#333',
-        labelWidth: 125,
+        width: cmpWidth - labelWidth,
+        emptyText: i18n.chart_title,
         maxLength: 100,
         enforceMaxLength: true,
         style: 'margin-bottom:0',
         xable: function() {
             this.setDisabled(hideTitle.getValue());
+        }
+    });
+
+    hideSubtitle = Ext.create('Ext.form.field.Checkbox', {
+        boxLabel: i18n.hide_chart_subtitle,
+        style: `margin-bottom:${ checkboxBottomMargin }px; margin-right:5px`,
+        width: 125,
+        listeners: {
+            change: function() {
+                subtitle.xable();
+            }
+        }
+    });
+
+    subtitle = Ext.create('Ext.form.field.Text', {
+        width: cmpWidth - labelWidth,
+        emptyText: i18n.chart_subtitle,
+        maxLength: 100,
+        enforceMaxLength: true,
+        style: 'margin-bottom:0',
+        xable: function() {
+            this.setDisabled(hideSubtitle.getValue());
         }
     });
 
@@ -337,8 +360,22 @@ OptionsWindow = function(c) {
         style: 'margin-left:14px',
         items: [
             hideLegend,
-            hideTitle,
-            title
+            {
+                layout: 'column',
+                bodyStyle: 'border:0 none; padding-bottom:1px',
+                items: [
+                    hideTitle,
+                    title
+                ]
+            },
+            {
+                layout: 'column',
+                bodyStyle: 'border:0 none; padding-bottom:1px',
+                items: [
+                    hideSubtitle,
+                    subtitle
+                ]
+            },
         ]
     };
 
@@ -383,7 +420,9 @@ OptionsWindow = function(c) {
                 domainAxisTitle: domainAxisTitle.getValue(),
                 hideLegend: hideLegend.getValue(),
                 hideTitle: hideTitle.getValue(),
-                title: title.getValue()
+                title: title.getValue(),
+                hideSubtitle: hideSubtitle.getValue(),
+                subtitle: subtitle.getValue()
             };
         },
         setOptions: function(layout) {
@@ -479,15 +518,25 @@ OptionsWindow = function(c) {
             }
 
             hideLegend.setValue(isBoolean(layout.hideLegend) ? layout.hideLegend : false);
-            hideTitle.setValue(isBoolean(layout.hideTitle) ? layout.hideTitle : false);
 
             // title
+            hideTitle.setValue(isBoolean(layout.hideTitle) ? layout.hideTitle : false);
             if (isString(layout.title)) {
                 title.setValue(layout.title);
             }
             else {
                 title.reset();
             }
+
+            // subtitle
+            hideSubtitle.setValue(isBoolean(layout.hideSubtitle) ? layout.hideSubtitle : false);
+            if (isString(layout.subtitle)) {
+                subtitle.setValue(layout.subtitle);
+            }
+            else {
+                subtitle.reset();
+            }
+
         },
         items: [
             {
@@ -575,6 +624,8 @@ OptionsWindow = function(c) {
                 w.hideLegend = hideLegend;
                 w.hideTitle = hideTitle;
                 w.title = title;
+                w.hideSubtitle = hideSubtitle;
+                w.subtitle = subtitle;
             }
         }
     });
