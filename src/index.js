@@ -13,7 +13,6 @@ import { Layout } from './api/Layout';
 
 import { LayoutWindow } from './ui/LayoutWindow.js';
 import { OptionsWindow } from './ui/OptionsWindow.js';
-import { DownloadButtonItems } from './ui/DownloadButtonItems';
 
 // override
 override.extOverrides();
@@ -284,7 +283,7 @@ function initialize() {
             defaultIntegrationButton,
             mapIntegrationButton
         ],
-        DownloadButtonItems: DownloadButtonItems
+        DownloadButtonItems: ui.ChartDownloadButtonItems
     }), 'viewport');
 
     uiManager.onResize(function(cmp, width) {
