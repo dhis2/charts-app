@@ -3,8 +3,17 @@ import isNumber from 'd2-utilizr/lib/isNumber';
 import isBoolean from 'd2-utilizr/lib/isBoolean';
 import isObject from 'd2-utilizr/lib/isObject';
 import isEmpty from 'd2-utilizr/lib/isEmpty';
+import arrayContains from 'd2-utilizr/lib/arrayContains';
 
 import { Record, Layout as d2aLayout } from 'd2-analysis';
+
+var LEGEND_SET_CHART_TYPES = [
+    'column',
+    'stackedcolumn',
+    'bar',
+    'stackedbar',
+    'pie'
+];
 
 export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     var t = this;
@@ -121,11 +130,5 @@ Layout.prototype.toPost = function() {
 };
 
 Layout.prototype.doLegendSet = function() {
-    return [
-        'column',
-        'stackedcolumn',
-        'bar',
-        'stackedbar',
-        'pie'
-    ].indexOf(this.type) > -1;
+    return arrayContains(LEGEND_SET_CHART_TYPES, this.type);
 };
