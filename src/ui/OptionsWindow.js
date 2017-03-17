@@ -16,7 +16,7 @@ OptionsWindow = function(c) {
 
         showValues,
         percentStackedValues,
-        useCumulativeValues,
+        cumulativeValues,
         hideEmptyRows,
         regressionType,
         targetLineValue,
@@ -65,7 +65,7 @@ OptionsWindow = function(c) {
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    useCumulativeValues = Ext.create('Ext.form.field.Checkbox', {
+    cumulativeValues = Ext.create('Ext.form.field.Checkbox', {
         boxLabel: i18n.use_cumulative_values,
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
@@ -295,7 +295,7 @@ OptionsWindow = function(c) {
         items: [
             showValues,
             percentStackedValues,
-            useCumulativeValues,
+            cumulativeValues,
             hideEmptyRows,
             regressionType,
             {
@@ -402,7 +402,7 @@ OptionsWindow = function(c) {
             return {
                 showValues: showValues.getValue(),
                 percentStackedValues: percentStackedValues.getValue(),
-                useCumulativeValues: useCumulativeValues.getValue(),
+                cumulativeValues: cumulativeValues.getValue(),
                 hideEmptyRows: hideEmptyRows.getValue(),
                 regressionType: regressionType.getValue(),
                 completedOnly: completedOnly.getValue(),
@@ -430,7 +430,7 @@ OptionsWindow = function(c) {
 
             showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : true);
             percentStackedValues.setValue(isBoolean(layout.percentStackedValues) ? layout.percentStackedValues : true);
-            useCumulativeValues.setValue(isBoolean(layout.useCumulativeValues) ? layout.useCumulativeValues : true);
+            cumulativeValues.setValue(isBoolean(layout.cumulativeValues) ? layout.cumulativeValues : true);
             hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
             regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
 
@@ -605,7 +605,7 @@ OptionsWindow = function(c) {
                 // cmp
                 w.showValues = showValues;
                 w.percentStackedValues = percentStackedValues;
-                w.useCumulativeValues = useCumulativeValues;
+                w.cumulativeValues = cumulativeValues;
                 w.hideEmptyRows = hideEmptyRows;
                 w.regressionType = regressionType;
                 w.completedOnly = completedOnly;
