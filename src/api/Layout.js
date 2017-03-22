@@ -24,6 +24,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     // options
     t.showValues = isBoolean(c.showData) ? c.showData : (isBoolean(c.showValues) ? c.showValues : true);
     t.percentStackedValues = isBoolean(c.percentStackedValues) ? c.percentStackedValues : false;
+    t.cumulativeValues = isBoolean(c.cumulativeValues) ? c.cumulativeValues : false;
     t.hideEmptyRows = isBoolean(c.hideEmptyRows) ? c.hideEmptyRows : (isBoolean(c.hideEmptyRows) ? c.hideEmptyRows : true);
     t.regressionType = isString(c.regressionType) ? c.regressionType : 'NONE';
 
@@ -50,6 +51,8 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.hideLegend = isBoolean(c.hideLegend) ? c.hideLegend : false;
     t.hideTitle = isBoolean(c.hideTitle) ? c.hideTitle : false;
     t.title = isString(c.title) && !isEmpty(c.title) ? c.title : null;
+    t.hideSubtitle = isBoolean(c.hideSubtitle) ? c.hideSubtitle : false;
+    t.subtitle = isString(c.subtitle) && !isEmpty(c.subtitle) ? c.subtitle : null;
 
     // graph map
     t.parentGraphMap = isObject(c.parentGraphMap) ? c.parentGraphMap : null;
