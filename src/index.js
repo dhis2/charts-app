@@ -48,7 +48,7 @@ refs.uiConfig = uiConfig;
     // app manager
 var appManager = new manager.AppManager(refs);
 appManager.sessionName = 'chart';
-appManager.apiVersion = 25;
+appManager.apiVersion = 26;
 refs.appManager = appManager;
 
     // calendar manager
@@ -129,14 +129,14 @@ userAccountReq.done(function(userAccount) {
     calendarManager.setDateFormat(appManager.getDateFormat());
     calendarManager.init(appManager.systemSettings.keyCalendar);
 
-requestManager.add(new api.Request(init.i18nInit(refs)));
-requestManager.add(new api.Request(init.authViewUnapprovedDataInit(refs)));
-requestManager.add(new api.Request(init.rootNodesInit(refs)));
-requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
-requestManager.add(new api.Request(init.legendSetsInit(refs)));
-requestManager.add(new api.Request(init.dimensionsInit(refs)));
-requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
-requestManager.add(new api.Request(init.userFavoritesInit(refs)));
+requestManager.add(new api.Request(refs, init.i18nInit(refs)));
+requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
+requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
+requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
+requestManager.add(new api.Request(refs, init.dimensionsInit(refs)));
+requestManager.add(new api.Request(refs, init.dataApprovalLevelsInit(refs)));
+requestManager.add(new api.Request(refs, init.userFavoritesInit(refs)));
 
 requestManager.set(initialize);
 requestManager.run();
@@ -151,6 +151,9 @@ function initialize() {
     optionConfig.init();
     dimensionConfig.init();
     periodConfig.init();
+
+    // ui config
+    uiConfig.checkout('aggregate');
 
     // app manager
     appManager.appName = i18n.data_visualizer || 'Data Visualizer';
@@ -244,6 +247,8 @@ function initialize() {
 
     var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
+    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
+
     var chartTypeToolbar = uiManager.reg(ui.ChartTypeToolbar(refs), 'chartTypeToolbar');
 
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
@@ -284,6 +289,13 @@ function initialize() {
             mapIntegrationButton
         ],
         DownloadButtonItems: ui.ChartDownloadButtonItems
+    }, {
+        getLayoutWindow: function() {
+            return uiManager.get('layoutWindow');
+        },
+        getOptionsWindow: function() {
+            return uiManager.get('optionsWindow');
+        },
     }), 'viewport');
 
     uiManager.onResize(function(cmp, width) {
