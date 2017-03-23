@@ -70,10 +70,29 @@ OptionsWindow = function(c) {
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    hideEmptyRows = Ext.create('Ext.form.field.Checkbox', {
-        boxLabel: i18n.hide_empty_categories,
-        style: 'margin-bottom:' + separatorTopMargin + 'px'
+    hideEmptyRows = Ext.create('Ext.form.field.ComboBox', {
+        cls: 'ns-combo',
+        style: 'margin-bottom:' + comboBottomMargin + 'px',
+        width: cmpWidth,
+        labelWidth: 125,
+        fieldLabel: i18n.hide_empty_categories,
+        labelStyle: 'color:#333',
+        queryMode: 'local',
+        valueField: 'id',
+        editable: false,
+        value: 'NONE',
+        store: Ext.create('Ext.data.Store', {
+            fields: ['id', 'text'],
+            data: [
+                {id: 'NONE', text: i18n.none},
+                {id: 'BEFORE_FIRST', text: i18n.before_first},
+                {id: 'AFTER_LAST', text: i18n.after_last},
+                {id: 'BEFORE_FIRST_AFTER_LAST', text: i18n.before_first_after_last},
+                {id: 'ALL', text: i18n.all}
+            ]
+        })
     });
+
 
     regressionType = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
@@ -431,7 +450,7 @@ OptionsWindow = function(c) {
             showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : true);
             percentStackedValues.setValue(isBoolean(layout.percentStackedValues) ? layout.percentStackedValues : true);
             cumulativeValues.setValue(isBoolean(layout.cumulativeValues) ? layout.cumulativeValues : true);
-            hideEmptyRows.setValue(isBoolean(layout.hideEmptyRows) ? layout.hideEmptyRows : false);
+            hideEmptyRows.setValue(isString(layout.hideEmptyRows) ? layout.hideEmptyRows : 'NONE');
             regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
 
             completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
