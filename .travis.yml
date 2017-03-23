@@ -4,19 +4,11 @@ node_js:
 cache:
   directories:
   - node_modules
-before_script:
-- cd $HOME
-- git clone --depth=10 -b v25 https://github.com/dhis2/d2-charts-api.git
-- cd $HOME/d2-charts-api
-- npm install
-- npm run build
 script:
-- npm link d2-charts-api
 - npm run build
 after_success:
-- cd $TRAVIS_BUILD_DIR
 - if ( [ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ] ) && [ "$TRAVIS_REPO_SLUG"
-  == "dhis2/charts-app" ]  &&  [ "$TRAVIS_PULL_REQUEST" == "false" ] ;then mvn clean
+  == "dhis2/charts-app" ]  &&  [ "$TRAVIS_PULL_REQUEST" == "false" ] ; then mvn clean
   deploy --settings deploy/settings.xml && exit 0; fi
 env:
   global:
