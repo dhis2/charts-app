@@ -1275,27 +1275,27 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@27.0.0:
-  version "27.0.0"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.0.tgz#5bfcebf3def15f2da7be32418718e115571d933c"
+d2-analysis@27.0.2:
+  version "27.0.2"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.2.tgz#3b032400a9358245b3c4a722717314324e42f28b"
   dependencies:
-    d2-utilizr "^0.2.11"
+    d2-utilizr "^0.2.13"
     jquery "2.1.4"
 
-d2-charts-api@27.0.0:
-  version "27.0.0"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.0.tgz#b9b621b5e02c82c37510147e7b6d267de705cc09"
+d2-charts-api@27.0.2:
+  version "27.0.2"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.2.tgz#93f1b658d6c137705724f6fe6a2830a263fcb13a"
   dependencies:
-    d2-utilizr "0.2.11"
+    d2-utilizr "0.2.13"
     d3-color "1.0.1"
     highcharts "5.0.7"
     highcharts-more "0.1.2"
     highcharts-no-data-to-display "0.1.2"
     highcharts-solid-gauge "0.1.2"
 
-d2-utilizr@0.2.11, d2-utilizr@^0.2.11:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.11.tgz#addf9c70fedb04ea237115ab158ac79d75885c39"
+d2-utilizr@0.2.13, d2-utilizr@^0.2.13:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.13.tgz#aff6dfb054f92e2c974cf69f38f4fdc13699a6d3"
   dependencies:
     lodash.isboolean "^3.0.3"
     lodash.isfunction "^3.0.8"
