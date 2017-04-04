@@ -19,6 +19,12 @@ var refs = {
     init
 };
 
+// inits
+var inits = [
+    init.legendSetsInit,
+    init.dimensionsInit
+];
+
 // dimension config
 var dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
@@ -138,4 +144,4 @@ function render(plugin, layout) {
     }
 }
 
-global.chartPlugin = new util.Plugin({ refs, renderFn: render });
+global.chartPlugin = new util.Plugin({ refs, inits, renderFn: render });
