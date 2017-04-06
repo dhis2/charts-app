@@ -17,7 +17,7 @@ OptionsWindow = function(c) {
         showValues,
         percentStackedValues,
         cumulativeValues,
-        hideEmptyRows,
+        hideEmptyRowItems,
         regressionType,
         targetLineValue,
         targetLineTitle,
@@ -70,7 +70,7 @@ OptionsWindow = function(c) {
         style: 'margin-bottom:' + checkboxBottomMargin + 'px'
     });
 
-    hideEmptyRows = Ext.create('Ext.form.field.ComboBox', {
+    hideEmptyRowItems = Ext.create('Ext.form.field.ComboBox', {
         cls: 'ns-combo',
         style: 'margin-bottom:' + comboBottomMargin + 'px',
         width: cmpWidth,
@@ -315,7 +315,7 @@ OptionsWindow = function(c) {
             showValues,
             percentStackedValues,
             cumulativeValues,
-            hideEmptyRows,
+            hideEmptyRowItems,
             regressionType,
             {
                 xtype: 'container',
@@ -422,7 +422,7 @@ OptionsWindow = function(c) {
                 showValues: showValues.getValue(),
                 percentStackedValues: percentStackedValues.getValue(),
                 cumulativeValues: cumulativeValues.getValue(),
-                hideEmptyRows: hideEmptyRows.getValue(),
+                hideEmptyRowItems: hideEmptyRowItems.getValue(),
                 regressionType: regressionType.getValue(),
                 completedOnly: completedOnly.getValue(),
                 targetLineValue: targetLineValue.getValue(),
@@ -450,7 +450,7 @@ OptionsWindow = function(c) {
             showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : true);
             percentStackedValues.setValue(isBoolean(layout.percentStackedValues) ? layout.percentStackedValues : true);
             cumulativeValues.setValue(isBoolean(layout.cumulativeValues) ? layout.cumulativeValues : true);
-            hideEmptyRows.setValue(isString(layout.hideEmptyRows) ? layout.hideEmptyRows : 'NONE');
+            hideEmptyRowItems.setValue(isString(layout.hideEmptyRowItems) ? layout.hideEmptyRowItems : 'NONE');
             regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
 
             completedOnly.setValue(isBoolean(layout.completedOnly) ? layout.completedOnly : false);
@@ -625,7 +625,7 @@ OptionsWindow = function(c) {
                 w.showValues = showValues;
                 w.percentStackedValues = percentStackedValues;
                 w.cumulativeValues = cumulativeValues;
-                w.hideEmptyRows = hideEmptyRows;
+                w.hideEmptyRowItems = hideEmptyRowItems;
                 w.regressionType = regressionType;
                 w.completedOnly = completedOnly;
                 w.targetLineValue = targetLineValue;
