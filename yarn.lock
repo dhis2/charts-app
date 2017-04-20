@@ -1275,22 +1275,24 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@26.0.6:
-  version "26.0.6"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-26.0.6.tgz#a6822ab8bd2029a565ff25d4d810a6cdb56a584e"
+d2-analysis@26.0.7:
+  version "26.0.7"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-26.0.7.tgz#c6577fc98bb158cc934831a95c7de1c6abb7cee8"
   dependencies:
     d2-utilizr "^0.2.11"
     jquery "2.1.4"
 
-d2-charts-api@26.0.2:
-  version "26.0.2"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-26.0.2.tgz#bb280d4d0a82bb341e36d6693dac243c9c91b44c"
+d2-charts-api@26.0.4:
+  version "26.0.4"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-26.0.4.tgz#22fec7590ff324de12a24d437689cb6e939943a4"
   dependencies:
     d2-utilizr "0.2.11"
     d3-color "1.0.1"
-    highcharts "5.0.7"
+    highcharts "5.0.10"
+    highcharts-exporting "0.1.2"
     highcharts-more "0.1.2"
     highcharts-no-data-to-display "0.1.2"
+    highcharts-offline-exporting "0.1.2"
     highcharts-solid-gauge "0.1.2"
 
 d2-utilizr@0.2.11, d2-utilizr@^0.2.11:
@@ -2259,6 +2261,10 @@ hawk@~3.1.3:
     hoek "2.x.x"
     sntp "1.x.x"
 
+highcharts-exporting@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/highcharts-exporting/-/highcharts-exporting-0.1.2.tgz#49850e5a4dab2a4a88e83e8a1f143bc1c2250daf"
+
 highcharts-more@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/highcharts-more/-/highcharts-more-0.1.2.tgz#38c2e386569ec79c8bd97fd68b384c5ea512efac"
@@ -2267,13 +2273,17 @@ highcharts-no-data-to-display@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/highcharts-no-data-to-display/-/highcharts-no-data-to-display-0.1.2.tgz#274930128c10f0e78cde7d6007658d876f43f79f"
 
+highcharts-offline-exporting@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/highcharts-offline-exporting/-/highcharts-offline-exporting-0.1.2.tgz#99790dc111cc3c5592964feed2c2b672bf17438c"
+
 highcharts-solid-gauge@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/highcharts-solid-gauge/-/highcharts-solid-gauge-0.1.2.tgz#96c2943ddf362ada650ace2777514f8bda7094bb"
 
-highcharts@5.0.7:
-  version v5.0.7
-  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-5.0.7.tgz#63ebeeee05acd56e3b2554b5b31a1224e1e05bf6"
+highcharts@5.0.10:
+  version v5.0.10
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-5.0.10.tgz#7a432c39a3c27992314ab17e45ecf29bd1a91132"
 
 hoek@2.x.x:
   version "2.16.3"
