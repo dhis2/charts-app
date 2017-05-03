@@ -6,7 +6,7 @@ import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 
 import { createChart } from 'd2-charts-api';
 
-import { api, config, init, manager, override, ui, util } from 'd2-analysis';
+import { api, manager, config, init, util } from 'd2-analysis';
 
 import { Layout } from './api/Layout';
 
@@ -18,6 +18,12 @@ var refs = {
     api,
     init
 };
+
+// inits
+var inits = [
+    init.legendSetsInit,
+    init.dimensionsInit
+];
 
 // dimension config
 var dimensionConfig = new config.DimensionConfig();
@@ -37,7 +43,7 @@ refs.chartConfig = chartConfig;
 
 // app manager
 var appManager = new manager.AppManager(refs);
-appManager.apiVersion = 25;
+appManager.apiVersion = 26;
 refs.appManager = appManager;
 
 // calendar manager
@@ -97,7 +103,7 @@ function render(plugin, layout) {
                 dashboard: instanceManager.dashboard
             };
 
-            var {chart} = createChart(response, _layout, el, extraOptions);
+            var { chart } = createChart(response, _layout, el, extraOptions);
 
             // reg
             uiManager.reg(chart, 'chart');
@@ -138,4 +144,4 @@ function render(plugin, layout) {
     }
 }
 
-global.chartPlugin = new util.Plugin({ refs, renderFn: render });
+global.chartPlugin = new util.Plugin({ refs, inits, renderFn: render });
