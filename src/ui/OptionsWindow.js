@@ -4,20 +4,20 @@ import isBoolean from 'd2-utilizr/lib/isBoolean';
 import isObject from 'd2-utilizr/lib/isObject';
 
 // Options window components
-import { CumulativeValuesCheckbox } from 'd2-analysis/lib/ui/Options/CumulativeValues';
-import { PercentStackedValuesCheckbox } from 'd2-analysis/lib/ui/Options/PercentStackedValues';
-import { ShowValuesCheckbox } from 'd2-analysis/lib/ui/Options/ShowValues';
-import { HideLegendCheckbox } from 'd2-analysis/lib/ui/Options/HideLegend';
-import { RegressionTypeSelect } from 'd2-analysis/lib/ui/Options/RegressionType';
-import { SortOrderSelect } from 'd2-analysis/lib/ui/Options/SortOrder';
-import { HideEmptyRowItemsSelect } from 'd2-analysis/lib/ui/Options/HideEmptyRowItems';
-import { CompletedOnlyCheckbox } from 'd2-analysis/lib/ui/Options/CompletedOnly';
-import { AxisContainer } from 'd2-analysis/lib/ui/Options/Axis';
-import { TitleContainer } from 'd2-analysis/lib/ui/Options/Title';
-import { SubtitleContainer } from 'd2-analysis/lib/ui/Options/Subtitle';
-import { AggregationTypeSelect } from 'd2-analysis/lib/ui/Options/AggregationType';
-import { TargetLineContainer } from 'd2-analysis/lib/ui/Options/TargetLine';
-import { BaseLineContainer } from 'd2-analysis/lib/ui/Options/BaseLine';
+import { CumulativeValuesCheckbox } from 'd2-analysis/lib/ui/options/CumulativeValues';
+import { PercentStackedValuesCheckbox } from 'd2-analysis/lib/ui/options/PercentStackedValues';
+import { ShowValuesCheckbox } from 'd2-analysis/lib/ui/options/ShowValues';
+import { HideLegendCheckbox } from 'd2-analysis/lib/ui/options/HideLegend';
+import { RegressionTypeSelect } from 'd2-analysis/lib/ui/options/RegressionType';
+import { SortOrderSelect } from 'd2-analysis/lib/ui/options/SortOrder';
+import { HideEmptyRowItemsSelect } from 'd2-analysis/lib/ui/options/HideEmptyRowItems';
+import { CompletedOnlyCheckbox } from 'd2-analysis/lib/ui/options/CompletedOnly';
+import { AxisContainer } from 'd2-analysis/lib/ui/options/Axis';
+import { TitleContainer } from 'd2-analysis/lib/ui/options/Title';
+import { SubtitleContainer } from 'd2-analysis/lib/ui/options/Subtitle';
+import { AggregationTypeSelect } from 'd2-analysis/lib/ui/options/AggregationType';
+import { TargetLineContainer } from 'd2-analysis/lib/ui/options/TargetLine';
+import { BaseLineContainer } from 'd2-analysis/lib/ui/options/BaseLine';
 
 export var OptionsWindow;
 
@@ -61,6 +61,10 @@ OptionsWindow = function(refs) {
             showValues,
             percentStackedValues,
             cumulativeValues,
+            {
+                style: 'margin-top:8px',
+                bodyStyle: 'border:0 none'
+            },
             hideEmptyRowItems,
             regressionType,
             targetLineContainer,
@@ -76,6 +80,10 @@ OptionsWindow = function(refs) {
         style: 'margin-left:14px',
         items: [
             hideLegend,
+            {
+                style: 'margin-top:7px',
+                bodyStyle: 'border:0 none'
+            },
             titleContainer,
             subtitleContainer,
         ]
@@ -131,8 +139,8 @@ OptionsWindow = function(refs) {
             layout = layout || {};
 
             showValues.setValue(isBoolean(layout.showValues) ? layout.showValues : true);
-            percentStackedValues.setValue(isBoolean(layout.percentStackedValues) ? layout.percentStackedValues : true);
-            cumulativeValues.setValue(isBoolean(layout.cumulativeValues) ? layout.cumulativeValues : true);
+            percentStackedValues.setValue(isBoolean(layout.percentStackedValues) ? layout.percentStackedValues : false);
+            cumulativeValues.setValue(isBoolean(layout.cumulativeValues) ? layout.cumulativeValues : false);
             hideEmptyRowItems.setValue(isString(layout.hideEmptyRowItems) ? layout.hideEmptyRowItems : 'NONE');
             regressionType.setValue(isString(layout.regressionType) ? layout.regressionType : 'NONE');
 
