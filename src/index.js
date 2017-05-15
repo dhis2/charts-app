@@ -13,7 +13,6 @@ import { Layout } from './api/Layout';
 
 import { LayoutWindow } from './ui/LayoutWindow.js';
 import { OptionsWindow } from './ui/OptionsWindow.js';
-import { DownloadButtonItems } from './ui/DownloadButtonItems';
 
 // override
 override.extOverrides();
@@ -49,7 +48,7 @@ refs.uiConfig = uiConfig;
     // app manager
 var appManager = new manager.AppManager(refs);
 appManager.sessionName = 'chart';
-appManager.apiVersion = 25;
+appManager.apiVersion = 26;
 refs.appManager = appManager;
 
     // calendar manager
@@ -92,66 +91,31 @@ instanceManager.applyTo(arrayTo(api));
 uiManager.applyTo(arrayTo(api));
 optionConfig.applyTo([].concat(arrayTo(api)));
 
-// requests
-var manifestReq = $.ajax({
-    url: 'manifest.webapp',
-    dataType: 'text',
-    headers: {
-        'Accept': 'text/plain; charset=utf-8'
-    }
+// common initial requests for setting up the app
+appManager.init(() => {
+    requestManager.add(new api.Request(refs, init.i18nInit(refs)));
+    requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+    requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
+    requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
+    requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
+    requestManager.add(new api.Request(refs, init.dimensionsInit(refs)));
+    requestManager.add(new api.Request(refs, init.dataApprovalLevelsInit(refs)));
+    requestManager.add(new api.Request(refs, init.userFavoritesInit(refs)));
+
+    requestManager.set(initialize);
+    requestManager.run();
 });
 
-var systemInfoUrl = '/system/info.json';
-var systemSettingsUrl = '/systemSettings.json?key=keyCalendar&key=keyDateFormat&key=keyAnalysisRelativePeriod&key=keyHideUnapprovedDataInAnalytics&key=keyAnalysisDigitGroupSeparator';
-var userAccountUrl = '/api/me/user-account.json';
-
-manifestReq.done(function(text) {
-    appManager.manifest = JSON.parse(text);
-    appManager.env = process.env.NODE_ENV;
-    appManager.setAuth();
-    appManager.logVersion();
-
-    var systemInfoReq = $.getJSON(appManager.getApiPath() + systemInfoUrl);
-
-systemInfoReq.done(function(systemInfo) {
-    appManager.systemInfo = systemInfo;
-    appManager.path = systemInfo.contextPath;
-
-    var systemSettingsReq = $.getJSON(appManager.getApiPath() + systemSettingsUrl);
-
-systemSettingsReq.done(function(systemSettings) {
-    appManager.systemSettings = systemSettings;
-
-    var userAccountReq = $.getJSON(appManager.getPath() + userAccountUrl);
-
-userAccountReq.done(function(userAccount) {
-    appManager.userAccount = userAccount;
-    calendarManager.setBaseUrl(appManager.getPath());
-    calendarManager.setDateFormat(appManager.getDateFormat());
-    calendarManager.init(appManager.systemSettings.keyCalendar);
-
-requestManager.add(new api.Request(init.i18nInit(refs)));
-requestManager.add(new api.Request(init.authViewUnapprovedDataInit(refs)));
-requestManager.add(new api.Request(init.rootNodesInit(refs)));
-requestManager.add(new api.Request(init.organisationUnitLevelsInit(refs)));
-requestManager.add(new api.Request(init.legendSetsInit(refs)));
-requestManager.add(new api.Request(init.dimensionsInit(refs)));
-requestManager.add(new api.Request(init.dataApprovalLevelsInit(refs)));
-requestManager.add(new api.Request(init.userFavoritesInit(refs)));
-
-requestManager.set(initialize);
-requestManager.run();
-
-});});});});
-
 function initialize() {
-
     // i18n init
     var i18n = i18nManager.get();
 
     optionConfig.init();
     dimensionConfig.init();
     periodConfig.init();
+
+    // ui config
+    uiConfig.checkout('aggregate');
 
     // app manager
     appManager.appName = i18n.data_visualizer || 'Data Visualizer';
@@ -238,6 +202,10 @@ function initialize() {
 
     var eastRegion = uiManager.reg(ui.EastRegion(refs), 'eastRegion');
 
+    var westRegionItems = uiManager.reg(ui.WestRegionAggregateItems(refs), 'accordion');
+
+    var chartTypeToolbar = uiManager.reg(ui.ChartTypeToolbar(refs), 'chartTypeToolbar');
+
     var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
         isDefaultButton: true,
         btnText: i18n.chart,
@@ -268,14 +236,21 @@ function initialize() {
     uiManager.reg(ui.Viewport(refs, {
         northRegion: northRegion,
         eastRegion: eastRegion,
-        westRegionItems: ui.WestRegionAggregateItems(refs),
-        chartTypeToolbar: ui.ChartTypeToolbar(refs),
+        westRegionItems: westRegionItems,
+        chartTypeToolbar: chartTypeToolbar,
         integrationButtons: [
             tableIntegrationButton,
             defaultIntegrationButton,
             mapIntegrationButton
         ],
-        DownloadButtonItems: DownloadButtonItems
+        DownloadButtonItems: ui.ChartDownloadButtonItems
+    }, {
+        getLayoutWindow: function() {
+            return uiManager.get('layoutWindow');
+        },
+        getOptionsWindow: function() {
+            return uiManager.get('optionsWindow');
+        },
     }), 'viewport');
 
     uiManager.onResize(function(cmp, width) {

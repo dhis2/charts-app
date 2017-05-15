@@ -389,14 +389,6 @@ LayoutWindow = function(c) {
         }
     };
 
-    var getSetup = function() {
-        return {
-            col: getStoreKeys(colStore),
-            row: getStoreKeys(rowStore),
-            filter: getStoreKeys(filterStore)
-        };
-    };
-
     var window = Ext.create('Ext.window.Window', {
         title: i18n.chart_layout,
         bodyStyle: 'background-color:#fff; padding:' + margin + 'px',
@@ -404,7 +396,6 @@ LayoutWindow = function(c) {
         autoShow: true,
         modal: true,
         resizable: false,
-        getSetup,
         dimensionStore,
         rowStore,
         colStore,
@@ -416,7 +407,6 @@ LayoutWindow = function(c) {
         resetData,
         reset,
         setDimensions,
-        getSetup,
         hideOnBlur: true,
         items: {
             layout: 'column',
