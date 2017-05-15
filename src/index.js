@@ -157,6 +157,8 @@ function initialize() {
     uiManager.disableRightClick();
 
     uiManager.enableConfirmUnload();
+    
+    uiManager.introHtmlIsAsync = true;
 
     var introHtml = function() {
         var html = '<div class="ns-viewport-text" style="padding:20px">' +
@@ -183,10 +185,10 @@ function initialize() {
         return html;
     }
 
-    uiManager.introHtmlIsAsync = true;
     uiManager.setIntroHtml(introHtml());
+
     uiManager.setUpdateIntroHtmlFn(function() {
-        return new api.Request(init.userFavoritesInit(refs)).run()
+        return new api.Request(refs, init.userFavoritesInit(refs)).run()
             .then(() => uiManager.setIntroHtml(introHtml()));
     });
 
