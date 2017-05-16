@@ -54,7 +54,6 @@ OptionsWindow = function(refs) {
 
     // data
     data = {
-        xtype: 'container',
         bodyStyle: 'border:0 none',
         style: 'margin-left:14px',
         items: [
@@ -62,7 +61,7 @@ OptionsWindow = function(refs) {
             percentStackedValues,
             cumulativeValues,
             {
-                style: 'margin-top:8px',
+                style: 'margin-top:9px',
                 bodyStyle: 'border:0 none'
             },
             hideEmptyRowItems,
@@ -250,34 +249,34 @@ OptionsWindow = function(refs) {
         items: [
             {
                 bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:2px',
+                style: 'margin-top:4px; margin-bottom:6px; margin-left:5px',
                 html: i18n.data
             },
             data,
             {
-                bodyStyle: 'border:0 none; padding:5px'
+                bodyStyle: 'border:0 none; padding:7px'
             },
             {
                 bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:2px',
+                style: 'margin-bottom:6px; margin-left:5px',
                 html: i18n.events
             },
             events,
             {
-                bodyStyle: 'border:0 none; padding:5px'
+                bodyStyle: 'border:0 none; padding:7px'
             },
             {
                 bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:2px',
+                style: 'margin-bottom:6px; margin-left:5px',
                 html: i18n.axes
             },
             axisContainer,
             {
-                bodyStyle: 'border:0 none; padding:5px'
+                bodyStyle: 'border:0 none; padding:7px'
             },
             {
                 bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
-                style: 'margin-bottom:6px; margin-left:2px',
+                style: 'margin-bottom:6px; margin-left:5px',
                 html: i18n.general
             },
             general
