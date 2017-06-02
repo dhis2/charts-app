@@ -157,20 +157,10 @@ function initialize() {
     uiManager.disableRightClick();
 
     uiManager.enableConfirmUnload();
+    
+    uiManager.introHtmlIsAsync = true;
 
-    uiManager.setIntroFn(function() {
-        if (appManager.userFavorites.length) {
-            setTimeout(function() {
-                appManager.userFavorites.forEach(function(favorite) {
-                    Ext.get('favorite-' + favorite.id).addListener('click', function() {
-                        instanceManager.getById(favorite.id, null, true);
-                    });
-                });
-            }, 0);
-        }
-    });
-
-    uiManager.setIntroHtml(function() {
+    var introHtml = function() {
         var html = '<div class="ns-viewport-text" style="padding:20px">' +
             '<h3>' + i18n.example1 + '</h3>' +
             '<div>- ' + i18n.example2 + '</div>' +
@@ -193,9 +183,14 @@ function initialize() {
         }
 
         return html;
-    }());
+    }
 
-    uiManager.update();
+    uiManager.setIntroHtml(introHtml());
+
+    uiManager.setUpdateIntroHtmlFn(function() {
+        return new api.Request(refs, init.userFavoritesInit(refs)).run()
+            .then(() => uiManager.setIntroHtml(introHtml()));
+    });
 
     // windows
     uiManager.reg(LayoutWindow(refs), 'layoutWindow').hide();
@@ -273,6 +268,19 @@ function initialize() {
             }
         }
     });
+
+    // subscribe functions to viewport regions to update ui on renew
+    uiManager.subscribe('centerRegion', () => {
+        if (appManager.userFavorites.length) {
+            appManager.userFavorites.forEach(function(favorite) {
+                Ext.get('favorite-' + favorite.id).addListener('click', function() {
+                    instanceManager.getById(favorite.id, null, true);
+                });
+            });
+        }
+    });
+
+    uiManager.update();
 }
 
 global.refs = refs;

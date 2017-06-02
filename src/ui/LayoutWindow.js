@@ -25,6 +25,11 @@ LayoutWindow = function(c) {
 
     // components
 
+    var dxDim = {id: confData.dimensionName, name: confData.name};
+    var peDim = {id: confPeriod.dimensionName, name: confPeriod.name};
+    var ouDim = {id: confOrganisationUnit.dimensionName, name: confOrganisationUnit.name};
+    var coDim = {id: confCategory.dimensionName, name: confCategory.name};
+
     var getStore = function(data, name) {
         var config = {};
 
@@ -330,7 +335,7 @@ LayoutWindow = function(c) {
 
     var resetData = function() {
         var map = saveState({}),
-            keys = ['dx', 'ou', 'pe', 'dates'];
+            keys = [dxDim.id, peDim.id, ouDim.id, 'dates'];
 
         for (var key in map) {
             if (map.hasOwnProperty(key) && !arrayContains(keys, key)) {
@@ -346,10 +351,10 @@ LayoutWindow = function(c) {
         dimensionStore.removeAll();
 
         if (!isAll) {
-            colStore.add({id: confData.dimensionName, name: confData.name});
-            rowStore.add({id: confPeriod.dimensionName, name: confPeriod.name});
-            filterStore.add({id: confOrganisationUnit.dimensionName, name: confOrganisationUnit.name});
-            dimensionStore.add({id: confCategory.dimensionName, name: confCategory.name});
+            colStore.add(dxDim);
+            rowStore.add(peDim);
+            filterStore.add(ouDim);
+            dimensionStore.add(coDim);
         }
     };
 
@@ -386,6 +391,19 @@ LayoutWindow = function(c) {
                     name: dimensionConfig.get(dimension.dimension).name
                 }, filterStore);
             });
+        }
+
+        // add required dimensions if missing
+        if (!hasDimension(dxDim.id)) {
+            dimensionStore.add(dxDim);
+        }
+
+        if (!hasDimension(peDim.id)) {
+            dimensionStore.add(peDim);
+        }
+
+        if (!hasDimension(ouDim.id)) {
+            dimensionStore.add(ouDim);
         }
     };
 
