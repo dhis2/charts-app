@@ -1279,16 +1279,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@28.0.3:
-  version "28.0.3"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-28.0.3.tgz#5b2bc3083ca2be1bd46b5297e0e07f58835ee999"
+d2-analysis@28.0.5:
+  version "28.0.5"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-28.0.5.tgz#0438adf4cbc08a531dfcdcc377e8e4300246c2f1"
   dependencies:
     d2-utilizr "0.2.13"
     jquery "2.1.4"
 
-d2-charts-api@27.0.8:
-  version "27.0.8"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.8.tgz#4486cfcc6696bf37ef538e69a8452e479aff88aa"
+d2-charts-api@28.0.0:
+  version "28.0.0"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-28.0.0.tgz#a0c01acfe5cad84f8f766fafc574c56d4325b211"
   dependencies:
     d2-utilizr "0.2.13"
     d3-color "1.0.1"
