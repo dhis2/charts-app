@@ -95,6 +95,7 @@ optionConfig.applyTo([].concat(arrayTo(api)));
 appManager.init(() => {
     requestManager.add(new api.Request(refs, init.i18nInit(refs)));
     requestManager.add(new api.Request(refs, init.authViewUnapprovedDataInit(refs)));
+    requestManager.add(new api.Request(refs, init.isAdminInit(refs)));
     requestManager.add(new api.Request(refs, init.rootNodesInit(refs)));
     requestManager.add(new api.Request(refs, init.organisationUnitLevelsInit(refs)));
     requestManager.add(new api.Request(refs, init.legendSetsInit(refs)));
