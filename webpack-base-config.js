@@ -1,28 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-
-const isDevBuild = process.argv[1].indexOf('webpack-dev-server') !== -1;
-const dhisConfigPath = process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
-
-var dhisConfig;
-
-try {
-    dhisConfig = require(dhisConfigPath);
-    //    console.log('\nLoaded DHIS config:');
-} catch (e) {
-    // Failed to load config file - use default config
-    console.warn(`\nWARNING! Failed to load DHIS config:`, e.message);
-    console.info('Using default config');
-    dhisConfig = {
-        baseUrl: 'http://localhost:8080',
-        authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=', // admin:district
-    };
-}
-
-const scriptPrefix = (isDevBuild ? dhisConfig.baseUrl : '..');
-
 module.exports = {
     context: __dirname,
     entry: {
@@ -58,17 +36,5 @@ module.exports = {
                 ]
             },
         ],
-    },
-    plugins: [
-        new HTMLWebpackPlugin({
-            chunks: ['app'],
-            template: './index.ejs',
-            vendorScripts: [
-                `${scriptPrefix}/dhis-web-core-resource/babel-polyfill/6.20.0/dist/polyfill${isDevBuild ? '' : '.min'}.js`,
-            ]
-            .map(script => {
-                return (`<script src="${script}"></script>`);
-            }).join("\n"),
-        })
-    ]
+    }
 };
