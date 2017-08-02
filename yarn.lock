@@ -621,6 +621,12 @@ babel-plugin-transform-exponentiation-operator@^6.22.0:
     babel-plugin-syntax-exponentiation-operator "^6.8.0"
     babel-runtime "^6.22.0"
 
+babel-plugin-transform-object-assign@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-assign/-/babel-plugin-transform-object-assign-6.22.0.tgz#f99d2f66f1a0b0d498e346c5359684740caa20ba"
+  dependencies:
+    babel-runtime "^6.22.0"
+
 babel-plugin-transform-object-rest-spread@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.22.0.tgz#1d419b55e68d2e4f64a5ff3373bd67d73c8e83bc"
@@ -640,14 +646,6 @@ babel-plugin-transform-strict-mode@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
     babel-types "^6.22.0"
-
-babel-polyfill@^6.3.14:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.22.0.tgz#1ac99ebdcc6ba4db1e2618c387b2084a82154a3b"
-  dependencies:
-    babel-runtime "^6.22.0"
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
 
 babel-preset-es2015@^6.3.13:
   version "6.22.0"
@@ -1275,16 +1273,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@26.0.8:
-  version "26.0.8"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-26.0.8.tgz#686c85eb01c95add457ebf68b21e5872fbb52b95"
+d2-analysis@26.0.9:
+  version "26.0.9"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-26.0.9.tgz#b641a205240bf5cb1d204926361aba47a286fa49"
   dependencies:
     d2-utilizr "^0.2.11"
     jquery "2.1.4"
 
-d2-charts-api@26.0.5:
-  version "26.0.5"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-26.0.5.tgz#a6d43313ed120c916ec1b0430184c09b8ee91a32"
+d2-charts-api@26.0.6:
+  version "26.0.6"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-26.0.6.tgz#d8a62dbd8a416c7fbccf4b5e08f66f303520b69f"
   dependencies:
     d2-utilizr "0.2.11"
     d3-color "1.0.1"
