@@ -621,6 +621,12 @@ babel-plugin-transform-exponentiation-operator@^6.22.0:
     babel-plugin-syntax-exponentiation-operator "^6.8.0"
     babel-runtime "^6.22.0"
 
+babel-plugin-transform-object-assign@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-assign/-/babel-plugin-transform-object-assign-6.22.0.tgz#f99d2f66f1a0b0d498e346c5359684740caa20ba"
+  dependencies:
+    babel-runtime "^6.22.0"
+
 babel-plugin-transform-object-rest-spread@^6.22.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.22.0.tgz#1d419b55e68d2e4f64a5ff3373bd67d73c8e83bc"
@@ -1275,16 +1281,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@27.0.44:
-  version "27.0.44"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.44.tgz#e2187ac23b21ee9d26322bfc5fe0f43a3096f407"
+d2-analysis@27.0.61:
+  version "27.0.61"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.61.tgz#3cfdb071cedf307f2b2a75fc1fd1df0fbc53a233"
   dependencies:
     d2-utilizr "0.2.13"
     jquery "2.1.4"
 
-d2-charts-api@27.0.8:
-  version "27.0.8"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.8.tgz#4486cfcc6696bf37ef538e69a8452e479aff88aa"
+d2-charts-api@27.0.11:
+  version "27.0.11"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.11.tgz#286642d8b693612ab872f8d45002b86f3411861f"
   dependencies:
     d2-utilizr "0.2.13"
     d3-color "1.0.1"
