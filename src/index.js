@@ -157,7 +157,7 @@ function initialize() {
     uiManager.disableRightClick();
 
     uiManager.enableConfirmUnload();
-    
+
     uiManager.introHtmlIsAsync = true;
 
     var introHtml = function() {
@@ -280,7 +280,7 @@ function initialize() {
         }
     });
 
-    uiManager.update();
+    //uiManager.update();
 }
 
 global.refs = refs;
