@@ -5,3 +5,4 @@ target/
 *.json.gzip
 *.iml
 npm-debug.log
+manifest.webapp
