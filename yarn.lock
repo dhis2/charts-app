@@ -1281,16 +1281,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@27.0.68:
-  version "27.0.68"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.68.tgz#0de631f89ba71844f3a47adbc89daba411e1fad8"
+d2-analysis@27.0.70:
+  version "27.0.70"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-27.0.70.tgz#599b0c0998ad2bc18c90186ed8a502b35863d2f6"
   dependencies:
     d2-utilizr "0.2.13"
     jquery "2.1.4"
 
-d2-charts-api@27.0.11:
-  version "27.0.11"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.11.tgz#286642d8b693612ab872f8d45002b86f3411861f"
+d2-charts-api@27.0.12:
+  version "27.0.12"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-27.0.12.tgz#4a808f746bfd27eedb5b527e8cfdb9fdd2d8689f"
   dependencies:
     d2-utilizr "0.2.13"
     d3-color "1.0.1"
@@ -2283,7 +2283,7 @@ highcharts-solid-gauge@0.1.2:
   resolved "https://registry.yarnpkg.com/highcharts-solid-gauge/-/highcharts-solid-gauge-0.1.2.tgz#96c2943ddf362ada650ace2777514f8bda7094bb"
 
 highcharts@5.0.10:
-  version v5.0.10
+  version "5.0.10"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-5.0.10.tgz#7a432c39a3c27992314ab17e45ecf29bd1a91132"
 
 hoek@2.x.x:
