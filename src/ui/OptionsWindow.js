@@ -18,6 +18,7 @@ import { SubtitleContainer } from 'd2-analysis/lib/ui/options/Subtitle';
 import { AggregationTypeSelect } from 'd2-analysis/lib/ui/options/AggregationType';
 import { TargetLineContainer } from 'd2-analysis/lib/ui/options/TargetLine';
 import { BaseLineContainer } from 'd2-analysis/lib/ui/options/BaseLine';
+import { ShowAsEpiCurve } from 'd2-analysis/lib/ui/options/ShowAsEpiCurve';
 
 export var OptionsWindow;
 
@@ -48,6 +49,10 @@ OptionsWindow = function(refs) {
 
         data,
         axisContainer = AxisContainer(refs),
+
+        showAsEpiCurve = ShowAsEpiCurve(refs),
+
+        style,
         general,
         events,
         window;
@@ -73,6 +78,24 @@ OptionsWindow = function(refs) {
         ]
     };
 
+    // events
+    events = {
+        bodyStyle: 'border:0 none',
+        style: 'margin-left:14px',
+        items: [
+            completedOnly
+        ]
+    };
+
+    // style
+    style = {
+        bodyStyle: 'border:0 none',
+        style: 'margin-left:14px',
+        items: [
+            showAsEpiCurve
+        ]
+    };
+
     // general
     general = {
         bodyStyle: 'border:0 none',
@@ -85,14 +108,6 @@ OptionsWindow = function(refs) {
             },
             titleContainer,
             subtitleContainer,
-        ]
-    };
-
-    events = {
-        bodyStyle: 'border:0 none',
-        style: 'margin-left:14px',
-        items: [
-            completedOnly
         ]
     };
 
@@ -131,7 +146,8 @@ OptionsWindow = function(refs) {
                 hideTitle: titleContainer.hideTitleCheckbox.getValue(),
                 title: titleContainer.titleInput.getValue(),
                 hideSubtitle: subtitleContainer.hideSubtitleCheckbox.getValue(),
-                subtitle: subtitleContainer.subtitleInput.getValue()
+                subtitle: subtitleContainer.subtitleInput.getValue(),
+                showAsEpiCurve: showAsEpiCurve.getValue()
             };
         },
         setOptions: function(layout) {
@@ -245,6 +261,9 @@ OptionsWindow = function(refs) {
             else {
                 subtitleContainer.subtitleInput.reset();
             }
+
+            // show as Epi Curve
+            showAsEpiCurve.setValue(isBoolean(layout.showAsEpiCurve) ? layout.showAsEpiCurve : false);
         },
         items: [
             {
@@ -271,6 +290,15 @@ OptionsWindow = function(refs) {
                 html: i18n.axes
             },
             axisContainer,
+            {
+                bodyStyle: 'border:0 none; padding:7px'
+            },
+            {
+                bodyStyle: 'border:0 none; color:#222; font-size:12px; font-weight:bold',
+                style: 'margin-bottom:6px; margin-left:5px',
+                html: i18n.style
+            },
+            style,
             {
                 bodyStyle: 'border:0 none; padding:7px'
             },
@@ -334,6 +362,7 @@ OptionsWindow = function(refs) {
                 w.title = titleContainer.titleInput;
                 w.hideSubtitle = subtitleContainer.hideSubtitleCheckbox;
                 w.subtitle = subtitleContainer.subtitleInput;
+                w.showAsEpiCurve = showAsEpiCurve;
             }
         }
     });
