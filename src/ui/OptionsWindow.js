@@ -18,7 +18,7 @@ import { SubtitleContainer } from 'd2-analysis/lib/ui/options/Subtitle';
 import { AggregationTypeSelect } from 'd2-analysis/lib/ui/options/AggregationType';
 import { TargetLineContainer } from 'd2-analysis/lib/ui/options/TargetLine';
 import { BaseLineContainer } from 'd2-analysis/lib/ui/options/BaseLine';
-import { ShowAsEpiCurve } from 'd2-analysis/lib/ui/options/ShowAsEpiCurve';
+import { NoSpaceBetweenColumns } from 'd2-analysis/lib/ui/options/NoSpaceBetweenColumns';
 
 export var OptionsWindow;
 
@@ -50,7 +50,7 @@ OptionsWindow = function(refs) {
         data,
         axisContainer = AxisContainer(refs),
 
-        showAsEpiCurve = ShowAsEpiCurve(refs),
+        noSpaceBetweenColumns = NoSpaceBetweenColumns(refs),
 
         style,
         general,
@@ -92,7 +92,7 @@ OptionsWindow = function(refs) {
         bodyStyle: 'border:0 none',
         style: 'margin-left:14px',
         items: [
-            showAsEpiCurve
+            noSpaceBetweenColumns
         ]
     };
 
@@ -147,7 +147,7 @@ OptionsWindow = function(refs) {
                 title: titleContainer.titleInput.getValue(),
                 hideSubtitle: subtitleContainer.hideSubtitleCheckbox.getValue(),
                 subtitle: subtitleContainer.subtitleInput.getValue(),
-                showAsEpiCurve: showAsEpiCurve.getValue()
+                noSpaceBetweenColumns: noSpaceBetweenColumns.getValue()
             };
         },
         setOptions: function(layout) {
@@ -262,8 +262,8 @@ OptionsWindow = function(refs) {
                 subtitleContainer.subtitleInput.reset();
             }
 
-            // show as Epi Curve
-            showAsEpiCurve.setValue(isBoolean(layout.showAsEpiCurve) ? layout.showAsEpiCurve : false);
+            // remove space between columns/bars (Epi Curve)
+            noSpaceBetweenColumns.setValue(isBoolean(layout.noSpaceBetweenColumns) ? layout.noSpaceBetweenColumns : false);
         },
         items: [
             {
@@ -362,7 +362,7 @@ OptionsWindow = function(refs) {
                 w.title = titleContainer.titleInput;
                 w.hideSubtitle = subtitleContainer.hideSubtitleCheckbox;
                 w.subtitle = subtitleContainer.subtitleInput;
-                w.showAsEpiCurve = showAsEpiCurve;
+                w.noSpaceBetweenColumns = noSpaceBetweenColumns;
             }
         }
     });

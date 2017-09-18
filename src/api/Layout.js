@@ -48,7 +48,7 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.domainAxisTitle = isString(c.domainAxisLabel) && !isEmpty(c.domainAxisLabel) ? c.domainAxisLabel :
         (isString(c.domainAxisTitle) && !isEmpty(c.domainAxisTitle) ? c.domainAxisTitle : null);
 
-    t.showAsEpiCurve = isBoolean(c.showAsEpiCurve) ? c.showAsEpiCurve : false;
+    t.noSpaceBetweenColumns = isBoolean(c.noSpaceBetweenColumns) ? c.noSpaceBetweenColumns : false;
 
     t.hideLegend = isBoolean(c.hideLegend) ? c.hideLegend : false;
     t.hideTitle = isBoolean(c.hideTitle) ? c.hideTitle : false;
