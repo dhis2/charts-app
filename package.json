@@ -1,6 +1,6 @@
 {
   "name": "charts-app",
-  "version": "27.0.30",
+  "version": "27.0.31",
   "description": "DHIS 2 Visualizer",
   "main": "index.html",
   "scripts": {
