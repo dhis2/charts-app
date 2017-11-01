@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/dhis2/charts-app#readme",
   "dependencies": {
-    "d2-analysis": "27.0.80",
+    "d2-analysis": "27.0.83",
     "d2-charts-api": "27.0.12",
     "d2-utilizr": "0.2.13"
   },
