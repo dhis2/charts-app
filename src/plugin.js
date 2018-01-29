@@ -153,4 +153,4 @@ function render(plugin, layout) {
     }
 }
 
-global.chartPlugin = new util.Plugin({ refs, inits, renderFn: render });
+global.chartPlugin = new util.Plugin({ refs, inits, renderFn: render, type: 'CHART' });

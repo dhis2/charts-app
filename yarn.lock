@@ -1284,9 +1284,9 @@ d2-analysis@^28.0.45:
     d2-utilizr "0.2.13"
     jquery "2.1.4"
 
-d2-charts-api@28.0.3:
-  version "28.0.3"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-28.0.3.tgz#84f2430b017bf05e67ec9425ed40ad9064881418"
+d2-charts-api@29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-29.0.0.tgz#f4c909c919eab635b9f8ce257b7adef18769a114"
   dependencies:
     d2-utilizr "0.2.13"
     d3-color "1.0.1"
