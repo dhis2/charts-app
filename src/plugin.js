@@ -43,7 +43,7 @@ refs.chartConfig = chartConfig;
 
 // app manager
 var appManager = new manager.AppManager(refs);
-appManager.apiVersion = 26;
+appManager.apiVersion = 29;
 refs.appManager = appManager;
 
 // calendar manager
