@@ -149,7 +149,7 @@ function render(plugin, layout) {
         });
     }
     else {
-        instanceManager.getReport(new api.Layout(instanceRefs, layout));
+        instanceManager.getReport(new api.Layout(instanceRefs, layout), false, false, false, null, { noError: true, errorMessage: 'No data to display' });
     }
 }
 
