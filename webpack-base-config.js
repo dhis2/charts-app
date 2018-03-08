@@ -62,6 +62,7 @@ module.exports = {
     plugins: [
         new HTMLWebpackPlugin({
             template: './index.ejs',
+            inject: false,
             vendorScripts: [
                 `<script type="text/javascript">window.CKEDITOR_BASEPATH = '${ckeditorBasePath}/';</script>`,
                 `<script defer async src="${ckeditorBasePath}/ckeditor.js"></script>`,
