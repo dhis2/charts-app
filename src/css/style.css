@@ -1291,3 +1291,19 @@ body,
 .literal em {
     font-style: italic;
 }
+
+.cke_dialog_background_cover {
+    opacity: 0 !important;
+    z-index: 19500 !important;
+}
+
+a.cke_button_off.active {
+    background: #e5e5e5;
+    border: 1px #bcbcbc solid;
+    padding: 3px 5px;
+}
+
+.cke_dialog_contents_body {
+    padding: 9px 10px 9px 10px !important;
+    height: auto !important;
+}
