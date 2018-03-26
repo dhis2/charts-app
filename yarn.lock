@@ -1341,16 +1341,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@29.0.12:
-  version "29.0.12"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-29.0.12.tgz#8a16c4cdde9650d0cbde6dcb73d3f5dba9949c41"
+d2-analysis@29.0.18:
+  version "29.0.18"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-29.0.18.tgz#b7d5769bb34ed2f2630c42c030f8d2c6b0c6ca88"
   dependencies:
     d2-utilizr v0.2.15
     jquery "2.1.4"
 
-d2-charts-api@29.0.0:
-  version "29.0.0"
-  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-29.0.0.tgz#f4c909c919eab635b9f8ce257b7adef18769a114"
+d2-charts-api@29.0.1:
+  version "29.0.1"
+  resolved "https://registry.yarnpkg.com/d2-charts-api/-/d2-charts-api-29.0.1.tgz#b386d43bbdacda5400b27797a80adb9b1534003e"
   dependencies:
     d2-utilizr "0.2.13"
     d3-color "1.0.1"
