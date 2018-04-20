@@ -1162,6 +1162,7 @@ body,
 
 .x-tip {
     width: auto !important;
+    height: auto !important;
     background-color: grey !important;
     border: 0px;
 }
@@ -1254,4 +1255,31 @@ body,
 
 .ns-panel-title-east-default .x-panel-body {
     border-left: 0;
+}
+
+/* Subscriptions */
+
+.eastPanel .subscriber-icon button {
+    padding: 0px;
+    border: 0px;
+    cursor: pointer;
+    background-color: #FFF;
+}
+
+.eastPanel .subscriber-inner {
+    display: none;
+}
+
+.eastPanel .subscriber-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+}
+
+.eastPanel .subscriber-enabled {
+    background-image: url(../images/subscriber-enabled.png);
+}
+
+.eastPanel .subscriber-disabled {
+    background-image: url(../images/subscriber-disabled.png);
 }
