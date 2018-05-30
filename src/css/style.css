@@ -1309,6 +1309,10 @@ a.cke_button_off.active {
     height: auto !important;
 }
 
+.cke_smiley .cke_dialog_contents_body {
+    width: 150px !important;
+}
+
 /* Favorite */
 
 .eastPanel .favorite-icon button {
