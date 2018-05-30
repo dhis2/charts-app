@@ -65,7 +65,7 @@ module.exports = {
             inject: false,
             vendorScripts: [
                 `<script type="text/javascript">window.CKEDITOR_BASEPATH = '${ckeditorBasePath}/';</script>`,
-                `<script defer async src="${ckeditorBasePath}/ckeditor.js"></script>`,
+                `<script src="${ckeditorBasePath}/ckeditor.js"></script>`,
             ].join("\n"),
         }),
     ]
