@@ -1341,11 +1341,11 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@29.0.25:
-  version "29.0.25"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-29.0.25.tgz#56a8f2584fc9af57f0e891a6f70d792ba0cb45de"
+d2-analysis@29.0.31:
+  version "29.0.31"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-29.0.31.tgz#48c1dd8b3e2aa2de944414b18e05c5d44c31729e"
   dependencies:
-    d2-utilizr v0.2.15
+    d2-utilizr "^0.2.16"
     jquery "2.1.4"
 
 d2-charts-api@29.0.1:
@@ -1383,9 +1383,9 @@ d2-utilizr@0.2.13:
     lodash.isset "^4.3.0"
     lodash.isstring "^4.0.1"
 
-d2-utilizr@v0.2.15:
-  version "0.2.15"
-  resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.15.tgz#377fba849edf03f927ca7bd9e0fdd6339c293e0d"
+d2-utilizr@^0.2.16:
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.16.tgz#b71df7ca8c7ab5125ca8bdb4899611bc6782a754"
   dependencies:
     lodash.isboolean "^3.0.3"
     lodash.isfunction "^3.0.8"
@@ -2430,7 +2430,7 @@ highcharts-solid-gauge@0.1.2:
   resolved "https://registry.yarnpkg.com/highcharts-solid-gauge/-/highcharts-solid-gauge-0.1.2.tgz#96c2943ddf362ada650ace2777514f8bda7094bb"
 
 highcharts@5.0.10:
-  version v5.0.10
+  version "5.0.10"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-5.0.10.tgz#7a432c39a3c27992314ab17e45ecf29bd1a91132"
 
 hoek@2.x.x:
