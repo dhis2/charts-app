@@ -1,6 +1,6 @@
 {
   "name": "charts-app",
-  "version": "29.0.12",
+  "version": "29.0.13",
   "description": "Data visualizer app",
   "main": "index.html",
   "scripts": {
