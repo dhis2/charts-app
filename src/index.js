@@ -7,7 +7,8 @@ import arrayTo from 'd2-utilizr/lib/arrayTo';
 
 import { createChart } from 'd2-charts-api';
 
-import { api, manager, config, ui, ux, init, override } from 'd2-analysis';
+import { api, manager, config, ui, init, override } from 'd2-analysis';
+import { CKEditor } from 'd2-analysis/lib/ux/CKEditor';
 
 import { Layout } from './api/Layout';
 
@@ -122,7 +123,7 @@ function initialize() {
     appManager.appName = i18n.data_visualizer || 'Data Visualizer';
 
     // CKEditor
-    ux.CKEditor(refs);
+    CKEditor(refs);
 
     instanceManager.setFn(function(layout) {
 
