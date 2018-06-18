@@ -2,6 +2,7 @@ node_modules/
 build/
 target/
 .idea/
+.vscode
 *.json.gzip
 *.iml
 npm-debug.log

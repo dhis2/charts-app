@@ -2,6 +2,7 @@ import './css/style.css';
 
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 import isArray from 'd2-utilizr/lib/isArray';
+import isObject from 'd2-utilizr/lib/isObject';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 
 import { createChart } from 'd2-charts-api';
@@ -73,8 +74,19 @@ periodConfig.init();
 appManager.applyTo(arrayTo(api));
 optionConfig.applyTo(arrayTo(api));
 
+const isTargetDiv = elId => !!document.getElementById(elId);
+
+const logNoTargetDiv = (id, name) => {
+    console.log(`Chart suspended (${id}, ${name})`);
+};
+
 // plugin
 function render(plugin, layout) {
+    if (!isTargetDiv(layout.el)) {
+        logNoTargetDiv(layout.id, layout.name || layout.displayName);
+        return;
+    }
+
     var instanceRefs = Object.assign({}, refs);
 
     var uiManager = new manager.UiManager(instanceRefs);
@@ -96,6 +108,11 @@ function render(plugin, layout) {
 
     instanceManager.setFn(function (_layout) {
         var fn = function (legendSetId) {
+            if (!isTargetDiv(_layout.el)) {
+                logNoTargetDiv(_layout.id, _layout.name || _layout.displayName);
+                return;
+            }
+
             var el = _layout.el;
             var element = document.getElementById(el);
             var response = _layout.getResponse();
