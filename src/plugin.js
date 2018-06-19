@@ -74,16 +74,9 @@ periodConfig.init();
 appManager.applyTo(arrayTo(api));
 optionConfig.applyTo(arrayTo(api));
 
-const isTargetDiv = elId => !!document.getElementById(elId);
-
-const logNoTargetDiv = (id, name) => {
-    console.log(`Chart suspended (${id}, ${name})`);
-};
-
 // plugin
 function render(plugin, layout) {
-    if (!isTargetDiv(layout.el)) {
-        logNoTargetDiv(layout.id, layout.name || layout.displayName);
+    if (!util.dom.validateTargetDiv(layout.el)) {
         return;
     }
 
@@ -107,12 +100,11 @@ function render(plugin, layout) {
     uiManager.setInstanceManager(instanceManager);
 
     instanceManager.setFn(function (_layout) {
-        var fn = function (legendSetId) {
-            if (!isTargetDiv(_layout.el)) {
-                logNoTargetDiv(_layout.id, _layout.name || _layout.displayName);
-                return;
-            }
+        if (!util.dom.validateTargetDiv(_layout.el)) {
+            return;
+        }
 
+        var fn = function (legendSetId) {
             var el = _layout.el;
             var element = document.getElementById(el);
             var response = _layout.getResponse();
@@ -161,6 +153,10 @@ function render(plugin, layout) {
     if (layout.id) {
         instanceManager.getById(layout.id, function (_layout) {
             _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
+
+            if (!util.dom.validateTargetDiv(_layout.el)) {
+                return;
+            }
 
             instanceManager.getReport(_layout);
         });
