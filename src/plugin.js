@@ -2,7 +2,6 @@ import './css/style.css';
 
 import arrayTo from 'd2-utilizr/lib/arrayTo';
 import isArray from 'd2-utilizr/lib/isArray';
-import isObject from 'd2-utilizr/lib/isObject';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 
 import { createChart } from 'd2-charts-api';
