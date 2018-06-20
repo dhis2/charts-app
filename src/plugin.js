@@ -75,6 +75,10 @@ optionConfig.applyTo(arrayTo(api));
 
 // plugin
 function render(plugin, layout) {
+    if (!util.dom.validateTargetDiv(layout.el)) {
+        return;
+    }
+
     var instanceRefs = Object.assign({}, refs);
 
     var uiManager = new manager.UiManager(instanceRefs);
@@ -95,6 +99,10 @@ function render(plugin, layout) {
     uiManager.setInstanceManager(instanceManager);
 
     instanceManager.setFn(function (_layout) {
+        if (!util.dom.validateTargetDiv(_layout.el)) {
+            return;
+        }
+
         var fn = function (legendSetId) {
             var el = _layout.el;
             var element = document.getElementById(el);
@@ -144,6 +152,10 @@ function render(plugin, layout) {
     if (layout.id) {
         instanceManager.getById(layout.id, function (_layout) {
             _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
+
+            if (!util.dom.validateTargetDiv(_layout.el)) {
+                return;
+            }
 
             instanceManager.getReport(_layout);
         });
