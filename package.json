@@ -1,5 +1,5 @@
 {
-  "name": "charts-app",
+  "name": "visualizer-app",
   "version": "29.0.17",
   "description": "Data visualizer app",
   "main": "index.html",
