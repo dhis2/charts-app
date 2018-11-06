@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@dhis2/deploy-build@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@dhis2/deploy-build/-/deploy-build-1.0.4.tgz#4cdfe26b4ab10e94019783243734da60eb3eda18"
-
 Base64@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/Base64/-/Base64-0.2.1.tgz#ba3a4230708e186705065e66babdd4c35cf60028"
@@ -1281,9 +1277,9 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@30.0.8:
-  version "30.0.8"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-30.0.8.tgz#4ae8c6ef4ecb6d0cb9e64fc0ac2db4bc238f18b9"
+d2-analysis@30.0.27:
+  version "30.0.27"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-30.0.27.tgz#9e036ef275f5f81b3aef5d85c03fa1088dcc6320"
   dependencies:
     d2-utilizr "^0.2.16"
     jquery "2.1.4"
