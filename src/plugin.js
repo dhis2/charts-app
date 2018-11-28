@@ -16,14 +16,11 @@ api.Layout = Layout;
 // references
 var refs = {
     api,
-    init
+    init,
 };
 
 // inits
-var inits = [
-    init.legendSetsInit,
-    init.dimensionsInit
-];
+var inits = [init.legendSetsInit, init.dimensionsInit];
 
 // dimension config
 var dimensionConfig = new config.DimensionConfig();
@@ -98,18 +95,18 @@ function render(plugin, layout) {
     // instance manager
     uiManager.setInstanceManager(instanceManager);
 
-    instanceManager.setFn(function (_layout) {
+    instanceManager.setFn(function(_layout) {
         if (!util.dom.validateTargetDiv(_layout.el)) {
             return;
         }
 
-        var fn = function (legendSetId) {
+        var fn = function(legendSetId) {
             var el = _layout.el;
             var element = document.getElementById(el);
             var response = _layout.getResponse();
             var extraOptions = {
                 legendSet: appManager.getLegendSetById(legendSetId),
-                dashboard: instanceManager.dashboard
+                dashboard: instanceManager.dashboard,
             };
 
             var { chart } = createChart(response, _layout, el, extraOptions);
@@ -118,16 +115,16 @@ function render(plugin, layout) {
             uiManager.reg(chart, 'chart');
 
             // dashboard item resize
-            element.setViewportWidth = function (width) {
-                chart.setSize(width, undefined, {duration: 50});
+            element.setViewportWidth = function(width) {
+                chart.setSize(width, undefined, { duration: 50 });
             };
 
-            element.setViewportHeight = function (height) {
-                chart.setSize(undefined, height, {duration: 50});
+            element.setViewportHeight = function(height) {
+                chart.setSize(undefined, height, { duration: 50 });
             };
 
-            element.setViewportSize = function (width, height) {
-                chart.setSize(width, height, {duration: 50});
+            element.setViewportSize = function(width, height) {
+                chart.setSize(width, height, { duration: 50 });
             };
 
             // mask
@@ -136,11 +133,10 @@ function render(plugin, layout) {
 
         // legend set
         if (_layout.doLegendSet()) {
-            appManager.getLegendSetIdByDxId(_layout.getFirstDxId(), function (legendSetId) {
+            appManager.getLegendSetIdByDxId(_layout.getFirstDxId(), function(legendSetId) {
                 fn(legendSetId);
             });
-        }
-        else {
+        } else {
             fn();
         }
     });
@@ -150,7 +146,7 @@ function render(plugin, layout) {
     }
 
     if (layout.id) {
-        instanceManager.getById(layout.id, function (_layout) {
+        instanceManager.getById(layout.id, function(_layout) {
             _layout = new api.Layout(instanceRefs, objectApplyIf(layout, _layout));
 
             if (!util.dom.validateTargetDiv(_layout.el)) {
@@ -159,9 +155,11 @@ function render(plugin, layout) {
 
             instanceManager.getReport(_layout);
         });
-    }
-    else {
-        instanceManager.getReport(new api.Layout(instanceRefs, layout), false, false, false, null, { noError: true, errorMessage: 'No data to display' });
+    } else {
+        instanceManager.getReport(new api.Layout(instanceRefs, layout), false, false, false, null, {
+            noError: true,
+            errorMessage: 'No data to display',
+        });
     }
 }
 

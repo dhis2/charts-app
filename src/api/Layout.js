@@ -19,10 +19,15 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.stripAxes();
 
     //type
-    t.type = refs.chartConfig.s2c[c.type] || refs.chartConfig.client[c.type] || refs.chartConfig.client['column'];
+    t.type =
+        refs.chartConfig.s2c[c.type] ||
+        refs.chartConfig.client[c.type] ||
+        refs.chartConfig.client['column'];
 
     // options
-    t.showValues = isBoolean(c.showData) ? c.showData : (isBoolean(c.showValues) ? c.showValues : true);
+    t.showValues = isBoolean(c.showData)
+        ? c.showData
+        : isBoolean(c.showValues) ? c.showValues : true;
     t.percentStackedValues = isBoolean(c.percentStackedValues) ? c.percentStackedValues : false;
     t.cumulativeValues = isBoolean(c.cumulativeValues) ? c.cumulativeValues : false;
     t.hideEmptyRowItems = isString(c.hideEmptyRowItems) ? c.hideEmptyRowItems : 'NONE';
@@ -31,11 +36,15 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.completedOnly = isBoolean(c.completedOnly) ? c.completedOnly : false;
 
     t.targetLineValue = isNumber(c.targetLineValue) ? c.targetLineValue : null;
-    t.targetLineTitle = isString(c.targetLineLabel) && !isEmpty(c.targetLineLabel) ? c.targetLineLabel :
-        (isString(c.targetLineTitle) && !isEmpty(c.targetLineTitle) ? c.targetLineTitle : null);
+    t.targetLineTitle =
+        isString(c.targetLineLabel) && !isEmpty(c.targetLineLabel)
+            ? c.targetLineLabel
+            : isString(c.targetLineTitle) && !isEmpty(c.targetLineTitle) ? c.targetLineTitle : null;
     t.baseLineValue = isNumber(c.baseLineValue) ? c.baseLineValue : null;
-    t.baseLineTitle = isString(c.baseLineLabel) && !isEmpty(c.baseLineLabel) ? c.baseLineLabel :
-        (isString(c.baseLineTitle) && !isEmpty(c.baseLineTitle) ? c.baseLineTitle : null);
+    t.baseLineTitle =
+        isString(c.baseLineLabel) && !isEmpty(c.baseLineLabel)
+            ? c.baseLineLabel
+            : isString(c.baseLineTitle) && !isEmpty(c.baseLineTitle) ? c.baseLineTitle : null;
     t.sortOrder = isNumber(c.sortOrder) ? c.sortOrder : 0;
     t.aggregationType = isString(c.aggregationType) ? c.aggregationType : 'DEFAULT';
 
@@ -43,10 +52,14 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     t.rangeAxisMinValue = isNumber(c.rangeAxisMinValue) ? c.rangeAxisMinValue : null;
     t.rangeAxisSteps = isNumber(c.rangeAxisSteps) ? c.rangeAxisSteps : null;
     t.rangeAxisDecimals = isNumber(c.rangeAxisDecimals) ? c.rangeAxisDecimals : null;
-    t.rangeAxisTitle = isString(c.rangeAxisLabel) && !isEmpty(c.rangeAxisLabel) ? c.rangeAxisLabel :
-        (isString(c.rangeAxisTitle) && !isEmpty(c.rangeAxisTitle) ? c.rangeAxisTitle : null);
-    t.domainAxisTitle = isString(c.domainAxisLabel) && !isEmpty(c.domainAxisLabel) ? c.domainAxisLabel :
-        (isString(c.domainAxisTitle) && !isEmpty(c.domainAxisTitle) ? c.domainAxisTitle : null);
+    t.rangeAxisTitle =
+        isString(c.rangeAxisLabel) && !isEmpty(c.rangeAxisLabel)
+            ? c.rangeAxisLabel
+            : isString(c.rangeAxisTitle) && !isEmpty(c.rangeAxisTitle) ? c.rangeAxisTitle : null;
+    t.domainAxisTitle =
+        isString(c.domainAxisLabel) && !isEmpty(c.domainAxisLabel)
+            ? c.domainAxisLabel
+            : isString(c.domainAxisTitle) && !isEmpty(c.domainAxisTitle) ? c.domainAxisTitle : null;
 
     t.noSpaceBetweenColumns = isBoolean(c.noSpaceBetweenColumns) ? c.noSpaceBetweenColumns : false;
 
@@ -79,14 +92,14 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
     // force apply
     Object.assign(t, forceApplyConfig);
 
-    t.getRefs = function() {
+    t.getRefs = function() {
         return refs;
     };
 };
 
 Layout.prototype = d2aLayout.prototype;
 
-Layout.prototype.clone = function() {
+Layout.prototype.clone = function() {
     var t = this,
         refs = this.getRefs();
 
@@ -99,7 +112,7 @@ Layout.prototype.clone = function() {
     return layout;
 };
 
-Layout.prototype.toPost = function() {
+Layout.prototype.toPost = function() {
     var t = this,
         refs = t.getRefs();
 
@@ -111,21 +124,21 @@ Layout.prototype.toPost = function() {
     delete t.showValues;
 
     t.regression = t.showTrendLine;
-	delete t.showTrendLine;
+    delete t.showTrendLine;
 
     t.targetLineLabel = t.targetLineTitle;
-	delete t.targetLineTitle;
+    delete t.targetLineTitle;
 
     t.baseLineLabel = t.baseLineTitle;
-	delete t.baseLineTitle;
+    delete t.baseLineTitle;
 
     t.domainAxisLabel = t.domainAxisTitle;
-	delete t.domainAxisTitle;
+    delete t.domainAxisTitle;
 
     t.rangeAxisLabel = t.rangeAxisTitle;
-	delete t.rangeAxisTitle;
+    delete t.rangeAxisTitle;
 };
 
-Layout.prototype.doLegendSet = function() {
+Layout.prototype.doLegendSet = function() {
     return this.type === 'gauge' && this.hasDimension('dx');
 };
