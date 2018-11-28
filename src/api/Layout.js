@@ -89,6 +89,9 @@ export var Layout = function(refs, c, applyConfig, forceApplyConfig) {
         t.seriesStyle = c.seriesStyle;
     }
 
+    // yearlySeries
+    t.yearlySeries = c.yearlySeries;
+
     // force apply
     Object.assign(t, forceApplyConfig);
 
