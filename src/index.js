@@ -22,56 +22,56 @@ api.Layout = Layout;
 
 // references
 var refs = {
-    api
+    api,
 };
 
-    // dimension config
+// dimension config
 var dimensionConfig = new config.DimensionConfig();
 refs.dimensionConfig = dimensionConfig;
 
-    // option config
+// option config
 var optionConfig = new config.OptionConfig();
 refs.optionConfig = optionConfig;
 
-    // period config
+// period config
 var periodConfig = new config.PeriodConfig();
 refs.periodConfig = periodConfig;
 
-    // chart config
+// chart config
 var chartConfig = new config.ChartConfig();
 refs.chartConfig = chartConfig;
 
-    // ui config
+// ui config
 var uiConfig = new config.UiConfig();
 refs.uiConfig = uiConfig;
 
-    // app manager
+// app manager
 var appManager = new manager.AppManager(refs);
 appManager.sessionName = 'chart';
-appManager.apiVersion = 29;
+appManager.apiVersion = 31;
 refs.appManager = appManager;
 
-    // calendar manager
+// calendar manager
 var calendarManager = new manager.CalendarManager(refs);
 refs.calendarManager = calendarManager;
 
-    // request manager
+// request manager
 var requestManager = new manager.RequestManager(refs);
 refs.requestManager = requestManager;
 
-    // i18n manager
+// i18n manager
 var i18nManager = new manager.I18nManager(refs);
 refs.i18nManager = i18nManager;
 
-    // sessionstorage manager
+// sessionstorage manager
 var sessionStorageManager = new manager.SessionStorageManager(refs);
 refs.sessionStorageManager = sessionStorageManager;
 
-    // ui manager
+// ui manager
 var uiManager = new manager.UiManager(refs);
 refs.uiManager = uiManager;
 
-    // instance manager
+// instance manager
 var instanceManager = new manager.InstanceManager(refs);
 instanceManager.apiResource = 'chart';
 instanceManager.apiEndpoint = 'charts';
@@ -107,7 +107,7 @@ appManager.init(() => {
     requestManager.run();
 });
 
-function initialize() {
+function initialize() {
     // i18n init
     var i18n = i18nManager.get();
 
@@ -121,15 +121,15 @@ function initialize() {
     // app manager
     appManager.appName = i18n.data_visualizer || 'Data Visualizer';
 
-    instanceManager.setFn(function(layout) {
-
-        var fn = function(legendSetId) {
-
+    instanceManager.setFn(function(layout) {
+        var fn = function(legendSetId) {
             var el = uiManager.getUpdateComponent().body.id;
             var response = layout.getResponse();
-            var extraOptions = legendSetId ? {
-                legendSet: appManager.getLegendSetById(legendSetId)
-            } : undefined;
+            var extraOptions = legendSetId
+                ? {
+                      legendSet: appManager.getLegendSetById(legendSetId),
+                  }
+                : undefined;
 
             var { chart } = createChart(response, layout, el, extraOptions);
 
@@ -144,12 +144,11 @@ function initialize() {
         };
 
         // legend set
-        if (layout.doLegendSet()) {
-            appManager.getLegendSetIdByDxId(layout.getFirstDxId(), function(legendSetId) {
+        if (layout.doLegendSet()) {
+            appManager.getLegendSetIdByDxId(layout.getFirstDxId(), function(legendSetId) {
                 fn(legendSetId);
             });
-        }
-        else {
+        } else {
             fn();
         }
     });
@@ -161,35 +160,58 @@ function initialize() {
 
     uiManager.introHtmlIsAsync = true;
 
-    var introHtml = function() {
-        var html = '<div class="ns-viewport-text" style="padding:20px">' +
-            '<h3>' + i18n.example1 + '</h3>' +
-            '<div>- ' + i18n.example2 + '</div>' +
-            '<div>- ' + i18n.example3 + '</div>' +
-            '<div>- ' + i18n.example4 + '</div>' +
-            '<h3 style="padding-top:20px">' + i18n.example5 + '</h3>' +
-            '<div>- ' + i18n.example6 + '</div>' +
-            '<div>- ' + i18n.example7 + '</div>' +
-            '<div>- ' + i18n.example8 + '</div>';
+    var introHtml = function() {
+        var html =
+            '<div class="ns-viewport-text" style="padding:20px">' +
+            '<h3>' +
+            i18n.example1 +
+            '</h3>' +
+            '<div>- ' +
+            i18n.example2 +
+            '</div>' +
+            '<div>- ' +
+            i18n.example3 +
+            '</div>' +
+            '<div>- ' +
+            i18n.example4 +
+            '</div>' +
+            '<h3 style="padding-top:20px">' +
+            i18n.example5 +
+            '</h3>' +
+            '<div>- ' +
+            i18n.example6 +
+            '</div>' +
+            '<div>- ' +
+            i18n.example7 +
+            '</div>' +
+            '<div>- ' +
+            i18n.example8 +
+            '</div>';
 
         if (appManager.userFavorites.length > 0) {
             html += '<div id="top-favorites" style="margin-top: 20px; padding: 0">';
-            html += `<h3>${ i18nManager.get('your_most_viewed_favorites') }</h3>`;
+            html += `<h3>${i18nManager.get('your_most_viewed_favorites')}</h3>`;
 
             appManager.userFavorites.forEach(function(favorite) {
-                html += '<div>- <a href="javascript:void(0)" class="favorite favorite-li" id="favorite-' + favorite.id + '">' + favorite.name + '</a></div>';
+                html +=
+                    '<div>- <a href="javascript:void(0)" class="favorite favorite-li" id="favorite-' +
+                    favorite.id +
+                    '">' +
+                    favorite.name +
+                    '</a></div>';
             });
 
             html += '</div>';
         }
 
         return html;
-    }
+    };
 
     uiManager.setIntroHtml(introHtml());
 
     uiManager.setUpdateIntroHtmlFn(function() {
-        return new api.Request(refs, init.userFavoritesInit(refs)).run()
+        return new api.Request(refs, init.userFavoritesInit(refs))
+            .run()
             .then(() => uiManager.setIntroHtml(introHtml()));
     });
 
@@ -209,11 +231,14 @@ function initialize() {
 
     var chartTypeToolbar = uiManager.reg(ui.ChartTypeToolbar(refs), 'chartTypeToolbar');
 
-    var defaultIntegrationButton = uiManager.reg(ui.IntegrationButton(refs, {
-        isDefaultButton: true,
-        btnText: i18n.chart,
-        btnIconCls: 'ns-button-icon-chart'
-    }), 'defaultIntegrationButton');
+    var defaultIntegrationButton = uiManager.reg(
+        ui.IntegrationButton(refs, {
+            isDefaultButton: true,
+            btnText: i18n.chart,
+            btnIconCls: 'ns-button-icon-chart',
+        }),
+        'defaultIntegrationButton'
+    );
 
     var tableIntegrationButton = ui.IntegrationButton(refs, {
         objectName: 'table',
@@ -222,7 +247,7 @@ function initialize() {
         btnText: i18n.table,
         menuItem1Text: i18n.go_to_pivot_tables,
         menuItem2Text: i18n.open_this_chart_as_table,
-        menuItem3Text: i18n.open_last_pivot_table
+        menuItem3Text: i18n.open_last_pivot_table,
     });
 
     var mapIntegrationButton = ui.IntegrationButton(refs, {
@@ -232,40 +257,47 @@ function initialize() {
         btnText: i18n.map,
         menuItem1Text: i18n.go_to_maps,
         menuItem2Text: i18n.open_this_chart_as_map,
-        menuItem3Text: i18n.open_last_map
+        menuItem3Text: i18n.open_last_map,
     });
 
     // viewport
-    uiManager.reg(ui.Viewport(refs, {
-        northRegion: northRegion,
-        eastRegion: eastRegion,
-        westRegionItems: westRegionItems,
-        chartTypeToolbar: chartTypeToolbar,
-        integrationButtons: [
-            tableIntegrationButton,
-            defaultIntegrationButton,
-            mapIntegrationButton
-        ],
-        DownloadButtonItems: ui.ChartDownloadButtonItems
-    }, {
-        getLayoutWindow: function() {
-            return uiManager.get('layoutWindow');
-        },
-        getOptionsWindow: function() {
-            return uiManager.get('optionsWindow');
-        },
-    }), 'viewport');
+    uiManager.reg(
+        ui.Viewport(
+            refs,
+            {
+                northRegion: northRegion,
+                eastRegion: eastRegion,
+                westRegionItems: westRegionItems,
+                chartTypeToolbar: chartTypeToolbar,
+                integrationButtons: [
+                    tableIntegrationButton,
+                    defaultIntegrationButton,
+                    mapIntegrationButton,
+                ],
+                DownloadButtonItems: ui.ChartDownloadButtonItems,
+            },
+            {
+                getLayoutWindow: function() {
+                    return uiManager.get('layoutWindow');
+                },
+                getOptionsWindow: function() {
+                    return uiManager.get('optionsWindow');
+                },
+            }
+        ),
+        'viewport'
+    );
 
-    uiManager.onResize(function(cmp, width) {
-        if (instanceManager.isStateCurrent()) {
-            if (uiManager.get('chart')) {
+    uiManager.onResize(function(cmp, width) {
+        if (instanceManager.isStateCurrent()) {
+            if (uiManager.get('chart')) {
                 var body = uiManager.getUpdateComponent().body,
                     buffer = 12;
 
                 var width = body.getWidth() - buffer,
                     height = body.getHeight() - buffer;
 
-                uiManager.get('chart').setSize(width, height, {duration: 50});
+                uiManager.get('chart').setSize(width, height, { duration: 50 });
             }
         }
     });
