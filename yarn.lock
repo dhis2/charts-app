@@ -1404,10 +1404,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@31.0.1:
-  version "31.0.1"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-31.0.1.tgz#f514098201b97e460fc23c5c376bc763f1748ac7"
-  integrity sha512-EETeoN00L5nJK3R4+e/hVxNLZZ6crV6uxgBSpNkQl+0NMvTC2hP4pM8/W28381ySoOv5AXCxi/O41Q8YJpVaCQ==
+d2-analysis@31.0.3:
+  version "31.0.3"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-31.0.3.tgz#1a8f28808abf59c12b107c1b273511b67512364e"
+  integrity sha512-rLyK2/OHL1mXd1y9OHpdbVZW6hQCwVUkW+sDRncubNgHCHfoXYQ8BmlAMXEKow3U8r/1eRmgQTZfugDw1gJkVA==
   dependencies:
     d2-utilizr "^0.2.16"
     jquery "2.1.4"
