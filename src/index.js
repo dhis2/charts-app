@@ -250,16 +250,6 @@ function initialize() {
         menuItem3Text: i18n.open_last_pivot_table,
     });
 
-    var mapIntegrationButton = ui.IntegrationButton(refs, {
-        objectName: 'map',
-        moduleName: 'dhis-web-mapping',
-        btnIconCls: 'ns-button-icon-map',
-        btnText: i18n.map,
-        menuItem1Text: i18n.go_to_maps,
-        menuItem2Text: i18n.open_this_chart_as_map,
-        menuItem3Text: i18n.open_last_map,
-    });
-
     // viewport
     uiManager.reg(
         ui.Viewport(
@@ -272,7 +262,6 @@ function initialize() {
                 integrationButtons: [
                     tableIntegrationButton,
                     defaultIntegrationButton,
-                    mapIntegrationButton,
                 ],
                 DownloadButtonItems: ui.ChartDownloadButtonItems,
             },
