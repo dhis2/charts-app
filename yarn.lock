@@ -3,9 +3,9 @@
 
 
 "@dhis2/d2-ui-rich-text@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@dhis2/d2-ui-rich-text/-/d2-ui-rich-text-5.1.0.tgz#87aa6e2214edbc5c686785ef717eef6f3e0d2e02"
-  integrity sha512-v9jARS9kJ0A9B8n3/vS7Gdyi1eB6hTYSkdEVi4tZvEMyVDzQjeEQhPZjRUo7r135KyNTh5zakp08ckLzgCu//A==
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@dhis2/d2-ui-rich-text/-/d2-ui-rich-text-5.2.8.tgz#eb2e241edc6936a5a0ae8c2302b06e704af5dd7f"
+  integrity sha512-Yz2rNAPAU+wQNGXV31Bid0iijL9bcT3Uhn0hdic4WotVRB2+UahvBEVy2/4c4AlFif35NV+N1OdgXefDNgVJmg==
   dependencies:
     babel-runtime "^6.26.0"
     markdown-it "^8.4.2"
@@ -1413,10 +1413,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-d2-analysis@31.0.4:
-  version "31.0.4"
-  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-31.0.4.tgz#cc5d6a8d2a08f26726d914ee5cbc56277e387474"
-  integrity sha512-Bn47br+4X5tj9l0pLiepCSKiD/wJX1MoRM74Gd99KXHk5tyIWPONZSwiOnyVfgWMkRCcjIg0i9hjVpATvfGpSg==
+d2-analysis@32.0.2:
+  version "32.0.2"
+  resolved "https://registry.yarnpkg.com/d2-analysis/-/d2-analysis-32.0.2.tgz#4a803cd0ea614f8a6fca94c8989b388726e29084"
+  integrity sha512-c4UVfk87cjCOenU8AQ4xW3r3yS+O2ZxHtFu18zbfkDIZlxGYYU0YgQ4J26r/t7NQmyl/z61A4THLsT3pUXEm5w==
   dependencies:
     "@dhis2/d2-ui-rich-text" "^5.1.0"
     d2-utilizr "^0.2.16"
@@ -3484,7 +3484,7 @@ loose-envify@^1.0.0:
   dependencies:
     js-tokens "^3.0.0"
 
-loose-envify@^1.3.1:
+loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -4308,12 +4308,13 @@ promise.pipe@^3.0.0:
   resolved "https://registry.yarnpkg.com/promise.pipe/-/promise.pipe-3.0.0.tgz#b8f729867f54353996e6d8e86f3bbd56882e32a6"
 
 prop-types@^15.6.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
-  integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
+  version "15.7.2"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+  integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
   dependencies:
-    loose-envify "^1.3.1"
+    loose-envify "^1.4.0"
     object-assign "^4.1.1"
+    react-is "^16.8.1"
 
 proxy-addr@~1.1.2:
   version "1.1.3"
@@ -4388,6 +4389,11 @@ rc@^1.1.2, rc@~1.1.6:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
+
+react-is@^16.8.1:
+  version "16.8.3"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
+  integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
 
 read-all-stream@^3.0.0:
   version "3.1.0"
@@ -5189,9 +5195,9 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
 uc.micro@^1.0.1, uc.micro@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.5.tgz#0c65f15f815aa08b560a61ce8b4db7ffc3f45376"
-  integrity sha512-JoLI4g5zv5qNyT09f4YAvEZIIV1oOjqnewYg5D38dkQljIzpPT296dbIGvKro3digYI1bkb7W6EP1y4uDlmzLg==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+  integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
 
 uglify-js@~2.3:
   version "2.3.6"
