@@ -1,7 +1,6 @@
 import './css/style.css';
 
 import arrayTo from 'd2-utilizr/lib/arrayTo';
-import isArray from 'd2-utilizr/lib/isArray';
 import objectApplyIf from 'd2-utilizr/lib/objectApplyIf';
 
 import { createChart } from 'd2-charts-api';
@@ -278,4 +277,4 @@ function render(plugin, layout) {
     }
 }
 
-global.chartPlugin = new util.Plugin({ refs, inits, renderFn: render, type: 'CHART' });
+global.chartPlugin = new util.Plugin({ refs, inits, renderFn: render, type: 'VISUALIZATION' });
