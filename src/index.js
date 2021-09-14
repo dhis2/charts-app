@@ -73,10 +73,10 @@ refs.uiManager = uiManager;
 
 // instance manager
 var instanceManager = new manager.InstanceManager(refs);
-instanceManager.apiResource = 'chart';
-instanceManager.apiEndpoint = 'charts';
-instanceManager.apiModule = 'dhis-web-visualizer';
-instanceManager.dataStatisticsEventType = 'CHART_VIEW';
+instanceManager.apiResource = 'visualization';
+instanceManager.apiEndpoint = 'visualizations';
+instanceManager.apiModule = 'dhis-web-data-visualizer';
+instanceManager.dataStatisticsEventType = 'VISUALIZATION_VIEW';
 refs.instanceManager = instanceManager;
 
 // dependencies

@@ -172,9 +172,9 @@ function render(plugin, layout) {
 
     var instanceManager = new manager.InstanceManager(instanceRefs);
     instanceRefs.instanceManager = instanceManager;
-    instanceManager.apiResource = 'chart';
-    instanceManager.apiEndpoint = 'charts';
-    instanceManager.apiModule = 'dhis-web-visualizer';
+    instanceManager.apiResource = 'visualization';
+    instanceManager.apiEndpoint = 'visualizations';
+    instanceManager.apiModule = 'dhis-web-data-visualizer';
     instanceManager.plugin = true;
     instanceManager.dashboard = chartPlugin.dashboard;
     instanceManager.applyTo(arrayTo(api));
