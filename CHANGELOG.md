@@ -1,3 +1,10 @@
+## [33.0.30](https://github.com/dhis2/charts-app/compare/v33.0.29...v33.0.30) (2023-05-27)
+
+
+### Bug Fixes
+
+* **translations:** sync translations from transifex (master) ([66c41c3](https://github.com/dhis2/charts-app/commit/66c41c30393682842f8c51df9d66d6679eaf7926))
+
 ## [33.0.29](https://github.com/dhis2/charts-app/compare/v33.0.28...v33.0.29) (2023-05-26)
 
 
