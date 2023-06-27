@@ -1,6 +1,6 @@
 {
   "name": "visualizer-app",
-  "version": "33.0.43",
+  "version": "33.0.44",
   "description": "Data visualizer app",
   "main": "index.html",
   "scripts": {
