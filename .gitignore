@@ -2,8 +2,11 @@ node_modules/
 build/
 target/
 .idea/
-.vscode
 *.json.gzip
 *.iml
 npm-debug.log
 manifest.webapp
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
